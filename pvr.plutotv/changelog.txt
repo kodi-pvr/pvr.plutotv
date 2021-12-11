@@ -1,3 +1,7 @@
+v19.0.1
+- Translations updates from Weblate
+	- de_de, ko_kr
+
 v19.0.0
 - Initial Matrix version
 
