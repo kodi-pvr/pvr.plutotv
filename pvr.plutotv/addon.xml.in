@@ -27,6 +27,7 @@
     <summary lang="en_GB">Pluto.tv PVR Client</summary>
     <summary lang="es_ES">Cliente PVR Pluto.tv</summary>
     <summary lang="es_MX">Cliente PVR de Pluto.tv</summary>
+    <summary lang="fi_FI">Pluto.tv PVR-pääte</summary>
     <summary lang="fr_FR">Client PVR Pluto.tv</summary>
     <summary lang="hr_HR">Pluto.tv PVR klijent</summary>
     <summary lang="it_IT">Client PVR Pluto.tv</summary>
@@ -37,6 +38,7 @@
     <description lang="en_GB">Pluto.tv PVR Client. Note: This is not an official pluto.tv add-on and not related to pluto.tv. It was developed by volunteers.</description>
     <description lang="es_ES">Cliente PVR de Pluto.tv. Nota: Este no es un complemento oficial de pluto.tv y no está relacionado con pluto.tv. Fue desarrollado por voluntarios.</description>
     <description lang="es_MX">Cliente PVR de Pluto.tv. Nota: Este no es un complemento oficial de plut.tv y no está relacionado a pluto.tv. Ha sido desarrollado por voluntarios.</description>
+    <description lang="fi_FI">Pluto.tv PVR-pääte. Huomioi: Tämä ei ole virallinen pluto.tv-lisäosa, eikä pluto.tv ole osallistunut sen kehitykseen. Lisäosa on vapaaehtoisten kehittämä.</description>
     <description lang="fr_FR">Client PVR Pluto.tv . Remarque : ceci n&apos;est pas un module complémentaire officiel de pluto.tv et n&apos;est pas lié à pluto.tv. Il a été développé par des bénévoles.</description>
     <description lang="hr_HR">Pluto.tv PVR klijent. Napomena: Ovo nije službeni pluto.tv dodatak i nije povezan s pluto.tv. Razvijen je od strane dobrovoljaca.</description>
     <description lang="it_IT">Client PVR Pluto.tv. Nota: questo non è un add-on ufficiale di pluto.tv e non è correlato a pluto.tv. È stato sviluppato da volontari.</description>
