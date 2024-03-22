@@ -90,7 +90,7 @@ bool PlutotvData::LoadChannelsData()
   kodi::Log(ADDON_LOG_DEBUG, "[load data] GET CHANNELS");
 
   std::string jsonChannels = HttpGet("https://api.pluto.tv/v2/channels.json");
-  if (jsonChannels.empty())
+  if (jsonChannels.empty() || jsonChannels == "[]")
   {
     kodi::Log(ADDON_LOG_ERROR, "[channels] ERROR - empty response");
     return false;
