@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
-"PO-Revision-Date: 2024-05-04 04:39+0000\n"
+"PO-Revision-Date: 2024-05-06 13:27+0000\n"
 "Last-Translator: Alfonso Cachero <alfonso.cachero@gmail.com>\n"
 "Language-Team: Spanish (Spain) <https://kodi.weblate.cloud/projects/kodi-add-ons-pvr-clients/pvr-plutotv/es_es/>\n"
 "Language: es_es\n"
@@ -25,11 +25,11 @@ msgstr "Cliente PVR de Pluto.tv. Nota: Este no es un complemento oficial de plut
 
 msgctxt "#30001"
 msgid "Playback"
-msgstr ""
+msgstr "Reproducción"
 
 msgctxt "#30002"
 msgid "Channels"
-msgstr ""
+msgstr "Canales"
 
 msgctxt "#30008"
 msgid "First channel number"
@@ -41,7 +41,7 @@ msgstr "Solución a los flujos rotos (requiere inputstream.adaptive > 21.4.5)"
 
 msgctxt "#30010"
 msgid "Coloured channel logos"
-msgstr ""
+msgstr "Logotipos a color de canal"
 
 msgctxt "#30040"
 msgid "Debug"
@@ -57,27 +57,27 @@ msgstr "Identificador de dispositivo"
 
 msgctxt "#30100"
 msgid "Category containing playback settings"
-msgstr ""
+msgstr "Categoría que contiene los ajustes de reproducción"
 
 msgctxt "#30101"
 msgid "Enable special stream handling to avoid hangs during playback."
-msgstr ""
+msgstr "Activa una gestión especial de los flujos para evitar cuelgues durante la reproducción."
 
 msgctxt "#30200"
 msgid "Category containing channel settings"
-msgstr ""
+msgstr "Categoría que contiene los ajustes de canal"
 
 msgctxt "#30201"
 msgid "The number for the first channel. Useful if you have multiple PVR clients enabled - to group the channels from the different clients."
-msgstr ""
+msgstr "Número para el primer canal. Útil si hay muchos clientes PVR activados para agrupar los canales de diferentes clientes."
 
 msgctxt "#30202"
 msgid "Use coulored channel logos, if available."
-msgstr ""
+msgstr "Usar logos de canal a color si están disponibles."
 
 msgctxt "#30300"
 msgid "Category containing debug settings"
-msgstr ""
+msgstr "Categoría que contiene los ajustes de depuración"
 
 #~ msgctxt "#30001"
 #~ msgid "General"

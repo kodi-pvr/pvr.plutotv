@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
-"PO-Revision-Date: 2024-05-05 07:45+0000\n"
+"PO-Revision-Date: 2024-05-09 23:55+0000\n"
 "Last-Translator: Minho Park <parkmino@gmail.com>\n"
 "Language-Team: Korean <https://kodi.weblate.cloud/projects/kodi-add-ons-pvr-clients/pvr-plutotv/ko_kr/>\n"
 "Language: ko_kr\n"
@@ -25,11 +25,11 @@ msgstr "Pluto.tv PVR 클라이언트. 참고 : 이것은 공식 pluto.tv 애드�
 
 msgctxt "#30001"
 msgid "Playback"
-msgstr ""
+msgstr "재생"
 
 msgctxt "#30002"
 msgid "Channels"
-msgstr ""
+msgstr "채널"
 
 msgctxt "#30008"
 msgid "First channel number"
@@ -41,7 +41,7 @@ msgstr "끊어진 스트림에 대한 해결 방법(inputstream.adaptive > 21.4.
 
 msgctxt "#30010"
 msgid "Coloured channel logos"
-msgstr ""
+msgstr "컬러 채널 로고"
 
 msgctxt "#30040"
 msgid "Debug"
@@ -57,27 +57,27 @@ msgstr "장치 ID"
 
 msgctxt "#30100"
 msgid "Category containing playback settings"
-msgstr ""
+msgstr "재생 설정이 포함된 카테고리"
 
 msgctxt "#30101"
 msgid "Enable special stream handling to avoid hangs during playback."
-msgstr ""
+msgstr "재생 중 중단을 방지하려면 특수 스트림으로 처리합니다."
 
 msgctxt "#30200"
 msgid "Category containing channel settings"
-msgstr ""
+msgstr "채널 설정이 포함된 카테고리"
 
 msgctxt "#30201"
 msgid "The number for the first channel. Useful if you have multiple PVR clients enabled - to group the channels from the different clients."
-msgstr ""
+msgstr "첫 번째 채널의 번호입니다. 여러 PVR 클라이언트를 사용할 경우 유용합니다. 다양한 클라이언트의 채널을 그룹화하는 데 유용합니다."
 
 msgctxt "#30202"
 msgid "Use coulored channel logos, if available."
-msgstr ""
+msgstr "가능하면 다양한 색상의 채널 로고를 사용합니다."
 
 msgctxt "#30300"
 msgid "Category containing debug settings"
-msgstr ""
+msgstr "디버그 설정이 포함된 카테고리"
 
 #~ msgctxt "#30001"
 #~ msgid "General"
