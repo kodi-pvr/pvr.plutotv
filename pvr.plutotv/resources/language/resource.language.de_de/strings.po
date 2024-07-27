@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
-"PO-Revision-Date: 2024-05-02 13:42+0000\n"
+"PO-Revision-Date: 2024-05-06 13:27+0000\n"
 "Last-Translator: Kai Sommerfeld <ksooo@users.noreply.kodi.weblate.cloud>\n"
 "Language-Team: German <https://kodi.weblate.cloud/projects/kodi-add-ons-pvr-clients/pvr-plutotv/de_de/>\n"
 "Language: de_de\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5.2\n"
+"X-Generator: Weblate 5.5.3\n"
 
 msgctxt "Addon Summary"
 msgid "Pluto.tv PVR Client"
@@ -25,11 +25,11 @@ msgstr "Pluto.tv PVR Client. Hinweis: Dies ist kein offizielles Pluto.tv-Addon u
 
 msgctxt "#30001"
 msgid "Playback"
-msgstr ""
+msgstr "Wiedergabe"
 
 msgctxt "#30002"
 msgid "Channels"
-msgstr ""
+msgstr "Sender"
 
 msgctxt "#30008"
 msgid "First channel number"
@@ -41,7 +41,7 @@ msgstr "Workaround für kaputte Streams (benötigt inputstream.adaptive > 21.4.5
 
 msgctxt "#30010"
 msgid "Coloured channel logos"
-msgstr ""
+msgstr "Farbige Senderlogos"
 
 msgctxt "#30040"
 msgid "Debug"
@@ -57,27 +57,27 @@ msgstr "Device-ID"
 
 msgctxt "#30100"
 msgid "Category containing playback settings"
-msgstr ""
+msgstr "Kategorie mit Wiedergabeeinstellungen"
 
 msgctxt "#30101"
 msgid "Enable special stream handling to avoid hangs during playback."
-msgstr ""
+msgstr "Aktivieren spezieller Behandlung für Streams, um Hänger bei der Wiedergabe zu verhindern."
 
 msgctxt "#30200"
 msgid "Category containing channel settings"
-msgstr ""
+msgstr "Kategorie mit Sendereinstellungen"
 
 msgctxt "#30201"
 msgid "The number for the first channel. Useful if you have multiple PVR clients enabled - to group the channels from the different clients."
-msgstr ""
+msgstr "Die Nummer der ersten Senders. Nützlich, wenn mehrere PVR-Clients aktiviert sind, um die Sender der verschiedenen Clients zu gruppieren."
 
 msgctxt "#30202"
 msgid "Use coulored channel logos, if available."
-msgstr ""
+msgstr "Farbige Senderlogos verwenden, wenn verfügbar."
 
 msgctxt "#30300"
 msgid "Category containing debug settings"
-msgstr ""
+msgstr "Kategorie mit Einstellungen für die Fehlersuche"
 
 #~ msgctxt "#30001"
 #~ msgid "General"
