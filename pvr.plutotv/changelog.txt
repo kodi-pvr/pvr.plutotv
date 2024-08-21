@@ -1,3 +1,6 @@
+v21.3.2
+- Add custom user agent to inputstream.adaptive properties.
+
 v21.3.1
 - Translations updates from Weblate
 	- de_de, es_es, it_it, ko_kr, pt_br
