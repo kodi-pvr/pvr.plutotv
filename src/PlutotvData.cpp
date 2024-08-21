@@ -12,7 +12,11 @@
 #include "Utils.h"
 #include "kodi/tools/StringUtils.h"
 
+#include <cctype>
 #include <ctime>
+#include <iomanip>
+#include <ios>
+#include <sstream>
 
 namespace
 {
@@ -66,6 +70,32 @@ PVR_ERROR PlutotvData::GetBackendVersion(std::string& version)
   return PVR_ERROR_NO_ERROR;
 }
 
+namespace
+{
+// http://stackoverflow.com/a/17708801
+const std::string UrlEncode(const std::string& value)
+{
+  std::ostringstream escaped;
+  escaped.fill('0');
+  escaped << std::hex;
+
+  for (auto c : value)
+  {
+    // Keep alphanumeric and other accepted characters intact
+    if (std::isalnum(c) || c == '-' || c == '_' || c == '.' || c == '~')
+    {
+      escaped << c;
+      continue;
+    }
+
+    // Any other characters are percent-encoded
+    escaped << '%' << std::setw(2) << int(static_cast<unsigned char>(c));
+  }
+
+  return escaped.str();
+}
+} // unnamed namespace
+
 void PlutotvData::SetStreamProperties(std::vector<kodi::addon::PVRStreamProperty>& properties,
                                       const std::string& url,
                                       bool realtime)
@@ -77,6 +107,13 @@ void PlutotvData::SetStreamProperties(std::vector<kodi::addon::PVRStreamProperty
   properties.emplace_back(PVR_STREAM_PROPERTY_ISREALTIMESTREAM, realtime ? "true" : "false");
   // HLS
   properties.emplace_back(PVR_STREAM_PROPERTY_MIMETYPE, "application/x-mpegURL");
+
+  const std::string encodedUserAgent{UrlEncode(PLUTOTV_USER_AGENT)};
+  properties.emplace_back("inputstream.adaptive.manifest_headers",
+                          "User-Agent=" + encodedUserAgent);
+  properties.emplace_back("inputstream.adaptive.stream_headers",
+                          "User-Agent=" + encodedUserAgent);
+
   if (GetSettingsWorkaroundBrokenStreams())
     properties.emplace_back("inputstream.adaptive.manifest_config",
                             "{\"hls_ignore_endlist\":true,\"hls_fix_mediasequence\":true,\"hls_fix_discsequence\":true}");
