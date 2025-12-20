@@ -1,7 +1,8 @@
 /*
  *  Copyright (C) 2020 flubshi (https://github.com/flubshi)
  *  Copyright (C) 2021 Team Kodi (https://kodi.tv)
- *
+ *  Copyright (C) 2025 Shawn Ray (https://github.com/Asmodasis)
+ * 
  *  SPDX-License-Identifier: GPL-2.0-or-later
  *  See LICENSE.md for more information.
  */
@@ -18,10 +19,13 @@
 #include <ios>
 #include <sstream>
 
-namespace
+#include <chrono> // std:chrono, 
+
+  //namespace
+  //{
+std::string PlutotvData::HttpGet(const std::string& url)
 {
-std::string HttpGet(const std::string& url)
-{
+  auto s = std::chrono::steady_clock::now(); //REMOVE
   kodi::Log(ADDON_LOG_DEBUG, "Http-GET-Request: %s.", url.c_str());
 
   Curl curl;
@@ -34,39 +38,64 @@ std::string HttpGet(const std::string& url)
 
   kodi::Log(ADDON_LOG_ERROR, "[Http-GET-Request] error. status: %i, body: %s", statusCode,
             content.c_str());
+  
+  auto e = std::chrono::steady_clock::now();  // REMOVE
+  std::chrono::duration<double> elapsed = e - s;  // REMOVE
+  kodi::Log(ADDON_LOG_DEBUG, "pvr.pluto chrono {HttpGet} elapsed time %d", elapsed.count()); // REMOVE 
+  std::string post = "";
+  curl.Delete(url, post, statusCode);
   return "";
 }
-} // namespace
+  // } // namespace
 
 ADDON_STATUS PlutotvData::Create()
 {
+  auto s = std::chrono::steady_clock::now(); //REMOVE
   kodi::Log(ADDON_LOG_DEBUG, "%s - Creating the pluto.tv PVR add-on", __FUNCTION__);
+  auto e = std::chrono::steady_clock::now();  // REMOVE
+  std::chrono::duration<double> elapsed = e - s;  // REMOVE
+  kodi::Log(ADDON_LOG_DEBUG, "pvr.pluto chrono {constructor} elapsed time %d", elapsed.count()); // REMOVE
   return ADDON_STATUS_OK;
 }
 
 ADDON_STATUS PlutotvData::SetSetting(const std::string& settingName,
                                      const kodi::addon::CSettingValue& settingValue)
 {
+  auto s = std::chrono::steady_clock::now(); //REMOVE
+  auto e = std::chrono::steady_clock::now();  // REMOVE
+  std::chrono::duration<double> elapsed = e - s;  // REMOVE
+  kodi::Log(ADDON_LOG_DEBUG, "pvr.pluto chrono {SetSetting} elapsed time %d", elapsed.count()); // REMOVE
   return ADDON_STATUS_NEED_RESTART;
 }
 
 PVR_ERROR PlutotvData::GetCapabilities(kodi::addon::PVRCapabilities& capabilities)
 {
+  auto s = std::chrono::steady_clock::now(); //REMOVE
   capabilities.SetSupportsEPG(true);
   capabilities.SetSupportsTV(true);
-
+  auto e = std::chrono::steady_clock::now();  // REMOVE
+  std::chrono::duration<double> elapsed = e - s;  // REMOVE
+  kodi::Log(ADDON_LOG_DEBUG, "pvr.pluto chrono {GetCapabilities} elapsed time %d", elapsed.count()); // REMOVE
   return PVR_ERROR_NO_ERROR;
 }
 
 PVR_ERROR PlutotvData::GetBackendName(std::string& name)
 {
+  auto s = std::chrono::steady_clock::now(); //REMOVE
   name = "pluto.tv PVR add-on";
+  auto e = std::chrono::steady_clock::now();  // REMOVE
+  std::chrono::duration<double> elapsed = e - s;  // REMOVE
+  kodi::Log(ADDON_LOG_DEBUG, "pvr.pluto chrono {GetBackendName} elapsed time %d", elapsed.count()); // REMOVE
   return PVR_ERROR_NO_ERROR;
 }
 
 PVR_ERROR PlutotvData::GetBackendVersion(std::string& version)
 {
+  auto s = std::chrono::steady_clock::now(); //REMOVE
   version = STR(IPTV_VERSION);
+  auto e = std::chrono::steady_clock::now();  // REMOVE
+  std::chrono::duration<double> elapsed = e - s;  // REMOVE
+  kodi::Log(ADDON_LOG_DEBUG, "pvr.pluto chrono {GetBackendVersion} elapsed time %d", elapsed.count()); // REMOVE
   return PVR_ERROR_NO_ERROR;
 }
 
@@ -75,6 +104,7 @@ namespace
 // http://stackoverflow.com/a/17708801
 const std::string UrlEncode(const std::string& value)
 {
+  auto s = std::chrono::steady_clock::now(); //REMOVE
   std::ostringstream escaped;
   escaped.fill('0');
   escaped << std::hex;
@@ -91,7 +121,9 @@ const std::string UrlEncode(const std::string& value)
     // Any other characters are percent-encoded
     escaped << '%' << std::setw(2) << int(static_cast<unsigned char>(c));
   }
-
+  auto e = std::chrono::steady_clock::now();  // REMOVE
+  std::chrono::duration<double> elapsed = e - s;  // REMOVE
+  kodi::Log(ADDON_LOG_DEBUG, "pvr.pluto chrono {URLEncode} elapsed time %d", elapsed.count()); // REMOVE
   return escaped.str();
 }
 } // unnamed namespace
@@ -100,6 +132,7 @@ void PlutotvData::SetStreamProperties(std::vector<kodi::addon::PVRStreamProperty
                                       const std::string& url,
                                       bool realtime)
 {
+  auto s = std::chrono::steady_clock::now(); //REMOVE
   kodi::Log(ADDON_LOG_DEBUG, "[PLAY STREAM] url: %s", url.c_str());
 
   properties.emplace_back(PVR_STREAM_PROPERTY_STREAMURL, url);
@@ -117,10 +150,14 @@ void PlutotvData::SetStreamProperties(std::vector<kodi::addon::PVRStreamProperty
   if (GetSettingsWorkaroundBrokenStreams())
     properties.emplace_back("inputstream.adaptive.manifest_config",
                             "{\"hls_ignore_endlist\":true,\"hls_fix_mediasequence\":true,\"hls_fix_discsequence\":true}");
+  auto e = std::chrono::steady_clock::now();  // REMOVE
+  std::chrono::duration<double> elapsed = e - s;  // REMOVE
+  kodi::Log(ADDON_LOG_DEBUG, "pvr.pluto chrono {SetStreamProperties} elapsed time %d", elapsed.count()); // REMOVE
 }
 
 bool PlutotvData::LoadChannelsData()
 {
+  auto s = std::chrono::steady_clock::now(); //REMOVE
   if (m_bChannelsLoaded)
     return true;
 
@@ -240,11 +277,15 @@ bool PlutotvData::LoadChannelsData()
   }
 
   m_bChannelsLoaded = true;
+  auto e = std::chrono::steady_clock::now();  // REMOVE
+  std::chrono::duration<double> elapsed = e - s;  // REMOVE
+  kodi::Log(ADDON_LOG_DEBUG, "pvr.pluto chrono {LoadChannelsData} elapsed time %d", elapsed.count()); // REMOVE
   return true;
 }
 
 PVR_ERROR PlutotvData::GetChannelsAmount(int& amount)
 {
+  auto s = std::chrono::steady_clock::now(); //REMOVE
   kodi::Log(ADDON_LOG_DEBUG, "pluto.tv function call: [%s]", __FUNCTION__);
 
   LoadChannelsData();
@@ -252,11 +293,15 @@ PVR_ERROR PlutotvData::GetChannelsAmount(int& amount)
     return PVR_ERROR_SERVER_ERROR;
 
   amount = static_cast<int>(m_channels.size());
+  auto e = std::chrono::steady_clock::now();  // REMOVE
+  std::chrono::duration<double> elapsed = e - s;  // REMOVE
+  kodi::Log(ADDON_LOG_DEBUG, "pvr.pluto chrono {GetChannelsAmount} elapsed time %d", elapsed.count()); // REMOVE
   return PVR_ERROR_NO_ERROR;
 }
 
 PVR_ERROR PlutotvData::GetChannels(bool radio, kodi::addon::PVRChannelsResultSet& results)
 {
+  auto s = std::chrono::steady_clock::now(); //REMOVE
   kodi::Log(ADDON_LOG_DEBUG, "pluto.tv function call: [%s]", __FUNCTION__);
 
   if (!radio)
@@ -279,14 +324,16 @@ PVR_ERROR PlutotvData::GetChannels(bool radio, kodi::addon::PVRChannelsResultSet
       results.Add(kodiChannel);
     }
   }
+  auto e = std::chrono::steady_clock::now();  // REMOVE
+  std::chrono::duration<double> elapsed = e - s;  // REMOVE
+  kodi::Log(ADDON_LOG_DEBUG, "pvr.pluto chrono {GetChannels} elapsed time %d", elapsed.count()); // REMOVE
   return PVR_ERROR_NO_ERROR;
 }
 
 PVR_ERROR PlutotvData::GetChannelStreamProperties(
-    const kodi::addon::PVRChannel& channel,
-    PVR_SOURCE source,
-    std::vector<kodi::addon::PVRStreamProperty>& properties)
+    const kodi::addon::PVRChannel& channel, std::vector<kodi::addon::PVRStreamProperty>& properties)
 {
+  auto s = std::chrono::steady_clock::now(); //REMOVE
   const std::string strUrl = GetChannelStreamURL(channel.GetUniqueId());
   kodi::Log(ADDON_LOG_DEBUG, "Stream URL -> %s", strUrl.c_str());
   PVR_ERROR ret = PVR_ERROR_FAILED;
@@ -295,11 +342,15 @@ PVR_ERROR PlutotvData::GetChannelStreamProperties(
     SetStreamProperties(properties, strUrl, true);
     ret = PVR_ERROR_NO_ERROR;
   }
+  auto e = std::chrono::steady_clock::now();  // REMOVE
+  std::chrono::duration<double> elapsed = e - s;  // REMOVE
+  kodi::Log(ADDON_LOG_DEBUG, "pvr.pluto chrono {GetChannelStreamProperties} elapsed time %d", elapsed.count()); // REMOVE
   return ret;
 }
 
 std::string PlutotvData::GetSettingsUUID(const std::string& setting)
 {
+  auto s = std::chrono::steady_clock::now(); //REMOVE
   std::string uuid = kodi::addon::GetSettingString(setting);
   if (uuid.empty())
   {
@@ -307,26 +358,42 @@ std::string PlutotvData::GetSettingsUUID(const std::string& setting)
     kodi::Log(ADDON_LOG_DEBUG, "uuid (generated): %s", uuid.c_str());
     kodi::addon::SetSettingString(setting, uuid);
   }
+  auto e = std::chrono::steady_clock::now();  // REMOVE
+  std::chrono::duration<double> elapsed = e - s;  // REMOVE
+  kodi::Log(ADDON_LOG_DEBUG, "pvr.pluto chrono {GetSettingsUUID} elapsed time %d", elapsed.count()); // REMOVE
   return uuid;
 }
 
 int PlutotvData::GetSettingsStartChannel() const
 {
+  auto s = std::chrono::steady_clock::now(); //REMOVE
+  auto e = std::chrono::steady_clock::now();  // REMOVE
+  std::chrono::duration<double> elapsed = e - s;  // REMOVE
+  kodi::Log(ADDON_LOG_DEBUG, "pvr.pluto chrono {GetSettingsStartChannel} elapsed time %d", elapsed.count()); // REMOVE
   return kodi::addon::GetSettingInt("start_channelnum", 1);
 }
 
 bool PlutotvData::GetSettingsColoredChannelLogos() const
 {
+  auto s = std::chrono::steady_clock::now(); //REMOVE
+  auto e = std::chrono::steady_clock::now();  // REMOVE
+  std::chrono::duration<double> elapsed = e - s;  // REMOVE
+  kodi::Log(ADDON_LOG_DEBUG, "pvr.pluto chrono {GetSettingsColoredChannelLogos} elapsed time %d", elapsed.count()); // REMOVE
   return kodi::addon::GetSettingBoolean("colored_channel_logos", true);
 }
 
 bool PlutotvData::GetSettingsWorkaroundBrokenStreams() const
 {
+  auto s = std::chrono::steady_clock::now(); //REMOVE
+  auto e = std::chrono::steady_clock::now();  // REMOVE
+  std::chrono::duration<double> elapsed = e - s;  // REMOVE
+  kodi::Log(ADDON_LOG_DEBUG, "pvr.pluto chrono {GetSettingsWorkaroundBrokenStreams} elapsed time %d", elapsed.count()); // REMOVE
   return kodi::addon::GetSettingBoolean("workaround_broken_streams", true);
 }
 
 std::string PlutotvData::GetChannelStreamURL(int uniqueId)
 {
+  auto s = std::chrono::steady_clock::now(); //REMOVE
   LoadChannelsData();
   if (!m_bChannelsLoaded)
     return {};
@@ -366,22 +433,28 @@ std::string PlutotvData::GetChannelStreamURL(int uniqueId)
       return streamURL;
     }
   }
+  auto e = std::chrono::steady_clock::now();  // REMOVE
+  std::chrono::duration<double> elapsed = e - s;  // REMOVE
+  kodi::Log(ADDON_LOG_DEBUG, "pvr.pluto chrono {GetChannelStreamURL} elapsed time %d", elapsed.count()); // REMOVE
   return {};
 }
 
 PVR_ERROR PlutotvData::GetChannelGroupsAmount(int& amount)
 {
+  auto s = std::chrono::steady_clock::now(); //REMOVE
   return PVR_ERROR_NOT_IMPLEMENTED;
 }
 
 PVR_ERROR PlutotvData::GetChannelGroups(bool radio, kodi::addon::PVRChannelGroupsResultSet& results)
 {
+  auto s = std::chrono::steady_clock::now(); //REMOVE
   return PVR_ERROR_NOT_IMPLEMENTED;
 }
 
 PVR_ERROR PlutotvData::GetChannelGroupMembers(const kodi::addon::PVRChannelGroup& group,
                                               kodi::addon::PVRChannelGroupMembersResultSet& results)
 {
+  auto s = std::chrono::steady_clock::now(); //REMOVE
   return PVR_ERROR_NOT_IMPLEMENTED;
 }
 
@@ -390,6 +463,7 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
                                         time_t end,
                                         kodi::addon::PVREPGTagsResultSet& results)
 {
+  auto s = std::chrono::steady_clock::now(); //REMOVE
   LoadChannelsData();
   if (!m_bChannelsLoaded)
     return PVR_ERROR_SERVER_ERROR;
@@ -562,6 +636,9 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
 
         results.Add(tag);
       }
+      auto e = std::chrono::steady_clock::now();  // REMOVE
+      std::chrono::duration<double> elapsed = e - s;  // REMOVE
+      kodi::Log(ADDON_LOG_DEBUG, "pvr.pluto chrono {GetEPGForChannel} elapsed time %d", elapsed.count()); // REMOVE
       return PVR_ERROR_NO_ERROR;
     }
     // EPG for channel not found. This is not an error. Channel might just have no EPG data.

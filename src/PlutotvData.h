@@ -1,6 +1,7 @@
 /*
  *  Copyright (C) 2020 flubshi (https://github.com/flubshi)
  *  Copyright (C) 2021 Team Kodi (https://kodi.tv)
+ *  Copyright (C) 2025 Shawn Ray (https://github.com/Asmodasis)
  *
  *  SPDX-License-Identifier: GPL-2.0-or-later
  *  See LICENSE.md for more information.
@@ -24,6 +25,7 @@ class ATTR_DLL_LOCAL PlutotvData : public kodi::addon::CAddonBase,
                                    public kodi::addon::CInstancePVRClient
 {
 public:
+  std::string HttpGet(const std::string&);
   PlutotvData() = default;
   PlutotvData(const PlutotvData&) = delete;
   PlutotvData(PlutotvData&&) = delete;
@@ -47,8 +49,7 @@ public:
                                    kodi::addon::PVRChannelGroupMembersResultSet& results) override;
   PVR_ERROR GetChannelStreamProperties(
       const kodi::addon::PVRChannel& channel,
-      PVR_SOURCE source,
-      std::vector<kodi::addon::PVRStreamProperty>& properties) override;
+      std::vector<kodi::addon::PVRStreamProperty>& properties);
 
   PVR_ERROR GetEPGForChannel(int channelUid,
                              time_t start,
