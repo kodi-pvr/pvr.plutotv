@@ -18,10 +18,18 @@
 #include <ios>
 #include <sstream>
 
+<<<<<<< Updated upstream
 namespace
 {
 std::string HttpGet(const std::string& url)
 {
+=======
+#include <chrono> // std:chrono, 
+
+
+std::string PlutotvData::HttpGet(const std::string& url){
+
+>>>>>>> Stashed changes
   kodi::Log(ADDON_LOG_DEBUG, "Http-GET-Request: %s.", url.c_str());
 
   Curl curl;
@@ -34,17 +42,30 @@ std::string HttpGet(const std::string& url)
 
   kodi::Log(ADDON_LOG_ERROR, "[Http-GET-Request] error. status: %i, body: %s", statusCode,
             content.c_str());
+<<<<<<< Updated upstream
   return "";
 }
 } // namespace
 
 ADDON_STATUS PlutotvData::Create()
 {
+=======
+  
+  std::string post = "";
+  curl.Delete(url, post, statusCode);
+  return "";
+}
+
+
+ADDON_STATUS PlutotvData::Create(){
+
+>>>>>>> Stashed changes
   kodi::Log(ADDON_LOG_DEBUG, "%s - Creating the pluto.tv PVR add-on", __FUNCTION__);
   return ADDON_STATUS_OK;
 }
 
 ADDON_STATUS PlutotvData::SetSetting(const std::string& settingName,
+<<<<<<< Updated upstream
                                      const kodi::addon::CSettingValue& settingValue)
 {
   return ADDON_STATUS_NEED_RESTART;
@@ -60,12 +81,33 @@ PVR_ERROR PlutotvData::GetCapabilities(kodi::addon::PVRCapabilities& capabilitie
 
 PVR_ERROR PlutotvData::GetBackendName(std::string& name)
 {
+=======
+                                     const kodi::addon::CSettingValue& settingValue){
+
+  return ADDON_STATUS_NEED_RESTART;
+}
+
+PVR_ERROR PlutotvData::GetCapabilities(kodi::addon::PVRCapabilities& capabilities){
+
+  capabilities.SetSupportsEPG(true);
+  capabilities.SetSupportsTV(true);
+  return PVR_ERROR_NO_ERROR;
+}
+
+PVR_ERROR PlutotvData::GetBackendName(std::string& name){
+
+>>>>>>> Stashed changes
   name = "pluto.tv PVR add-on";
   return PVR_ERROR_NO_ERROR;
 }
 
+<<<<<<< Updated upstream
 PVR_ERROR PlutotvData::GetBackendVersion(std::string& version)
 {
+=======
+PVR_ERROR PlutotvData::GetBackendVersion(std::string& version){
+
+>>>>>>> Stashed changes
   version = STR(IPTV_VERSION);
   return PVR_ERROR_NO_ERROR;
 }
@@ -73,8 +115,13 @@ PVR_ERROR PlutotvData::GetBackendVersion(std::string& version)
 namespace
 {
 // http://stackoverflow.com/a/17708801
+<<<<<<< Updated upstream
 const std::string UrlEncode(const std::string& value)
 {
+=======
+const std::string UrlEncode(const std::string& value){
+
+>>>>>>> Stashed changes
   std::ostringstream escaped;
   escaped.fill('0');
   escaped << std::hex;
@@ -98,8 +145,13 @@ const std::string UrlEncode(const std::string& value)
 
 void PlutotvData::SetStreamProperties(std::vector<kodi::addon::PVRStreamProperty>& properties,
                                       const std::string& url,
+<<<<<<< Updated upstream
                                       bool realtime)
 {
+=======
+                                      bool realtime){
+
+>>>>>>> Stashed changes
   kodi::Log(ADDON_LOG_DEBUG, "[PLAY STREAM] url: %s", url.c_str());
 
   properties.emplace_back(PVR_STREAM_PROPERTY_STREAMURL, url);
@@ -119,8 +171,13 @@ void PlutotvData::SetStreamProperties(std::vector<kodi::addon::PVRStreamProperty
                             "{\"hls_ignore_endlist\":true,\"hls_fix_mediasequence\":true,\"hls_fix_discsequence\":true}");
 }
 
+<<<<<<< Updated upstream
 bool PlutotvData::LoadChannelsData()
 {
+=======
+bool PlutotvData::LoadChannelsData(){
+
+>>>>>>> Stashed changes
   if (m_bChannelsLoaded)
     return true;
 
@@ -243,11 +300,16 @@ bool PlutotvData::LoadChannelsData()
   return true;
 }
 
+<<<<<<< Updated upstream
 PVR_ERROR PlutotvData::GetChannelsAmount(int& amount)
 {
+=======
+PVR_ERROR PlutotvData::GetChannelsAmount(int& amount){
+
+>>>>>>> Stashed changes
   kodi::Log(ADDON_LOG_DEBUG, "pluto.tv function call: [%s]", __FUNCTION__);
 
-  LoadChannelsData();
+  //LoadChannelsData(); # TODO: TEST
   if (!m_bChannelsLoaded)
     return PVR_ERROR_SERVER_ERROR;
 
@@ -255,13 +317,18 @@ PVR_ERROR PlutotvData::GetChannelsAmount(int& amount)
   return PVR_ERROR_NO_ERROR;
 }
 
+<<<<<<< Updated upstream
 PVR_ERROR PlutotvData::GetChannels(bool radio, kodi::addon::PVRChannelsResultSet& results)
 {
+=======
+PVR_ERROR PlutotvData::GetChannels(bool radio, kodi::addon::PVRChannelsResultSet& results){
+
+>>>>>>> Stashed changes
   kodi::Log(ADDON_LOG_DEBUG, "pluto.tv function call: [%s]", __FUNCTION__);
 
   if (!radio)
   {
-    LoadChannelsData();
+    //LoadChannelsData(); # TODO: TEST
     if (!m_bChannelsLoaded)
       return PVR_ERROR_SERVER_ERROR;
 
@@ -283,10 +350,15 @@ PVR_ERROR PlutotvData::GetChannels(bool radio, kodi::addon::PVRChannelsResultSet
 }
 
 PVR_ERROR PlutotvData::GetChannelStreamProperties(
+<<<<<<< Updated upstream
     const kodi::addon::PVRChannel& channel,
     PVR_SOURCE source,
     std::vector<kodi::addon::PVRStreamProperty>& properties)
 {
+=======
+    const kodi::addon::PVRChannel& channel, std::vector<kodi::addon::PVRStreamProperty>& properties){
+
+>>>>>>> Stashed changes
   const std::string strUrl = GetChannelStreamURL(channel.GetUniqueId());
   kodi::Log(ADDON_LOG_DEBUG, "Stream URL -> %s", strUrl.c_str());
   PVR_ERROR ret = PVR_ERROR_FAILED;
@@ -298,8 +370,13 @@ PVR_ERROR PlutotvData::GetChannelStreamProperties(
   return ret;
 }
 
+<<<<<<< Updated upstream
 std::string PlutotvData::GetSettingsUUID(const std::string& setting)
 {
+=======
+std::string PlutotvData::GetSettingsUUID(const std::string& setting){
+
+>>>>>>> Stashed changes
   std::string uuid = kodi::addon::GetSettingString(setting);
   if (uuid.empty())
   {
@@ -310,6 +387,7 @@ std::string PlutotvData::GetSettingsUUID(const std::string& setting)
   return uuid;
 }
 
+<<<<<<< Updated upstream
 int PlutotvData::GetSettingsStartChannel() const
 {
   return kodi::addon::GetSettingInt("start_channelnum", 1);
@@ -328,6 +406,24 @@ bool PlutotvData::GetSettingsWorkaroundBrokenStreams() const
 std::string PlutotvData::GetChannelStreamURL(int uniqueId)
 {
   LoadChannelsData();
+=======
+int PlutotvData::GetSettingsStartChannel() const{
+  return kodi::addon::GetSettingInt("start_channelnum", 1);
+}
+
+bool PlutotvData::GetSettingsColoredChannelLogos() const{
+
+  return kodi::addon::GetSettingBoolean("colored_channel_logos", true);
+}
+
+bool PlutotvData::GetSettingsWorkaroundBrokenStreams() const{
+  return kodi::addon::GetSettingBoolean("workaround_broken_streams", true);
+}
+
+std::string PlutotvData::GetChannelStreamURL(int uniqueId){
+
+  //LoadChannelsData(); # TODO: TEST
+>>>>>>> Stashed changes
   if (!m_bChannelsLoaded)
     return {};
 
@@ -369,6 +465,7 @@ std::string PlutotvData::GetChannelStreamURL(int uniqueId)
   return {};
 }
 
+<<<<<<< Updated upstream
 PVR_ERROR PlutotvData::GetChannelGroupsAmount(int& amount)
 {
   return PVR_ERROR_NOT_IMPLEMENTED;
@@ -376,21 +473,41 @@ PVR_ERROR PlutotvData::GetChannelGroupsAmount(int& amount)
 
 PVR_ERROR PlutotvData::GetChannelGroups(bool radio, kodi::addon::PVRChannelGroupsResultSet& results)
 {
+=======
+PVR_ERROR PlutotvData::GetChannelGroupsAmount(int& amount){
+
+  return PVR_ERROR_NOT_IMPLEMENTED;
+}
+
+PVR_ERROR PlutotvData::GetChannelGroups(bool radio, kodi::addon::PVRChannelGroupsResultSet& results){
+
+>>>>>>> Stashed changes
   return PVR_ERROR_NOT_IMPLEMENTED;
 }
 
 PVR_ERROR PlutotvData::GetChannelGroupMembers(const kodi::addon::PVRChannelGroup& group,
+<<<<<<< Updated upstream
                                               kodi::addon::PVRChannelGroupMembersResultSet& results)
 {
+=======
+                                              kodi::addon::PVRChannelGroupMembersResultSet& results){
+
+>>>>>>> Stashed changes
   return PVR_ERROR_NOT_IMPLEMENTED;
 }
 
 PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
                                         time_t start,
                                         time_t end,
+<<<<<<< Updated upstream
                                         kodi::addon::PVREPGTagsResultSet& results)
 {
   LoadChannelsData();
+=======
+                                        kodi::addon::PVREPGTagsResultSet& results){
+
+  //LoadChannelsData();  # TODO: TEST
+>>>>>>> Stashed changes
   if (!m_bChannelsLoaded)
     return PVR_ERROR_SERVER_ERROR;
 
