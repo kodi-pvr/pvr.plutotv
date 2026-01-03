@@ -69,7 +69,7 @@ private:
     std::string strStreamURL;
   };
 
-  std::shared_ptr<rapidjson::Document> m_epg_cache_document;
+  std::shared_ptr<nlohmann::json> m_epg_cache_document;
   time_t m_epg_cache_start = time_t(0);
   time_t m_epg_cache_end = time_t(0);;
 
