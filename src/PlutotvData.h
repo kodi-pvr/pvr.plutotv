@@ -10,10 +10,12 @@
 #pragma once
 
 #include "kodi/addon-instance/PVR.h"
-#include "rapidjson/document.h"
+//#include "rapidjson/document.h"
+#include <nlohmann/json.hpp>
 
 #include <memory>
 #include <vector>
+
 
 /**
  * User Agent for HTTP Requests

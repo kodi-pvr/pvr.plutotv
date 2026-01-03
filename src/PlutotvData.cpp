@@ -1,7 +1,8 @@
 /*
  *  Copyright (C) 2020 flubshi (https://github.com/flubshi)
  *  Copyright (C) 2021 Team Kodi (https://kodi.tv)
- *
+ *  Copyright (C) 2025 Shawn Ray (https://github.com/Asmodasis)
+ * 
  *  SPDX-License-Identifier: GPL-2.0-or-later
  *  See LICENSE.md for more information.
  */
@@ -17,8 +18,6 @@
 #include <iomanip>
 #include <ios>
 #include <sstream>
-
-#include <chrono> // std:chrono, 
 
 
 std::string PlutotvData::HttpGet(const std::string& url){
@@ -143,8 +142,11 @@ bool PlutotvData::LoadChannelsData(){
 
   // parse channels
   kodi::Log(ADDON_LOG_DEBUG, "[channels] parse channels");
-  rapidjson::Document channelsDoc;
-  channelsDoc.Parse(jsonChannels.c_str());
+
+  //rapidjson::Document channelsDoc; // TODO: If works, remove RapidJson
+  nlohmann::json channelsDoc = json::parse(jsonChannels.c_str());
+  //channelsDoc.Parse(jsonChannels.c_str()); 
+  
   if (channelsDoc.GetParseError())
   {
     kodi::Log(ADDON_LOG_ERROR, "[LoadChannelData] ERROR: error while parsing json");
@@ -250,7 +252,7 @@ PVR_ERROR PlutotvData::GetChannelsAmount(int& amount){
 
   kodi::Log(ADDON_LOG_DEBUG, "pluto.tv function call: [%s]", __FUNCTION__);
 
-  //LoadChannelsData(); # TODO: TEST
+  LoadChannelsData(); 
   if (!m_bChannelsLoaded)
     return PVR_ERROR_SERVER_ERROR;
 
@@ -264,7 +266,7 @@ PVR_ERROR PlutotvData::GetChannels(bool radio, kodi::addon::PVRChannelsResultSet
 
   if (!radio)
   {
-    //LoadChannelsData(); # TODO: TEST
+    LoadChannelsData(); 
     if (!m_bChannelsLoaded)
       return PVR_ERROR_SERVER_ERROR;
 
@@ -326,7 +328,7 @@ bool PlutotvData::GetSettingsWorkaroundBrokenStreams() const{
 
 std::string PlutotvData::GetChannelStreamURL(int uniqueId){
 
-  //LoadChannelsData(); # TODO: TEST
+  LoadChannelsData(); 
   if (!m_bChannelsLoaded)
     return {};
 
@@ -389,7 +391,7 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
                                         time_t end,
                                         kodi::addon::PVREPGTagsResultSet& results){
 
-  //LoadChannelsData();  # TODO: TEST
+  LoadChannelsData();
   if (!m_bChannelsLoaded)
     return PVR_ERROR_SERVER_ERROR;
 
@@ -433,7 +435,9 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
       }
       jsonEpg = "{\"result\": " + jsonEpg + "}";
 
-      const std::shared_ptr<rapidjson::Document> epgDoc(new rapidjson::Document);
+      //const std::shared_ptr<rapidjson::Document> epgDoc(new rapidjson::Document); // TODO
+      const std::shared_ptr<nlohmann::json> epgDoc(new nlohmann::json);
+
       epgDoc->Parse(jsonEpg.c_str());
       if (epgDoc->GetParseError())
       {
