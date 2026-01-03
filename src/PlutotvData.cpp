@@ -158,7 +158,7 @@ bool PlutotvData::LoadChannelsData(){
   // Use configured start channel number to populate the channel list
   int i = GetSettingsStartChannel();
   //for (const auto& channel : channelsDoc["result"].GetArray())
-  for (const auto& channel : channelsDoc.items())
+  for (const auto& channel : channelsDoc["result"].items())
   {
     /**
       {
