@@ -438,9 +438,10 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
       //const std::shared_ptr<rapidjson::Document> epgDoc(new rapidjson::Document); // TODO
       const std::shared_ptr<nlohmann::json> epgDoc(new nlohmann::json);
 
-      epgDoc->Parse(jsonEpg.c_str());
-      if (epgDoc->GetParseError())
-      {
+      epgDoc->parse(jsonEpg.c_str());
+
+      if (json::accept(epgDoc)){
+
         kodi::Log(ADDON_LOG_ERROR, "[GetEPG] ERROR: error while parsing json");
         return PVR_ERROR_SERVER_ERROR;
       }
