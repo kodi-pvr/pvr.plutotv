@@ -153,12 +153,12 @@ bool PlutotvData::LoadChannelsData(){
     return false;
   }
   kodi::Log(ADDON_LOG_DEBUG, "[channels] iterate channels");
-  kodi::Log(ADDON_LOG_DEBUG, "[channels] size: %i;", channelsDoc["result"].size());
+  //kodi::Log(ADDON_LOG_DEBUG, "[channels] size: %i;", channelsDoc["result"].size());
 
   // Use configured start channel number to populate the channel list
   int i = GetSettingsStartChannel();
   //for (const auto& channel : channelsDoc["result"].GetArray())
-  for (const auto& channel : channelsDoc["result"].items())
+  for (const auto& channel : channelsDoc.items())
   {
     /**
       {
@@ -196,7 +196,8 @@ bool PlutotvData::LoadChannelsData(){
          "sessionURL":"https://service-stitcher.clusters.pluto.tv/session/.json"
       }}, */
 
-    const std::string plutotvid = channel["_id"].GetString();
+    //const std::string plutotvid = channel["_id"].GetString();
+    const std::string plutotvid = channel["_id"];
 
     PlutotvChannel plutotv_channel;
     plutotv_channel.iChannelNumber = i++; // position
@@ -209,35 +210,46 @@ bool PlutotvData::LoadChannelsData(){
     plutotv_channel.iUniqueId = uniqueId;
     kodi::Log(ADDON_LOG_DEBUG, "[channel] id: %i;", uniqueId);
 
-    const std::string displayName = channel["name"].GetString();
+    //const std::string displayName = channel["name"].GetString();
+    const std::string displayName = channel["name"];
+
     plutotv_channel.strChannelName = displayName;
     kodi::Log(ADDON_LOG_DEBUG, "[channel] name: %s;", plutotv_channel.strChannelName.c_str());
 
     std::string logo;
     if (GetSettingsColoredChannelLogos())
     {
-      if (channel.HasMember("colorLogoPNG"))
-        logo = channel["colorLogoPNG"]["path"].GetString();
+      //if (channel.HasMember("colorLogoPNG"))
+      if (channel.find("colorLogoPNG"))
+        //logo = channel["colorLogoPNG"]["path"].GetString();
+        logo = channel["colorLogoPNG"]["path"];
     }
     else
     {
-      if (channel.HasMember("solidLogoPNG"))
-        logo = channel["solidLogoPNG"]["path"].GetString();
+      //if (channel.HasMember("solidLogoPNG"))
+      if (channel.find("solidLogoPNG"))
+        //logo = channel["solidLogoPNG"]["path"].GetString();
+        logo = channel["solidLogoPNG"]["path"];
     }
     // fallback, should always work
-    if (logo.empty() && channel.HasMember("logo"))
+    //if (logo.empty() && channel.HasMember("logo"))
+    if (logo.empty() && channel.find("logo"))
     {
-      logo = channel["logo"]["path"].GetString();
+      //logo = channel["logo"]["path"].GetString();
+      logo = channel["logo"]["path"];
       kodi::Log(ADDON_LOG_DEBUG, "[channel] logo (fallback): %s;", logo.c_str());
     }
 
     plutotv_channel.strIconPath = logo;
     kodi::Log(ADDON_LOG_DEBUG, "[channel] iconpath: %s;", plutotv_channel.strIconPath.c_str());
 
-    if (channel.HasMember("stitched") && channel["stitched"].HasMember("urls") &&
-        channel["stitched"]["urls"].Size() > 0)
+    //if (channel.HasMember("stitched") && channel["stitched"].HasMember("urls") &&
+    //    channel["stitched"]["urls"].Size() > 0)
+    if (channel.find("stitched") && channel["stitched"].find("urls") &&
+        channel["stitched"]["urls"].size() > 0)
     {
-      const std::string streamURL = channel["stitched"]["urls"][0]["url"].GetString();
+      //const std::string streamURL = channel["stitched"]["urls"][0]["url"].GetString();
+      const std::string streamURL = channel["stitched"]["urls"][0]["url"];
       plutotv_channel.strStreamURL = streamURL;
       kodi::Log(ADDON_LOG_DEBUG, "[channel] streamURL: %s;", streamURL.c_str());
     }
@@ -460,7 +472,8 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
     //for (const auto& epgChannel : (*m_epg_cache_document)["result"].GetArray())
     for (const auto& epgChannel : (*m_epg_cache_document)["result"].items())
     {
-      if (epgChannel["_id"].GetString() != channel.plutotvID)
+      //if (epgChannel["_id"].GetString() != channel.plutotvID)
+      if (epgChannel["_id"] != channel.plutotvID)
         continue;
 
       // EPG data found
@@ -501,7 +514,8 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
         //                } }  }   },
 
         // generate a unique boadcast id
-        const std::string epg_bsid = epgData["_id"].GetString();
+        //const std::string epg_bsid = epgData["_id"].GetString();
+        const std::string epg_bsid = epgData["_id"];
         kodi::Log(ADDON_LOG_DEBUG, "[epg] epg_bsid: %s;", epg_bsid.c_str());
         const int epg_bid = Utils::Hash(epg_bsid);
         kodi::Log(ADDON_LOG_DEBUG, "[epg] epg_bid: %i;", epg_bid);
@@ -511,56 +525,75 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
         tag.SetUniqueChannelId(channel.iUniqueId);
 
         // set title
-        tag.SetTitle(epgData["title"].GetString());
-        kodi::Log(ADDON_LOG_DEBUG, "[epg] title: %s;", epgData["title"].GetString());
+        //tag.SetTitle(epgData["title"].GetString());
+        tag.SetTitle(epgData["title"];
+        //kodi::Log(ADDON_LOG_DEBUG, "[epg] title: %s;", epgData["title"].GetString());
 
         // set startTime
-        std::string startTime = epgData["start"].GetString();
+        //std::string startTime = epgData["start"].GetString();
+        std::string startTime = epgData["start"];
         tag.SetStartTime(Utils::StringToTime(startTime));
 
         // set endTime
-        std::string endTime = epgData["stop"].GetString();
+        //std::string endTime = epgData["stop"].GetString();
+        std::string endTime = epgData["stop"];
         tag.SetEndTime(Utils::StringToTime(endTime));
 
-        if (epgData.HasMember("episode"))
+        //if (epgData.HasMember("episode"))
+        if (epgData.find("episode"))
         {
           const auto& episode = epgData["episode"];
           // set description
-          if (episode.HasMember("description") &&
-              episode["description"].IsString())
+          //if (episode.HasMember("description") &&
+          //    episode["description"].IsString())
+          if (episode.find("description") &&
+              episode["description"])
           {
-            tag.SetPlot(episode["description"].GetString());
-            kodi::Log(ADDON_LOG_DEBUG, "[epg] description: %s;", episode["description"].GetString());
+            //tag.SetPlot(episode["description"].GetString());
+            tag.SetPlot(episode["description"]);
+            //kodi::Log(ADDON_LOG_DEBUG, "[epg] description: %s;", episode["description"].GetString());
           }
 
           // genre
-          if (episode.HasMember("genre") && episode["genre"].IsString())
+          //if (episode.HasMember("genre") && episode["genre"].IsString())
+          if (episode.find("genre") && episode["genre"].IsString())
           {
             tag.SetGenreType(EPG_GENRE_USE_STRING);
-            tag.SetGenreDescription(episode["genre"].GetString());
+            //tag.SetGenreDescription(episode["genre"].GetString());
+            tag.SetGenreDescription(episode["genre"]);
           }
 
           // thumbnail
-          if (episode.HasMember("thumbnail") &&
+          //if (episode.HasMember("thumbnail") &&
+          //    episode["thumbnail"]["path"].IsString())
+          if (episode.find("thumbnail") &&
               episode["thumbnail"]["path"].IsString())
           {
-            tag.SetIconPath(episode["thumbnail"]["path"].GetString());
+            //tag.SetIconPath(episode["thumbnail"]["path"].GetString());
+            tag.SetIconPath(episode["thumbnail"]["path"]);
           }
 
           // series title / episode name
-          if (episode.HasMember("series") &&
-              episode["series"].HasMember("name") &&
+          //if (episode.HasMember("series") &&
+          //    episode["series"].HasMember("name") &&
+          //    episode["series"]["name"].IsString() &&
+          //    episode.HasMember("name") &&
+          //    episode["name"].IsString())
+          if (episode.find("series") &&
+              episode["series"].find("name") &&
               episode["series"]["name"].IsString() &&
-              episode.HasMember("name") &&
+              episode.find("name") &&
               episode["name"].IsString())
           {
             // series title
-            tag.SetTitle(episode["series"]["name"].GetString());
-            kodi::Log(ADDON_LOG_DEBUG, "[epg] series title: %s;", episode["series"]["name"].GetString());
+            //tag.SetTitle(episode["series"]["name"].GetString());
+           // kodi::Log(ADDON_LOG_DEBUG, "[epg] series title: %s;", episode["series"]["name"].GetString());
+           tag.SetTitle(episode["series"]["name"]);
 
             // episode name
-            tag.SetEpisodeName(episode["name"].GetString());
-            kodi::Log(ADDON_LOG_DEBUG, "[epg] episode name: %s;", episode["name"].GetString());
+            //tag.SetEpisodeName(episode["name"].GetString());
+            tag.SetEpisodeName(episode["name"]);
+            //kodi::Log(ADDON_LOG_DEBUG, "[epg] episode name: %s;", episode["name"].GetString());
 
             // set is series
             tag.SetFlags(EPG_TAG_FLAG_IS_SERIES);
