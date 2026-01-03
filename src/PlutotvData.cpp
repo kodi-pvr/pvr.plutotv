@@ -144,20 +144,21 @@ bool PlutotvData::LoadChannelsData(){
   kodi::Log(ADDON_LOG_DEBUG, "[channels] parse channels");
 
   //rapidjson::Document channelsDoc; // TODO: If works, remove RapidJson
-  nlohmann::json channelsDoc = json::parse(jsonChannels.c_str());
+  nlohmann::json channelsDoc = nlohmann::json::parse(jsonChannels.c_str());
   //channelsDoc.Parse(jsonChannels.c_str()); 
-  
-  if (channelsDoc.GetParseError())
+  //if (channelsDoc.GetParseError())
+  if(nlohmann::json::accept(channelsDoc))
   {
     kodi::Log(ADDON_LOG_ERROR, "[LoadChannelData] ERROR: error while parsing json");
     return false;
   }
   kodi::Log(ADDON_LOG_DEBUG, "[channels] iterate channels");
-  kodi::Log(ADDON_LOG_DEBUG, "[channels] size: %i;", channelsDoc["result"].Size());
+  kodi::Log(ADDON_LOG_DEBUG, "[channels] size: %i;", channelsDoc["result"].size());
 
   // Use configured start channel number to populate the channel list
   int i = GetSettingsStartChannel();
-  for (const auto& channel : channelsDoc["result"].GetArray())
+  //for (const auto& channel : channelsDoc["result"].GetArray())
+  for (const auto& channel : channelsDoc["result"].items())
   {
     /**
       {
@@ -453,16 +454,18 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
 
     kodi::Log(ADDON_LOG_DEBUG, "[epg] iterate entries");
 
-    kodi::Log(ADDON_LOG_DEBUG, "[epg] size: %i;", (*m_epg_cache_document)["result"].Size());
+    kodi::Log(ADDON_LOG_DEBUG, "[epg] size: %i;", (*m_epg_cache_document)["result"].size());
 
     // Find EPG data
-    for (const auto& epgChannel : (*m_epg_cache_document)["result"].GetArray())
+    //for (const auto& epgChannel : (*m_epg_cache_document)["result"].GetArray())
+    for (const auto& epgChannel : (*m_epg_cache_document)["result"].items())
     {
       if (epgChannel["_id"].GetString() != channel.plutotvID)
         continue;
 
       // EPG data found
-      for (const auto& epgData : epgChannel["timelines"].GetArray())
+      //for (const auto& epgData : epgChannel["timelines"].GetArray())
+      for (const auto& epgData : epgChannel["timelines"].items())
       {
         kodi::addon::PVREPGTag tag;
 
