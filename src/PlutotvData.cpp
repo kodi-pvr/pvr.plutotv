@@ -220,20 +220,20 @@ bool PlutotvData::LoadChannelsData(){
     if (GetSettingsColoredChannelLogos())
     {
       //if (channel.HasMember("colorLogoPNG"))
-      if (channel.find("colorLogoPNG"))
+      if (channel.contains("colorLogoPNG"))
         //logo = channel["colorLogoPNG"]["path"].GetString();
         logo = channel.at("colorLogoPNG").at("path");
     }
     else
     {
       //if (channel.HasMember("solidLogoPNG"))
-      if (channel.find("solidLogoPNG"))
+      if (channel.contains("solidLogoPNG"))
         //logo = channel["solidLogoPNG"]["path"].GetString();
         logo = channel.at("solidLogoPNG").at("path");
     }
     // fallback, should always work
     //if (logo.empty() && channel.HasMember("logo"))
-    if (logo.empty() && channel.find("logo"))
+    if (logo.empty() && channel.contains("logo"))
     {
       //logo = channel["logo"]["path"].GetString();
       logo = channel.at("logo").at("path");
@@ -245,7 +245,7 @@ bool PlutotvData::LoadChannelsData(){
 
     //if (channel.HasMember("stitched") && channel["stitched"].HasMember("urls") &&
     //    channel["stitched"]["urls"].Size() > 0)
-    if (channel.find("stitched") && channel.at("stitched").find("urls") &&
+    if (channel.contains("stitched") && channel.at("stitched").contains("urls") &&
         channel.at("stitched").at("urls").size() > 0)
     {
       //const std::string streamURL = channel["stitched"]["urls"][0]["url"].GetString();
@@ -526,7 +526,7 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
 
         // set title
         //tag.SetTitle(epgData["title"].GetString());
-        tag.SetTitle(epgData.at("title");
+        tag.SetTitle(epgData.at("title"));
         //kodi::Log(ADDON_LOG_DEBUG, "[epg] title: %s;", epgData["title"].GetString());
 
         // set startTime
@@ -540,14 +540,14 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
         tag.SetEndTime(Utils::StringToTime(endTime));
 
         //if (epgData.HasMember("episode"))
-        if (epgData.find("episode"))
+        if (epgData.contains("episode"))
         {
           const auto& episode = epgData.at("episode");
           // set description
           //if (episode.HasMember("description") &&
           //    episode["description"].IsString())
-          if (episode.find("description") &&
-              episode.at("description"))
+          if (episode.contains("description") &&
+              episode.at("description").is_string())
           {
             //tag.SetPlot(episode["description"].GetString());
             tag.SetPlot(episode.at("description"));
@@ -556,7 +556,7 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
 
           // genre
           //if (episode.HasMember("genre") && episode["genre"].IsString())
-          if (episode.find("genre") && episode.at("genre").IsString())
+          if (episode.contains("genre") && episode.at("genre").is_string())
           {
             tag.SetGenreType(EPG_GENRE_USE_STRING);
             //tag.SetGenreDescription(episode["genre"].GetString());
@@ -566,8 +566,8 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
           // thumbnail
           //if (episode.HasMember("thumbnail") &&
           //    episode["thumbnail"]["path"].IsString())
-          if (episode.find("thumbnail") &&
-              episode.at("thumbnail").at("path").IsString())
+          if (episode.contains("thumbnail") &&
+              episode.at("thumbnail").at("path").is_string())
           {
             //tag.SetIconPath(episode["thumbnail"]["path"].GetString());
             tag.SetIconPath(episode.at("thumbnail").at("path"));
@@ -579,11 +579,11 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
           //    episode["series"]["name"].IsString() &&
           //    episode.HasMember("name") &&
           //    episode["name"].IsString())
-          if (episode.find("series") &&
-              episode.at("series").find("name") &&
-              episode.at("series").at("name").IsString() &&
-              episode.find("name") &&
-              episode.at("name").IsString())
+          if (episode.contains("series") &&
+              episode.at("series").contains("name") &&
+              episode.at("series").at("name").is_string() &&
+              episode.contains("name") &&
+              episode.at("name").is_string())
           {
             // series title
             //tag.SetTitle(episode["series"]["name"].GetString());
