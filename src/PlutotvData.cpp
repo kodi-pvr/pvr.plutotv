@@ -449,9 +449,10 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
       jsonEpg = "{\"result\": " + jsonEpg + "}";
 
       //const std::shared_ptr<rapidjson::Document> epgDoc(new rapidjson::Document); // TODO
-      const std::shared_ptr<nlohmann::json> epgDoc(new nlohmann::json);
+      //const std::shared_ptr<nlohmann::json> epgDoc(new nlohmann::json);
 
-      epgDoc->parse(jsonEpg.c_str());
+      //epgDoc->parse(jsonEpg.c_str());
+      nlohmann::json epgDoc = nlohmann::json::parse(jsonEpg.c_str());
       //epgDoc = std::make_shared<nlohmann::json>(nlohmann::json::parse(jsonEpg.c_str()));
 
       if (nlohmann::json::accept(epgDoc)){
