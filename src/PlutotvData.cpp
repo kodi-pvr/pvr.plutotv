@@ -147,7 +147,7 @@ bool PlutotvData::LoadChannelsData(){
   nlohmann::json channelsDoc = nlohmann::json::parse(jsonChannels.c_str());
   //channelsDoc.Parse(jsonChannels.c_str()); 
   //if (channelsDoc.GetParseError())
-  if(nlohmann::json::accept(channelsDoc))
+  if(channelsDoc.is_discarded())
   {
     kodi::Log(ADDON_LOG_ERROR, "[LoadChannelData] ERROR: error while parsing json");
     return false;
@@ -455,7 +455,7 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
       nlohmann::json epgDoc = nlohmann::json::parse(jsonEpg.c_str());
       //epgDoc = std::make_shared<nlohmann::json>(nlohmann::json::parse(jsonEpg.c_str()));
 
-      if (nlohmann::json::accept(epgDoc)){
+      if (epgDoc.is_discarded()){
 
         kodi::Log(ADDON_LOG_ERROR, "[GetEPG] ERROR: error while parsing json");
         return PVR_ERROR_SERVER_ERROR;
