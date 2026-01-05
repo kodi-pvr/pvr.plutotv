@@ -12,7 +12,7 @@
 #include "kodi/addon-instance/PVR.h"
 //#include "rapidjson/document.h"
 #include <nlohmann/json.hpp>
-#include <ChannelGroups.h>
+//#include <ChannelGroups.h>
 
 #include <memory>
 #include <vector>
