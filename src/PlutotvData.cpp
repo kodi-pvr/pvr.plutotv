@@ -454,9 +454,8 @@ PVR_ERROR PlutotvData::GetChannelGroupMembers(const kodi::addon::PVRChannelGroup
   try{
     //for (const auto& grp : m_Groups)
     for(unsigned int i = 0; i < (int)m_Groups.size(); ++i){
-    {
-      if (grp.GetGroupName() == group.GetGroupName())
-      {
+      //if (grp.GetGroupName() == group.GetGroupName())
+      //{
         //for (unsigned int i = 0; i < grp.size(); i++)
         //{
           //int iId = grp[i] - 1;
@@ -474,8 +473,9 @@ PVR_ERROR PlutotvData::GetChannelGroupMembers(const kodi::addon::PVRChannelGroup
   
           results.Add(kodiGroupMember);
         //}
-      }
+      //}
     }
+  }
   }catch(PVR_ERROR e){
     kodi::Log(ADDON_LOG_DEBUG, "[GetChannelGroupMembers] PVR Error detected...");
     return e;
