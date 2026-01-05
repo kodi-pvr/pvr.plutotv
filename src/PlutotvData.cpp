@@ -400,7 +400,7 @@ PVR_ERROR PlutotvData::GetChannelGroupsAmount(int& amount){
       }            // no category, continue
     }
   }catch(PVR_ERROR e){
-    kodi::Log(ADDON_LOG_DEBUG, "[GetChannelGroupsAmount] PVR Error detected: %s", e.c_str());
+    kodi::Log(ADDON_LOG_DEBUG, "[GetChannelGroupsAmount] PVR Error detected...");
     return e;
   }
     return PVR_ERROR_NO_ERROR;
@@ -441,7 +441,7 @@ PVR_ERROR PlutotvData::GetChannelGroups(bool radio, kodi::addon::PVRChannelGroup
 
     }
   }catch(PVR_ERROR e){
-    kodi::Log(ADDON_LOG_DEBUG, "[GetChannelGroups] PVR Error detected: %s", e.c_str());
+    kodi::Log(ADDON_LOG_DEBUG, "[GetChannelGroups] PVR Error detected...");
     return e;
   }
     return PVR_ERROR_NO_ERROR;
@@ -454,7 +454,7 @@ PVR_ERROR PlutotvData::GetChannelGroupMembers(const kodi::addon::PVRChannelGroup
   try{
     for (const auto& grp : m_Groups)
     {
-      if (grp.strGroupName == group.GetGroupName())
+      if (grp.GetGroupName() == group.GetGroupName())
       {
         for (unsigned int i = 0; i < grp.members.size(); i++)
         {
@@ -476,7 +476,7 @@ PVR_ERROR PlutotvData::GetChannelGroupMembers(const kodi::addon::PVRChannelGroup
       }
     }
   }catch(PVR_ERROR e){
-    kodi::Log(ADDON_LOG_DEBUG, "[GetChannelGroupMembers] PVR Error detected: %s", e.c_str());
+    kodi::Log(ADDON_LOG_DEBUG, "[GetChannelGroupMembers] PVR Error detected...");
     return e;
   }
     return PVR_ERROR_NO_ERROR;                                  
