@@ -25,8 +25,8 @@ static const std::string PLUTOTV_USER_AGENT =
     "Mozilla/5.0 (Windows NT 6.2; rv:24.0) Gecko/20100101 Firefox/24.0";
 
 class ATTR_DLL_LOCAL PlutotvData : public kodi::addon::CAddonBase,
-                                   public kodi::addon::CInstancePVRClient,
-                                   public kodi::addon::PVRCapabilities  // for channel groups
+                                   public kodi::addon::CInstancePVRClient
+                                  // public kodi::addon::PVRCapabilities  // for channel groups TODO: DEPRECATED
 {
 public:
 

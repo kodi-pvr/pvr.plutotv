@@ -391,11 +391,11 @@ PVR_ERROR PlutotvData::GetChannelGroupsAmount(int& amount){
 
   try{
     amount = 0; 
-    if(m_channels.size() == 0){
+    if(m_channels.size() == 0 || m_channels.size() < 0){
       throw PVR_ERROR_SERVER_ERROR;
     } 
     for(unsigned int i = 0; i < (int)m_channels.size(); ++i){
-      if(m_channels[i].strChannelCategory){
+      if(m_channels[i].strChannelCategory != nullptr){
          amount++; // category found
       }            // no category, continue
     }
@@ -452,15 +452,16 @@ PVR_ERROR PlutotvData::GetChannelGroupMembers(const kodi::addon::PVRChannelGroup
                                               kodi::addon::PVRChannelGroupMembersResultSet& results){
 
   try{
-    for (const auto& grp : m_Groups)
+    //for (const auto& grp : m_Groups)
+    for(unsigned int i = 0; i < (int)m_Groups.size(); ++i){
     {
       if (grp.GetGroupName() == group.GetGroupName())
       {
-        for (unsigned int i = 0; i < grp.size(); i++)
-        {
+        //for (unsigned int i = 0; i < grp.size(); i++)
+        //{
           //int iId = grp[i] - 1;
-          if (i < 0 || i > (int)m_channels.size() - 1)
-            continue;
+          //if (i < 0 || i > (int)m_channels.size() - 1)
+          //  continue;
   
           //PlutotvChannel &channel = m_channels.at(i);
 
@@ -472,7 +473,7 @@ PVR_ERROR PlutotvData::GetChannelGroupMembers(const kodi::addon::PVRChannelGroup
           //kodiGroupMember.SetSubChannelNumber(m_channels[i].iSubChannelNumber);
   
           results.Add(kodiGroupMember);
-        }
+        //}
       }
     }
   }catch(PVR_ERROR e){
