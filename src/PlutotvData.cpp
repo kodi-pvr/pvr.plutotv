@@ -394,11 +394,19 @@ PVR_ERROR PlutotvData::GetChannelGroupsAmount(int& amount){
     if(m_channels.size() == 0 || m_channels.size() < 0){
       throw PVR_ERROR_SERVER_ERROR;
     } 
-    for(unsigned int i = 0; i < (int)m_channels.size(); ++i){
-      if(m_channels[i].strChannelCategory != nullptr){
-         amount++; // category found
-      }            // no category, continue
+    std::vector<std::string> g;
+    if(m_channels.size() < 1){        
+      // error occures
+      throw PVR_ERROR_SERVER_ERROR;
     }
+    for(unsigned int i = 0; i < (int)m_channels.size(); ++i){
+      if(!(std::find(g.begin(), g.end(), m_channels[i].strChannelCategory) != g.end())){
+        // the category is not contained within the vector
+        g.push_back(m_channels[i].strChannelCategory);
+      } // else it is, pass it
+    }
+    amount = g.size();
+
   }catch(PVR_ERROR e){
     kodi::Log(ADDON_LOG_DEBUG, "[GetChannelGroupsAmount] PVR Error detected...");
     return e;
