@@ -475,7 +475,6 @@ PVR_ERROR PlutotvData::GetChannelGroupMembers(const kodi::addon::PVRChannelGroup
         //}
       //}
     }
-  }
   }catch(PVR_ERROR e){
     kodi::Log(ADDON_LOG_DEBUG, "[GetChannelGroupMembers] PVR Error detected...");
     return e;
