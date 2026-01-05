@@ -30,10 +30,10 @@ class ATTR_DLL_LOCAL PlutotvData : public kodi::addon::CAddonBase,
 {
 public:
 
-  void SetSupportsChannelGroups	(bool	supportsChannelGroups	){
+  //void SetSupportsChannelGroups	(bool	supportsChannelGroups	){
     // This class will now support channel groups
-    supportsChannelGroups = true;
-  }
+  //  supportsChannelGroups = true;
+  //}
 
   std::string HttpGet(const std::string&);
   PlutotvData() = default;

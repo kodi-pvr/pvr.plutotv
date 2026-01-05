@@ -57,6 +57,8 @@ PVR_ERROR PlutotvData::GetCapabilities(kodi::addon::PVRCapabilities& capabilitie
 
   capabilities.SetSupportsEPG(true);
   capabilities.SetSupportsTV(true);
+  // supports channel grouping
+  capabilities.SetSupportsChannelGroups(true);
   return PVR_ERROR_NO_ERROR;
 }
 
