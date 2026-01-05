@@ -16,7 +16,7 @@ The addon `inputstream.adaptive` must be built at the same time
 ### Linux
 
 The following instructions assume you will not have built Kodi already in the `kodi-build` directory
-suggested by the README. Assuming all prerequisites are met, continueing from the build steps for x11. Done for branch `Omega` with source in directory `kodi` as follows:
+suggested by the README. Assuming all prerequisites are met, continuing from the build steps for x11. Done for branch `Omega` with source in directory `kodi` as follows:
 
 1. `cd $HOME`
 2. `sudo git clone --branch Omega https://github.com/xbmc/xbmc.git`

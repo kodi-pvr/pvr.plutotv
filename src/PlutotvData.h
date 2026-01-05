@@ -12,10 +12,11 @@
 #include "kodi/addon-instance/PVR.h"
 //#include "rapidjson/document.h"
 #include <nlohmann/json.hpp>
+#include <ChannelGroups.h>
 
 #include <memory>
 #include <vector>
-
+#include <algorithm>
 
 /**
  * User Agent for HTTP Requests
@@ -24,9 +25,16 @@ static const std::string PLUTOTV_USER_AGENT =
     "Mozilla/5.0 (Windows NT 6.2; rv:24.0) Gecko/20100101 Firefox/24.0";
 
 class ATTR_DLL_LOCAL PlutotvData : public kodi::addon::CAddonBase,
-                                   public kodi::addon::CInstancePVRClient
+                                   public kodi::addon::CInstancePVRClient,
+                                   public kodi::addon::PVRCapabilities  // for channel groups
 {
 public:
+
+  void SetSupportsChannelGroups	(bool	supportsChannelGroups	){
+    // This class will now support channel groups
+    supportsChannelGroups = true;
+  }
+
   std::string HttpGet(const std::string&);
   PlutotvData() = default;
   PlutotvData(const PlutotvData&) = delete;
@@ -58,6 +66,7 @@ public:
                              time_t end,
                              kodi::addon::PVREPGTagsResultSet& results) override;
 
+
 private:
   struct PlutotvChannel
   {
@@ -65,6 +74,9 @@ private:
     std::string plutotvID;
     int iChannelNumber; //position
     std::string strChannelName;
+    //std::string strChannelExtraInfo;        // Extra information about the channel
+    //std::string strChannelShowDescription;  // Description about the show being played
+    std::string strChannelCategory;         // The category the show belongs to: reality, comedy, kids, etc 
     std::string strIconPath;
     std::string strStreamURL;
   };
@@ -74,6 +86,7 @@ private:
   time_t m_epg_cache_end = time_t(0);;
 
   std::vector<PlutotvChannel> m_channels;
+  std::vector<kodi::addon::PVRChannelGroup> m_Groups;
   bool m_bChannelsLoaded = false;
 
   std::string GetChannelStreamURL(int uniqueId);

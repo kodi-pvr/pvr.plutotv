@@ -216,7 +216,11 @@ bool PlutotvData::LoadChannelsData(){
     plutotv_channel.strChannelName = displayName;
     kodi::Log(ADDON_LOG_DEBUG, "[channel] name: %s;", plutotv_channel.strChannelName.c_str());
 
+    plutotv_channel.strChannelCategory = channel.at("category"); // set category
+    kodi::Log(ADDON_LOG_DEBUG, "[channel] Category: %s;", plutotv_channel.strChannelCategory.c_str());
+
     std::string logo;
+
     if (GetSettingsColoredChannelLogos())
     {
       //if (channel.HasMember("colorLogoPNG"))
@@ -385,18 +389,98 @@ std::string PlutotvData::GetChannelStreamURL(int uniqueId){
 
 PVR_ERROR PlutotvData::GetChannelGroupsAmount(int& amount){
 
-  return PVR_ERROR_NOT_IMPLEMENTED;
+  try{
+    amount = 0; 
+    if(m_channels.size() == 0){
+      throw PVR_ERROR_SERVER_ERROR;
+    } 
+    for(int i = 0; i < (int)m_channels.size(); ++i){
+      if(m_channels[i].strChannelCategory){
+         amount++; // category found
+      }            // no category, continue
+    }
+  }catch(PVR_ERROR e){
+    kodi::Log(ADDON_LOG_DEBUG, "[GetChannelGroupsAmount] PVR Error detected: %s", e.c_str());
+    return e;
+  }
+    return PVR_ERROR_NO_ERROR;
+
+  
 }
 
 PVR_ERROR PlutotvData::GetChannelGroups(bool radio, kodi::addon::PVRChannelGroupsResultSet& results){
+  
+  try{
+    if(radio){
+      throw PVR_ERROR_NOT_IMPLEMENTED; // no radio support
+    }else{
+      std::vector<std::string> g;
+      if(m_channels.size() < 1){        
+        // error occures
+        throw PVR_ERROR_SERVER_ERROR;
+      }
+      for(int i = 0; i < (int)m_channels.size(); ++i){
+        if(!(std::find(g.begin(), g.end(), m_channels[i].strChannelCategory) != g.end())){
+          // the category is not contained within the vector
+          g.push_back(m_channels[i].strChannelCategory);
+        } // else it is, pass it
 
-  return PVR_ERROR_NOT_IMPLEMENTED;
+      }// vector of categories is complete
+      for(int i = 0; i < g.size(); ++i){
+        // add the elements to results 
+        kodi::addon::PVRChannelGroup group;
+        group.SetIsRadio(false);
+        group.SetGroupName(g[i]);
+        group.SetPosition(i);
+
+        // store the group for later
+        m_Groups.push_back(group);
+        // Then, give it to Kodi
+        results.Add(group);
+      }
+
+    }
+  }catch(PVR_ERROR e){
+    kodi::Log(ADDON_LOG_DEBUG, "[GetChannelGroups] PVR Error detected: %s", e.c_str());
+    return e;
+  }
+    return PVR_ERROR_NO_ERROR;
+    
 }
 
 PVR_ERROR PlutotvData::GetChannelGroupMembers(const kodi::addon::PVRChannelGroup& group,
                                               kodi::addon::PVRChannelGroupMembersResultSet& results){
 
-  return PVR_ERROR_NOT_IMPLEMENTED;
+  try{
+    for (const auto& grp : m_Groups)
+    {
+      if (grp.strGroupName == group.GetGroupName())
+      {
+        for (unsigned int i = 0; i < grp.members.size(); i++)
+        {
+          int iId = grp[i] - 1;
+          if (iId < 0 || iId > (int)m_channels.size() - 1)
+            continue;
+  
+          PlutotvChannel &channel = m_channels.at(iId);
+
+          kodi::addon::PVRChannelGroupMember kodiGroupMember;
+          
+          kodiGroupMember.SetGroupName(group.GetGroupName());
+          kodiGroupMember.SetChannelUniqueId(channel.iUniqueId);
+          kodiGroupMember.SetChannelNumber(channel.iChannelNumber);
+          kodiGroupMember.SetSubChannelNumber(channel.iSubChannelNumber);
+  
+          results.Add(kodiGroupMember);
+        }
+      }
+    }
+  }catch(PVR_ERROR e){
+    kodi::Log(ADDON_LOG_DEBUG, "[GetChannelGroupMembers] PVR Error detected: %s", e.c_str());
+    return e;
+  }
+    return PVR_ERROR_NO_ERROR;                                  
+
 }
 
 PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
@@ -615,5 +699,7 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
   kodi::Log(ADDON_LOG_ERROR, "[GetEPG] ERROR: channel not found");
   return PVR_ERROR_INVALID_PARAMETERS;
 }
+
+
 
 ADDONCREATOR(PlutotvData)
