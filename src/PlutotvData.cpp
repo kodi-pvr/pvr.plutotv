@@ -59,6 +59,7 @@ PVR_ERROR PlutotvData::GetCapabilities(kodi::addon::PVRCapabilities& capabilitie
   capabilities.SetSupportsTV(true);
   // supports channel grouping
   capabilities.SetSupportsChannelGroups(true);
+  kodi::Log(ADDON_LOG_DEBUG, "%s - GetSupportsChannelGroups", capabilities.GetSupportsChannelGroups());
   //capabilities.SetSupportsRecordings(true);
   return PVR_ERROR_NO_ERROR;
 }
@@ -391,7 +392,7 @@ std::string PlutotvData::GetChannelStreamURL(int uniqueId){
 }
 
 PVR_ERROR PlutotvData::GetChannelGroupsAmount(int& amount){
-  kodi::Log(ADDON_LOG_DEBUG, "[GetChannelGroupsAmount] INSIDE");
+  kodi::Log(ADDON_LOG_DEBUG, "[GetChannelGroupsAmount] INSIDE %s", __FUNCTION__);
   try{
     amount = 0; 
     if(m_channels.size() == 0 || m_channels.size() < 0){
@@ -405,7 +406,7 @@ PVR_ERROR PlutotvData::GetChannelGroupsAmount(int& amount){
     for(unsigned int i = 0; i < (int)m_channels.size(); ++i){
       if(!(std::find(g.begin(), g.end(), m_channels[i].strChannelCategory) != g.end())){
         // the category is not contained within the vector
-        kodi::Log(ADDON_LOG_DEBUG, "[GetChannelGroupsAmount] IN FOR LOOP IN IF");
+        kodi::Log(ADDON_LOG_DEBUG, "[GetChannelGroupsAmount] IN FOR LOOP IN IF %s", __FUNCTION__);
         g.push_back(m_channels[i].strChannelCategory);
       } // else it is, pass it
     }
@@ -421,7 +422,7 @@ PVR_ERROR PlutotvData::GetChannelGroupsAmount(int& amount){
 }
 
 PVR_ERROR PlutotvData::GetChannelGroups(bool radio, kodi::addon::PVRChannelGroupsResultSet& results){
-  kodi::Log(ADDON_LOG_DEBUG, "[GetChannelGroups] INSIDE");
+  kodi::Log(ADDON_LOG_DEBUG, "[GetChannelGroups] INSIDE %s", __FUNCTION__);
   try{
     if(radio){
       throw PVR_ERROR_NOT_IMPLEMENTED; // no radio support
@@ -434,7 +435,7 @@ PVR_ERROR PlutotvData::GetChannelGroups(bool radio, kodi::addon::PVRChannelGroup
       for(unsigned int i = 0; i < (int)m_channels.size(); ++i){
         if(!(std::find(g.begin(), g.end(), m_channels[i].strChannelCategory) != g.end())){
           // the category is not contained within the vector
-           kodi::Log(ADDON_LOG_DEBUG, "[GetChannelGroups] STD::FIND FOR LOOP.");
+           kodi::Log(ADDON_LOG_DEBUG, "[GetChannelGroups] STD::FIND FOR LOOP. %s", __FUNCTION__);
           g.push_back(m_channels[i].strChannelCategory);
         } // else it is, pass it
 
@@ -463,7 +464,7 @@ PVR_ERROR PlutotvData::GetChannelGroups(bool radio, kodi::addon::PVRChannelGroup
 
 PVR_ERROR PlutotvData::GetChannelGroupMembers(const kodi::addon::PVRChannelGroup& group,
                                               kodi::addon::PVRChannelGroupMembersResultSet& results){
-  kodi::Log(ADDON_LOG_DEBUG, "[GetChannelGroupMembers] INSIDE");
+  kodi::Log(ADDON_LOG_DEBUG, "[GetChannelGroupMembers] INSIDE %s", __FUNCTION__);
   try{
     //for (const auto& grp : m_Groups)
     for(unsigned int i = 0; i < (int)m_Groups.size(); ++i){
@@ -476,7 +477,7 @@ PVR_ERROR PlutotvData::GetChannelGroupMembers(const kodi::addon::PVRChannelGroup
           //  continue;
   
           //PlutotvChannel &channel = m_channels.at(i);
-          kodi::Log(ADDON_LOG_DEBUG, "[GetChannelGroupMembers] FOR LOOP");
+          kodi::Log(ADDON_LOG_DEBUG, "[GetChannelGroupMembers] FOR LOOP %s", __FUNCTION__);
           kodi::addon::PVRChannelGroupMember kodiGroupMember;
 
           kodiGroupMember.SetGroupName(group.GetGroupName());
