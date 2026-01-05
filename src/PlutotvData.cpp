@@ -394,7 +394,7 @@ PVR_ERROR PlutotvData::GetChannelGroupsAmount(int& amount){
     if(m_channels.size() == 0){
       throw PVR_ERROR_SERVER_ERROR;
     } 
-    for(int i = 0; i < (int)m_channels.size(); ++i){
+    for(unsigned int i = 0; i < (int)m_channels.size(); ++i){
       if(m_channels[i].strChannelCategory){
          amount++; // category found
       }            // no category, continue
@@ -419,14 +419,14 @@ PVR_ERROR PlutotvData::GetChannelGroups(bool radio, kodi::addon::PVRChannelGroup
         // error occures
         throw PVR_ERROR_SERVER_ERROR;
       }
-      for(int i = 0; i < (int)m_channels.size(); ++i){
+      for(unsigned int i = 0; i < (int)m_channels.size(); ++i){
         if(!(std::find(g.begin(), g.end(), m_channels[i].strChannelCategory) != g.end())){
           // the category is not contained within the vector
           g.push_back(m_channels[i].strChannelCategory);
         } // else it is, pass it
 
       }// vector of categories is complete
-      for(int i = 0; i < g.size(); ++i){
+      for(unsigned int i = 0; i < g.size(); ++i){
         // add the elements to results 
         kodi::addon::PVRChannelGroup group;
         group.SetIsRadio(false);
@@ -456,20 +456,20 @@ PVR_ERROR PlutotvData::GetChannelGroupMembers(const kodi::addon::PVRChannelGroup
     {
       if (grp.GetGroupName() == group.GetGroupName())
       {
-        for (unsigned int i = 0; i < grp.members.size(); i++)
+        for (unsigned int i = 0; i < grp.size(); i++)
         {
-          int iId = grp[i] - 1;
-          if (iId < 0 || iId > (int)m_channels.size() - 1)
+          //int iId = grp[i] - 1;
+          if (i < 0 || i > (int)m_channels.size() - 1)
             continue;
   
-          PlutotvChannel &channel = m_channels.at(iId);
+          //PlutotvChannel &channel = m_channels.at(i);
 
           kodi::addon::PVRChannelGroupMember kodiGroupMember;
 
           kodiGroupMember.SetGroupName(group.GetGroupName());
-          kodiGroupMember.SetChannelUniqueId(channel.iUniqueId);
-          kodiGroupMember.SetChannelNumber(channel.iChannelNumber);
-          //kodiGroupMember.SetSubChannelNumber(channel.iSubChannelNumber);
+          kodiGroupMember.SetChannelUniqueId(m_channels[i].iUniqueId);
+          kodiGroupMember.SetChannelNumber(m_channels[i].iChannelNumber);
+          //kodiGroupMember.SetSubChannelNumber(m_channels[i].iSubChannelNumber);
   
           results.Add(kodiGroupMember);
         }
