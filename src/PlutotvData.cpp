@@ -54,14 +54,11 @@ ADDON_STATUS PlutotvData::SetSetting(const std::string& settingName,
 }
 
 PVR_ERROR PlutotvData::GetCapabilities(kodi::addon::PVRCapabilities& capabilities){
-  kodi::Log(ADDON_LOG_DEBUG, "[GetCapabilities] is called");
-  //capabilities.SetSupportsEPG(true);
-  capabilities.SetSupportsTV(true);
-  // supports channel grouping
+  
   capabilities.SetSupportsChannelGroups(true);
   //capabilities.SetSupportsRecordings(true);
-  if(capabilities.GetSupportsChannelGroups())
-     kodi::Log(ADDON_LOG_DEBUG, "[GetCapabilities] Channel Grouping is True;");
+  capabilities.SetSupportsEPG(true);
+  capabilities.SetSupportsTV(true);
   return PVR_ERROR_NO_ERROR;
 }
 
