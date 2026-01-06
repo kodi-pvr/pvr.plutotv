@@ -59,7 +59,6 @@ PVR_ERROR PlutotvData::GetCapabilities(kodi::addon::PVRCapabilities& capabilitie
   capabilities.SetSupportsTV(true);
   // supports channel grouping
   capabilities.SetSupportsChannelGroups(true);
-  kodi::Log(ADDON_LOG_DEBUG, "%s - GetSupportsChannelGroups", capabilities.GetSupportsChannelGroups());
   //capabilities.SetSupportsRecordings(true);
   return PVR_ERROR_NO_ERROR;
 }
