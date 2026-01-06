@@ -54,8 +54,9 @@ ADDON_STATUS PlutotvData::SetSetting(const std::string& settingName,
 }
 
 PVR_ERROR PlutotvData::GetCapabilities(kodi::addon::PVRCapabilities& capabilities){
-  
+  kodi::Log(ADDON_LOG_DEBUG, "%s - GetCapabilities is being run", __FUNCTION__);
   capabilities.SetSupportsChannelGroups(true);
+  capabilities.SetSupportsTimers(false);
   //capabilities.SetSupportsRecordings(true);
   capabilities.SetSupportsEPG(true);
   capabilities.SetSupportsTV(true);
@@ -390,7 +391,7 @@ std::string PlutotvData::GetChannelStreamURL(int uniqueId){
 }
 
 PVR_ERROR PlutotvData::GetChannelGroupsAmount(int& amount){
-  kodi::Log(ADDON_LOG_ERROR, "[GetChannelGroupsAmount] INSIDE");
+  kodi::Log(ADDON_LOG_DEBUG, "%s - GetChannelGroupsAmount is being run", __FUNCTION__);
   try{
     amount = 0; 
     if(m_channels.size() == 0 || m_channels.size() < 0){
@@ -420,7 +421,7 @@ PVR_ERROR PlutotvData::GetChannelGroupsAmount(int& amount){
 }
 
 PVR_ERROR PlutotvData::GetChannelGroups(bool radio, kodi::addon::PVRChannelGroupsResultSet& results){
-  kodi::Log(ADDON_LOG_ERROR, "[GetChannelGroups] INSIDE");
+  kodi::Log(ADDON_LOG_DEBUG, "%s - GetChannelGroups is being run", __FUNCTION__);
   try{
     if(radio){
       throw PVR_ERROR_NOT_IMPLEMENTED; // no radio support
@@ -462,7 +463,7 @@ PVR_ERROR PlutotvData::GetChannelGroups(bool radio, kodi::addon::PVRChannelGroup
 
 PVR_ERROR PlutotvData::GetChannelGroupMembers(const kodi::addon::PVRChannelGroup& group,
                                               kodi::addon::PVRChannelGroupMembersResultSet& results){
-  kodi::Log(ADDON_LOG_ERROR, "[GetChannelGroupMembers] INSIDE");
+  kodi::Log(ADDON_LOG_DEBUG, "%s - GetChannelGroupMembers is being run", __FUNCTION__);
   try{
     //for (const auto& grp : m_Groups)
     for(unsigned int i = 0; i < (int)m_Groups.size(); ++i){
