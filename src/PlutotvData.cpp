@@ -423,7 +423,7 @@ PVR_ERROR PlutotvData::GetChannelGroupMembers(const kodi::addon::PVRChannelGroup
         //if (iId < 0 || iId > (int)m_channels.m_Groups.GetGroupName().size() - 1)
         //  continue;
  
-        PlutotvChannel &channel = m_channels.at(iId);
+        PlutotvChannel &channel = m_channels.at(iChannelPtr);
         kodi::addon::PVRChannelGroupMember kodiGroupMember;
         kodiGroupMember.SetGroupName(group.GetGroupName());
         kodiGroupMember.SetChannelUniqueId(channel.iUniqueId);
