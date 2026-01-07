@@ -76,9 +76,10 @@ private:
     std::string strChannelName;
     //std::string strChannelExtraInfo;        // Extra information about the channel
     //std::string strChannelShowDescription;  // Description about the show being played
-    std::string strChannelCategory;         // The category the show belongs to: reality, comedy, kids, etc 
+    std::string strGroupName;                // The group the show belongs to: reality, comedy, kids, etc 
     std::string strIconPath;
     std::string strStreamURL;
+    kodi::addon::PVRChannelGroup m_Groups;
   };
 
   std::shared_ptr<nlohmann::json> m_epg_cache_document;
@@ -86,8 +87,10 @@ private:
   time_t m_epg_cache_end = time_t(0);;
 
   std::vector<PlutotvChannel> m_channels;
-  std::vector<kodi::addon::PVRChannelGroup> m_Groups;
+  //std::vector<kodi::addon::PVRChannelGroup> m_Groups;
   bool m_bChannelsLoaded = false;
+  unsigned int categoryCounter; 
+
 
   std::string GetChannelStreamURL(int uniqueId);
   std::string GetSettingsUUID(const std::string& setting);
