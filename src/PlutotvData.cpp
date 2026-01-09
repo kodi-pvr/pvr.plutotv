@@ -221,8 +221,9 @@ bool PlutotvData::LoadChannelsData(){
 
     //plutotv_channel.strGroupName = channel.at("category"); // set category
     //kodi::Log(ADDON_LOG_DEBUG, "[channel] Category: %s;", plutotv_channel.strGroupName.c_str());
-    plutotv_channel.m_Groups.SetGroupName(channel.at("category")); // set category
-    kodi::Log(ADDON_LOG_DEBUG, "[channel] Category: %s;",plutotv_channel.m_Groups.GetGroupName().c_str());
+
+    //plutotv_channel.m_Groups.SetGroupName(channel.at("category")); // set category
+    //kodi::Log(ADDON_LOG_DEBUG, "[channel] Category: %s;",plutotv_channel.m_Groups.GetGroupName().c_str());
 
     std::string logo;
 
@@ -413,7 +414,7 @@ PVR_ERROR PlutotvData::GetChannelGroups(bool radio, kodi::addon::PVRChannelGroup
 
 PVR_ERROR PlutotvData::GetChannelGroupMembers(const kodi::addon::PVRChannelGroup& group,
                                               kodi::addon::PVRChannelGroupMembersResultSet& results){
-  /*
+  
   for (const auto& myGroup : m_channels)
   {
     if (myGroup.m_Groups.GetGroupName() == group.GetGroupName())
@@ -436,7 +437,7 @@ PVR_ERROR PlutotvData::GetChannelGroupMembers(const kodi::addon::PVRChannelGroup
     }
   }
   return PVR_ERROR_NO_ERROR
-  */
+  
 }
 
 PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
