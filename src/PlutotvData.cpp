@@ -436,7 +436,7 @@ PVR_ERROR PlutotvData::GetChannelGroupMembers(const kodi::addon::PVRChannelGroup
       }
     }
   }
-  return PVR_ERROR_NO_ERROR
+  return PVR_ERROR_NO_ERROR;
   
 }
 
