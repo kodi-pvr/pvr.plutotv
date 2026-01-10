@@ -396,7 +396,7 @@ std::string PlutotvData::GetChannelStreamURL(int uniqueId){
 
 PVR_ERROR PlutotvData::GetChannelGroupsAmount(int& amount){
   amount = categoryCounter;
-  kodi::Log(ADDON_LOG_DEBUG, "[GetChannelGroupsAmount] categoryCounter is %s", categoryCounter.c_str());
+  kodi::Log(ADDON_LOG_DEBUG, "[GetChannelGroupsAmount] categoryCounter is %d", categoryCounter);
   return PVR_ERROR_NO_ERROR;
 }
 
