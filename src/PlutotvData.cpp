@@ -42,7 +42,7 @@ std::string PlutotvData::HttpGet(const std::string& url){
 
 
 ADDON_STATUS PlutotvData::Create(){
-
+  
   kodi::Log(ADDON_LOG_DEBUG, "%s - Creating the pluto.tv PVR add-on", __FUNCTION__);
   return ADDON_STATUS_OK;
 }
@@ -395,7 +395,7 @@ std::string PlutotvData::GetChannelStreamURL(int uniqueId){
 }
 
 PVR_ERROR PlutotvData::GetChannelGroupsAmount(int& amount){
-  //amount = 5;
+  amount = categoryCounter;
   return PVR_ERROR_NO_ERROR;
 }
 
