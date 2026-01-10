@@ -401,7 +401,7 @@ PVR_ERROR PlutotvData::GetChannelGroupsAmount(int& amount){
 }
 
 PVR_ERROR PlutotvData::GetChannelGroups(bool radio, kodi::addon::PVRChannelGroupsResultSet& results){
-  
+  /*
   kodi::addon::PVRChannelGroup group;
   group.SetIsRadio(false);
   //group.SetGroupName(m_channels[categoryCounter].strGroupName);
@@ -410,7 +410,7 @@ PVR_ERROR PlutotvData::GetChannelGroups(bool radio, kodi::addon::PVRChannelGroup
   categoryCounter++;
   // Give it now to Kodi
   results.Add(group);
-  
+  */
   return PVR_ERROR_NO_ERROR;
     
 }
