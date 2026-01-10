@@ -55,7 +55,7 @@ ADDON_STATUS PlutotvData::SetSetting(const std::string& settingName,
 
 PVR_ERROR PlutotvData::GetCapabilities(kodi::addon::PVRCapabilities& capabilities){
   kodi::Log(ADDON_LOG_DEBUG, "%s - GetCapabilities is being run", __FUNCTION__);
-  capabilities.SetSupportsChannelGroups(true);
+  //capabilities.SetSupportsChannelGroups(true);
   capabilities.SetSupportsTimers(false);
   //capabilities.SetSupportsRecordings(true);
   capabilities.SetSupportsEPG(true);
