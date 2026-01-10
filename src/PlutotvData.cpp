@@ -409,8 +409,9 @@ PVR_ERROR PlutotvData::GetChannelGroups(bool radio, kodi::addon::PVRChannelGroup
   categoryCounter++;
   // Give it now to Kodi
   results.Add(group);
+  */
   return PVR_ERROR_NO_ERROR;
-    */
+    
 }
 
 PVR_ERROR PlutotvData::GetChannelGroupMembers(const kodi::addon::PVRChannelGroup& group,
@@ -437,8 +438,9 @@ PVR_ERROR PlutotvData::GetChannelGroupMembers(const kodi::addon::PVRChannelGroup
       }
     }
   }
-  return PVR_ERROR_NO_ERROR;
   */
+  return PVR_ERROR_NO_ERROR;
+  
 }
 
 PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
