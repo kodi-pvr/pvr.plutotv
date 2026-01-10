@@ -222,8 +222,9 @@ bool PlutotvData::LoadChannelsData(){
     //plutotv_channel.strGroupName = channel.at("category"); // set category
     //kodi::Log(ADDON_LOG_DEBUG, "[channel] Category: %s;", plutotv_channel.strGroupName.c_str());
 
-    //plutotv_channel.m_Groups.SetGroupName(channel.at("category")); // set category
-    //kodi::Log(ADDON_LOG_DEBUG, "[channel] Category: %s;",plutotv_channel.m_Groups.GetGroupName().c_str());
+    plutotv_channel.m_Groups.SetGroupName(channel.at("category")); // set category
+
+    kodi::Log(ADDON_LOG_DEBUG, "[channel] Category: %s;",plutotv_channel.m_Groups.GetGroupName().c_str());
 
     std::string logo;
 
@@ -394,7 +395,7 @@ std::string PlutotvData::GetChannelStreamURL(int uniqueId){
 }
 
 PVR_ERROR PlutotvData::GetChannelGroupsAmount(int& amount){
-  amount = &categoryCounter;
+  amount = 5;
   return PVR_ERROR_NO_ERROR;
 }
 
