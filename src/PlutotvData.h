@@ -89,7 +89,7 @@ private:
   std::vector<PlutotvChannel> m_channels;
   //std::vector<kodi::addon::PVRChannelGroup> m_Groups;
   bool m_bChannelsLoaded = false;
-  unsigned int categoryCounter; 
+  int categoryCounter; 
 
 
   std::string GetChannelStreamURL(int uniqueId);
