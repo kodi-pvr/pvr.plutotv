@@ -79,7 +79,7 @@ private:
     std::string strGroupName;                // The group the show belongs to: reality, comedy, kids, etc 
     std::string strIconPath;
     std::string strStreamURL;
-    kodi::addon::PVRChannelGroup m_Groups;
+    //kodi::addon::PVRChannelGroup m_Groups;
   };
 
   std::shared_ptr<nlohmann::json> m_epg_cache_document;
