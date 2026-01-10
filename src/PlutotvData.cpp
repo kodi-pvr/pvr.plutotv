@@ -395,7 +395,7 @@ std::string PlutotvData::GetChannelStreamURL(int uniqueId){
 }
 
 PVR_ERROR PlutotvData::GetChannelGroupsAmount(int& amount){
-  amount = 5;
+  //amount = 5;
   return PVR_ERROR_NO_ERROR;
 }
 
