@@ -43,6 +43,7 @@ std::string PlutotvData::HttpGet(const std::string& url){
 
 ADDON_STATUS PlutotvData::Create(){
 
+  categoryCounter = 0;
   kodi::Log(ADDON_LOG_DEBUG, "%s - Creating the pluto.tv PVR add-on", __FUNCTION__);
   return ADDON_STATUS_OK;
 }
@@ -401,7 +402,7 @@ PVR_ERROR PlutotvData::GetChannelGroupsAmount(int& amount){
 }
 
 PVR_ERROR PlutotvData::GetChannelGroups(bool radio, kodi::addon::PVRChannelGroupsResultSet& results){
-  /*
+  
   kodi::addon::PVRChannelGroup group;
   group.SetIsRadio(false);
   //group.SetGroupName(m_channels[categoryCounter].strGroupName);
@@ -410,7 +411,7 @@ PVR_ERROR PlutotvData::GetChannelGroups(bool radio, kodi::addon::PVRChannelGroup
   categoryCounter++;
   // Give it now to Kodi
   results.Add(group);
-  */
+  
   return PVR_ERROR_NO_ERROR;
     
 }
