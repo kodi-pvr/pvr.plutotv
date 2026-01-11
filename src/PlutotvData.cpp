@@ -402,6 +402,7 @@ PVR_ERROR PlutotvData::GetChannelGroupsAmount(int& amount){
 }
 
 PVR_ERROR PlutotvData::GetChannelGroups(bool radio, kodi::addon::PVRChannelGroupsResultSet& results){
+  kodi::Log(ADDON_LOG_DEBUG, "[GetChannelGroups] categoryCounter is %d", categoryCounter);
   /*
   kodi::addon::PVRChannelGroup group;
   group.SetIsRadio(false);
@@ -418,6 +419,7 @@ PVR_ERROR PlutotvData::GetChannelGroups(bool radio, kodi::addon::PVRChannelGroup
 
 PVR_ERROR PlutotvData::GetChannelGroupMembers(const kodi::addon::PVRChannelGroup& group,
                                               kodi::addon::PVRChannelGroupMembersResultSet& results){
+  kodi::Log(ADDON_LOG_DEBUG, "[GetChannelGroupMembers] categoryCounter is %d", categoryCounter);
   /*
   for (const auto& myGroup : m_channels)
   {
