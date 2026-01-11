@@ -424,11 +424,13 @@ PVR_ERROR PlutotvData::GetChannelGroupMembers(const kodi::addon::PVRChannelGroup
                                               kodi::addon::PVRChannelGroupMembersResultSet& results){
   kodi::Log(ADDON_LOG_DEBUG, "[GetChannelGroupMembers] categoryCounter is %d", categoryCounter);
   
+  unsigned int iChannelPtr = 0;
+
   for (const auto& myGroup : m_channels){
     if (myGroup.m_Groups.GetGroupName() == group.GetGroupName())
     {
-      for (unsigned int iChannelPtr = 0; iChannelPtr < m_channels.size(); iChannelPtr++)
-      {
+      //for (unsigned int iChannelPtr = 0; iChannelPtr < m_channels.size(); iChannelPtr++)
+      //{
         //int iId = myGroup.members.at(iChannelPtr) - 1;
         //if (iId < 0 || iId > (int)m_channels.size() - 1)
         //  continue;
@@ -441,8 +443,9 @@ PVR_ERROR PlutotvData::GetChannelGroupMembers(const kodi::addon::PVRChannelGroup
         //kodiGroupMember.SetSubChannelNumber(channel.iSubChannelNumber);
  
         results.Add(kodiGroupMember);
-      }
+      // }
     }
+    iChannelPtr++;
   }
   return PVR_ERROR_NO_ERROR;
   
