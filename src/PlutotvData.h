@@ -79,6 +79,7 @@ private:
     std::string strGroupName;                // The group the show belongs to: reality, comedy, kids, etc 
     std::string strIconPath;
     std::string strStreamURL;
+    // The group the channel belongs to
     kodi::addon::PVRChannelGroup m_Groups;
   };
 
@@ -87,7 +88,8 @@ private:
   time_t m_epg_cache_end = time_t(0);;
 
   std::vector<PlutotvChannel> m_channels;
-  //std::vector<kodi::addon::PVRChannelGroup> m_Groups;
+  // List of unique group elements 
+  std::vector<std::string> uniqueGroupList;
   bool m_bChannelsLoaded = false;
   int categoryCounter; 
 

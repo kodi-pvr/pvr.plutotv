@@ -224,7 +224,12 @@ bool PlutotvData::LoadChannelsData(){
     //kodi::Log(ADDON_LOG_DEBUG, "[channel] Category: %s;", plutotv_channel.strGroupName.c_str());
 
     plutotv_channel.m_Groups.SetGroupName(channel.at("category")); // set category
-
+    if (!(std::find(uniqueGroupList.begin(), uniqueGroupList.end(), channel.at("category")) != uniqueGroupList.end())){
+        // unique group located, store it to access easier later
+        uniqueGroupList.emplace_back(channel.at("category"));
+        categoryCounter++;
+        kodi::Log(ADDON_LOG_DEBUG, "[channel] uniqueGroupList located: %s;",channel.at("category").c_str());
+    }
     kodi::Log(ADDON_LOG_DEBUG, "[channel] Category: %s;",plutotv_channel.m_Groups.GetGroupName().c_str());
 
     std::string logo;
@@ -403,16 +408,14 @@ PVR_ERROR PlutotvData::GetChannelGroupsAmount(int& amount){
 
 PVR_ERROR PlutotvData::GetChannelGroups(bool radio, kodi::addon::PVRChannelGroupsResultSet& results){
   kodi::Log(ADDON_LOG_DEBUG, "[GetChannelGroups] categoryCounter is %d", categoryCounter);
-  /*
-  kodi::addon::PVRChannelGroup group;
-  group.SetIsRadio(false);
-  //group.SetGroupName(m_channels[categoryCounter].strGroupName);
-  group.SetGroupName(m_channels[categoryCounter].m_Groups.GetGroupName());
-  group.SetPosition(categoryCounter);
-  categoryCounter++;
-  // Give it now to Kodi
-  results.Add(group);
-  */
+  for (unsigned int i = 0; i < uniqueGroupList.size(); ++i){
+    kodi::addon::PVRChannelGroup group;
+    group.SetIsRadio(false);
+    group.SetGroupName(uniqueGroupList[i]);
+    group.SetPosition(i);
+    // Give it now to Kodi
+    results.Add(group);
+  }
   return PVR_ERROR_NO_ERROR;
     
 }
