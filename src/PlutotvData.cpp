@@ -226,7 +226,7 @@ bool PlutotvData::LoadChannelsData(){
     plutotv_channel.m_Groups.SetGroupName(channel.at("category")); // set category
     if (!(std::find(uniqueGroupList.begin(), uniqueGroupList.end(), channel.at("category")) != uniqueGroupList.end())){
         // unique group located, store it to access easier later
-        uniqueGroupList.emplace_back(channel.at("category"));
+        uniqueGroupList.emplace_back(std::to_string(channel.at("category")));
         categoryCounter++;
         kodi::Log(ADDON_LOG_DEBUG, "[channel] uniqueGroupList located: %s;",uniqueGroupList.back());
     }
