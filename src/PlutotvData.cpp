@@ -224,7 +224,7 @@ bool PlutotvData::LoadChannelsData(){
     //kodi::Log(ADDON_LOG_DEBUG, "[channel] Category: %s;", plutotv_channel.strGroupName.c_str());
     const std::string categoryName = channel.at("category");
     plutotv_channel.m_Groups.SetGroupName(categoryName); // set category
-    if (!(std::find(uniqueGroupList.begin(), uniqueGroupList.end(), categoryName) != uniqueGroupList.end())){
+    if ( (!(std::find(uniqueGroupList.begin(), uniqueGroupList.end(), categoryName) != uniqueGroupList.end())) && (categoryName.find("Test") == std::string::npos)){
         // unique group located, store it to access easier later
         uniqueGroupList.emplace_back(categoryName);
         categoryCounter++;
@@ -440,6 +440,7 @@ PVR_ERROR PlutotvData::GetChannelGroupMembers(const kodi::addon::PVRChannelGroup
         kodiGroupMember.SetGroupName(group.GetGroupName());
         kodiGroupMember.SetChannelUniqueId(channel.iUniqueId);
         kodiGroupMember.SetChannelNumber(channel.iChannelNumber);
+        kodiGroupMember.SetIconPath(channel.strIconPath);
         //kodiGroupMember.SetSubChannelNumber(channel.iSubChannelNumber);
  
         results.Add(kodiGroupMember);
