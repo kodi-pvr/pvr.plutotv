@@ -222,13 +222,13 @@ bool PlutotvData::LoadChannelsData(){
 
     //plutotv_channel.strGroupName = channel.at("category"); // set category
     //kodi::Log(ADDON_LOG_DEBUG, "[channel] Category: %s;", plutotv_channel.strGroupName.c_str());
-
-    plutotv_channel.m_Groups.SetGroupName(channel.at("category")); // set category
-    if (!(std::find(uniqueGroupList.begin(), uniqueGroupList.end(), channel.at("category")) != uniqueGroupList.end())){
+    const std::string categoryName = channel.at("category");
+    plutotv_channel.m_Groups.SetGroupName(categoryName); // set category
+    if (!(std::find(uniqueGroupList.begin(), uniqueGroupList.end(), categoryName) != uniqueGroupList.end())){
         // unique group located, store it to access easier later
-        uniqueGroupList.emplace_back(channel.at("category"));
+        uniqueGroupList.emplace_back(categoryName);
         categoryCounter++;
-        //kodi::Log(ADDON_LOG_DEBUG, "[channel] uniqueGroupList located: %s;",uniqueGroupList.back());
+        kodi::Log(ADDON_LOG_DEBUG, "[channel] uniqueGroupList located: %s;",categoryName);
     }
     kodi::Log(ADDON_LOG_DEBUG, "[channel] Category: %s;",plutotv_channel.m_Groups.GetGroupName().c_str());
 
