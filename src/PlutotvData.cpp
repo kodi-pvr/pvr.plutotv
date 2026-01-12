@@ -437,7 +437,7 @@ PVR_ERROR PlutotvData::GetChannelGroupMembers(const kodi::addon::PVRChannelGroup
         // TODO: Iterating over m_channels allows myGroup to be used instead. Iterating a counter keeps original numbers
 
         //PlutotvChannel &channel = m_channels[iChannelPtr];
-        PlutotvChannel &channel = myGroup.m_Groups;
+        PlutotvChannel &channel = myGroup;
         kodi::addon::PVRChannelGroupMember kodiGroupMember;
         kodiGroupMember.SetGroupName(group.GetGroupName());
         kodiGroupMember.SetChannelUniqueId(channel.iUniqueId);
