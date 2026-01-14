@@ -234,8 +234,7 @@ bool PlutotvData::LoadChannelsData(){
 
     std::string logo;
 
-    // TODO: TESTING LOGO
-    /*
+    
     if (GetSettingsColoredChannelLogos())
     {
       //if (channel.HasMember("colorLogoPNG"))
@@ -258,8 +257,8 @@ bool PlutotvData::LoadChannelsData(){
       logo = channel.at("logo").at("path");
       kodi::Log(ADDON_LOG_DEBUG, "[channel] logo (fallback): %s;", logo.c_str());
     }
-    */
-    logo = channel.at("featuredImage").at("path");
+
+
 
     plutotv_channel.strIconPath = logo;
     kodi::Log(ADDON_LOG_DEBUG, "[channel] iconpath: %s;", plutotv_channel.strIconPath.c_str());
@@ -479,8 +478,8 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
       const time_t now = std::time(nullptr);
       if (orig_start < now)
       {
-        kodi::Log(ADDON_LOG_DEBUG, "[epg] adjusting start time to 'now' minus 3 hrs");
-        start = now - 7200; // Pluto.tv API returns nothing if we step back (to wide) in time.
+        kodi::Log(ADDON_LOG_DEBUG, "[epg] adjusting start time to 'now' minus 2 hrs");
+        start = now - 4800; // Pluto.tv API returns nothing if we step back (to wide) in time.
       }
 
       const std::tm* pstm = std::localtime(&start);
@@ -488,7 +487,7 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
       char startTime[21] = "";
       std::strftime(startTime, sizeof(startTime), "%Y-%m-%dT%H:%M:%SZ", pstm);
 
-      const std::tm* petm = std::localtime(&end);
+      const std::tm* petm = std::localtime(&(end+2400));
       // 2020-05-27T15:04:05Z
       char endTime[21] = "";
       std::strftime(endTime, sizeof(endTime), "%Y-%m-%dT%H:%M:%SZ", petm);
