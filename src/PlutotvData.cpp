@@ -234,6 +234,8 @@ bool PlutotvData::LoadChannelsData(){
 
     std::string logo;
 
+    // TODO: TESTING LOGO
+    /*
     if (GetSettingsColoredChannelLogos())
     {
       //if (channel.HasMember("colorLogoPNG"))
@@ -256,6 +258,8 @@ bool PlutotvData::LoadChannelsData(){
       logo = channel.at("logo").at("path");
       kodi::Log(ADDON_LOG_DEBUG, "[channel] logo (fallback): %s;", logo.c_str());
     }
+    */
+    logo = channel.at("featuredImage").at("path");
 
     plutotv_channel.strIconPath = logo;
     kodi::Log(ADDON_LOG_DEBUG, "[channel] iconpath: %s;", plutotv_channel.strIconPath.c_str());
@@ -434,7 +438,7 @@ PVR_ERROR PlutotvData::GetChannelGroupMembers(const kodi::addon::PVRChannelGroup
         //int iId = myGroup.members.at(iChannelPtr) - 1;
         //if (iId < 0 || iId > (int)m_channels.size() - 1)
         //  continue;
-        // TODO: Iterating over m_channels allows myGroup to be used instead. Iterating a counter keeps original numbers
+
         
         PlutotvChannel &channel = m_channels[iChannelPtr];
         kodi::addon::PVRChannelGroupMember kodiGroupMember;
@@ -623,13 +627,13 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
           // thumbnail
           //if (episode.HasMember("thumbnail") &&
           //    episode["thumbnail"]["path"].IsString())
-          // TODO; THUMBNAIL
-          //if (episode.contains("thumbnail") &&
-          //    episode.at("thumbnail").at("path").is_string())
-          //{
+
+          if (episode.contains("thumbnail") &&
+              episode.at("thumbnail").at("path").is_string())
+          {
             //tag.SetIconPath(episode["thumbnail"]["path"].GetString());
             tag.SetIconPath(episode.at("thumbnail").at("path"));
-          //}
+          }
 
 
           // series title / episode name
