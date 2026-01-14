@@ -486,8 +486,8 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
       // 2020-05-27T15:04:05Z
       char startTime[21] = "";
       std::strftime(startTime, sizeof(startTime), "%Y-%m-%dT%H:%M:%SZ", pstm);
-
-      const std::tm* petm = std::localtime(&(end+2400));
+      time_t myEnd = end+2400;
+      const std::tm* petm = std::localtime(&myEnd);
       // 2020-05-27T15:04:05Z
       char endTime[21] = "";
       std::strftime(endTime, sizeof(endTime), "%Y-%m-%dT%H:%M:%SZ", petm);
