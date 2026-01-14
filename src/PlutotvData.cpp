@@ -58,7 +58,7 @@ PVR_ERROR PlutotvData::GetCapabilities(kodi::addon::PVRCapabilities& capabilitie
   kodi::Log(ADDON_LOG_DEBUG, "%s - GetCapabilities is being run", __FUNCTION__);
   capabilities.SetSupportsChannelGroups(true);
   capabilities.SetSupportsTimers(false);
-  //capabilities.SetSupportsRecordings(true);
+  capabilities.SetSupportsRecordings(true);
   capabilities.SetSupportsEPG(true);
   capabilities.SetSupportsTV(true);
   return PVR_ERROR_NO_ERROR;
@@ -426,7 +426,7 @@ PVR_ERROR PlutotvData::GetChannelGroupMembers(const kodi::addon::PVRChannelGroup
   
   unsigned int iChannelPtr = 0;
 
-  for (auto& myGroup : m_channels){
+  for (const auto& myGroup : m_channels){
     if (myGroup.m_Groups.GetGroupName() == group.GetGroupName())
     {
       //for (unsigned int iChannelPtr = 0; iChannelPtr < m_channels.size(); iChannelPtr++)
@@ -435,9 +435,8 @@ PVR_ERROR PlutotvData::GetChannelGroupMembers(const kodi::addon::PVRChannelGroup
         //if (iId < 0 || iId > (int)m_channels.size() - 1)
         //  continue;
         // TODO: Iterating over m_channels allows myGroup to be used instead. Iterating a counter keeps original numbers
-
-        //PlutotvChannel &channel = m_channels[iChannelPtr];
-        PlutotvChannel &channel = myGroup;
+        
+        PlutotvChannel &channel = m_channels[iChannelPtr];
         kodi::addon::PVRChannelGroupMember kodiGroupMember;
         kodiGroupMember.SetGroupName(group.GetGroupName());
         kodiGroupMember.SetChannelUniqueId(channel.iUniqueId);
@@ -624,12 +623,14 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
           // thumbnail
           //if (episode.HasMember("thumbnail") &&
           //    episode["thumbnail"]["path"].IsString())
-          if (episode.contains("thumbnail") &&
-              episode.at("thumbnail").at("path").is_string())
-          {
+          // TODO; THUMBNAIL
+          //if (episode.contains("thumbnail") &&
+          //    episode.at("thumbnail").at("path").is_string())
+          //{
             //tag.SetIconPath(episode["thumbnail"]["path"].GetString());
             tag.SetIconPath(episode.at("thumbnail").at("path"));
-          }
+          //}
+
 
           // series title / episode name
           //if (episode.HasMember("series") &&
