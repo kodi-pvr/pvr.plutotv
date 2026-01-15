@@ -479,14 +479,14 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
       if (orig_start < now)
       {
         kodi::Log(ADDON_LOG_DEBUG, "[epg] adjusting start time to 'now' minus 2 hrs");
-        start = now - 4800; // Pluto.tv API returns nothing if we step back (to wide) in time.
+        start = now - 2400; // Pluto.tv API returns nothing if we step back (to wide) in time.
       }
 
       const std::tm* pstm = std::localtime(&start);
       // 2020-05-27T15:04:05Z
       char startTime[21] = "";
       std::strftime(startTime, sizeof(startTime), "%Y-%m-%dT%H:%M:%SZ", pstm);
-      time_t myEnd = end+2400;
+      time_t myEnd = end+4800;
       const std::tm* petm = std::localtime(&myEnd);
       // 2020-05-27T15:04:05Z
       char endTime[21] = "";
