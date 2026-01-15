@@ -234,7 +234,6 @@ bool PlutotvData::LoadChannelsData(){
 
     std::string logo;
 
-    /*
     if (GetSettingsColoredChannelLogos())
     {
       //if (channel.HasMember("colorLogoPNG"))
@@ -257,9 +256,6 @@ bool PlutotvData::LoadChannelsData(){
       logo = channel.at("logo").at("path");
       kodi::Log(ADDON_LOG_DEBUG, "[channel] logo (fallback): %s;", logo.c_str());
     }
-    */
-      logo = channel.at("featuredImage").at("path");
-      kodi::Log(ADDON_LOG_DEBUG, "[channel] logo (fallback): %s;", logo.c_str());
 
     plutotv_channel.strIconPath = logo;
     kodi::Log(ADDON_LOG_DEBUG, "[channel] iconpath: %s;", plutotv_channel.strIconPath.c_str());
@@ -633,9 +629,6 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
           {
             //tag.SetIconPath(episode["thumbnail"]["path"].GetString());
             tag.SetIconPath(episode.at("thumbnail").at("path"));
-          }else{
-            // TODO; check if fix icon
-            tag.SetIconPath(episode.at("featuredImage").at("path"));
           }
 
 
