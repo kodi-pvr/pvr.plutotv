@@ -108,6 +108,11 @@ void PlutotvData::SetStreamProperties(std::vector<kodi::addon::PVRStreamProperty
 
   kodi::Log(ADDON_LOG_DEBUG, "[PLAY STREAM] url: %s", url.c_str());
 
+  //properties.emplace_back(PVR_STREAM_PROPERTY_INPUTSTREAM, "inputstream.adaptive");
+  //properties.emplace_back("inputstream.adaptive.manifest_type", "mpd");
+  //properties.emplace_back("inputstream.adaptive.manifest_update_parameter", "full");
+  //properties.emplace_back(PVR_STREAM_PROPERTY_MIMETYPE, "application/xml+dash");
+
   properties.emplace_back(PVR_STREAM_PROPERTY_STREAMURL, url);
   properties.emplace_back(PVR_STREAM_PROPERTY_INPUTSTREAM, "inputstream.adaptive");
   properties.emplace_back(PVR_STREAM_PROPERTY_ISREALTIMESTREAM, realtime ? "true" : "false");
@@ -318,15 +323,20 @@ PVR_ERROR PlutotvData::GetChannels(bool radio, kodi::addon::PVRChannelsResultSet
 }
 
 PVR_ERROR PlutotvData::GetChannelStreamProperties(
-    const kodi::addon::PVRChannel& channel, std::vector<kodi::addon::PVRStreamProperty>& properties){
+    const kodi::addon::PVRChannel& channel, PVR_SOURCE source, std::vector<kodi::addon::PVRStreamProperty>& properties){
 
-  const std::string strUrl = GetChannelStreamURL(channel.GetUniqueId());
-  kodi::Log(ADDON_LOG_DEBUG, "Stream URL -> %s", strUrl.c_str());
-  PVR_ERROR ret = PVR_ERROR_FAILED;
-  if (!strUrl.empty())
-  {
-    SetStreamProperties(properties, strUrl, true);
-    ret = PVR_ERROR_NO_ERROR;
+  if(source){
+    // Playback from the EPG but playing like live TV
+  }else{
+    // Live TV
+    const std::string strUrl = GetChannelStreamURL(channel.GetUniqueId());
+    kodi::Log(ADDON_LOG_DEBUG, "Stream URL -> %s", strUrl.c_str());
+    PVR_ERROR ret = PVR_ERROR_FAILED;
+    if (!strUrl.empty())
+    {
+      SetStreamProperties(properties, strUrl, true);
+      ret = PVR_ERROR_NO_ERROR;
+    }
   }
   return ret;
 }
@@ -671,6 +681,49 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
   return PVR_ERROR_INVALID_PARAMETERS;
 }
 
+PVR_ERROR PlutotvData::GetRecordings(bool deleted, kodi::addon::PVRRecordingsResultSet& results){
+  if(!deleted){
+    
+    PVR_ERROR ret = GetChannelStreamProperties(channel, PVR_SOURCE_EPG_AS_LIVE, properties);
 
+    kodi::addon::PVRRecording recording;
+    //recording.SetRecordingId();
+    //recording.SetTitle();
+    //recording.SetEpisodeName();
+    //recording.SetSeriesNumber();  // Show season
+    //recording.SetEpisodeNumber();
+    //recording.SetPlot();          // Plot name
+    //recording.SetPlotOutline();
+    //recording.SetChannelName();
+
+    results.Add(recording);
+    return ret;
+  }else{
+    // Return deleted recordings not implemented
+    return PVR_ERROR_NOT_IMPLEMENTED;
+  }
+  
+}
+PVR_ERROR PlutotvData::GetRecordingStreamProperties(const kodi::addon::PVRRecording& recording,
+                                                       std::vector<kodi::addon::PVRStreamProperty>& properties){
+  
+  //properties.emplace_back(PVR_STREAM_PROPERTY_INPUTSTREAM, "inputstream.adaptive");
+  //properties.emplace_back("inputstream.adaptive.manifest_type", "mpd");
+  //properties.emplace_back("inputstream.adaptive.manifest_update_parameter", "full");
+  //properties.emplace_back(PVR_STREAM_PROPERTY_MIMETYPE, "application/xml+dash");
+    // Record TV
+
+    const std::string strUrl = GetChannelStreamURL(recording.GetRecordingId());
+    kodi::Log(ADDON_LOG_DEBUG, "Recording Stream URL -> %s", strUrl.c_str());
+    PVR_ERROR ret = PVR_ERROR_FAILED;
+    if (!strUrl.empty())
+    {
+      SetStreamProperties(properties, strUrl, true);
+      recordingList.emplace_back(recording);
+      ret = PVR_ERROR_NO_ERROR;
+    }
+
+  return ret;
+}
 
 ADDONCREATOR(PlutotvData)
