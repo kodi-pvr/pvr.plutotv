@@ -323,11 +323,11 @@ PVR_ERROR PlutotvData::GetChannels(bool radio, kodi::addon::PVRChannelsResultSet
 }
 
 PVR_ERROR PlutotvData::GetChannelStreamProperties(
-    const kodi::addon::PVRChannel& channel, PVR_SOURCE source, std::vector<kodi::addon::PVRStreamProperty>& properties){
+    const kodi::addon::PVRChannel& channel, std::vector<kodi::addon::PVRStreamProperty>& properties){
 
-  if(source){
+  //if(source){
     // Playback from the EPG but playing like live TV
-  }else{
+  //}else{
     // Live TV
     const std::string strUrl = GetChannelStreamURL(channel.GetUniqueId());
     kodi::Log(ADDON_LOG_DEBUG, "Stream URL -> %s", strUrl.c_str());
@@ -337,7 +337,7 @@ PVR_ERROR PlutotvData::GetChannelStreamProperties(
       SetStreamProperties(properties, strUrl, true);
       ret = PVR_ERROR_NO_ERROR;
     }
-  }
+  //}
   return ret;
 }
 
@@ -684,7 +684,7 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
 PVR_ERROR PlutotvData::GetRecordings(bool deleted, kodi::addon::PVRRecordingsResultSet& results){
   if(!deleted){
     
-    PVR_ERROR ret = GetChannelStreamProperties(channel, PVR_SOURCE_EPG_AS_LIVE, properties);
+    //PVR_ERROR ret = GetChannelStreamProperties(channel, PVR_SOURCE_EPG_AS_LIVE, properties);
 
     kodi::addon::PVRRecording recording;
     //recording.SetRecordingId();
@@ -697,7 +697,7 @@ PVR_ERROR PlutotvData::GetRecordings(bool deleted, kodi::addon::PVRRecordingsRes
     //recording.SetChannelName();
 
     results.Add(recording);
-    return ret;
+    return PVR_ERROR_NO_ERROR;
   }else{
     // Return deleted recordings not implemented
     return PVR_ERROR_NOT_IMPLEMENTED;
@@ -713,7 +713,8 @@ PVR_ERROR PlutotvData::GetRecordingStreamProperties(const kodi::addon::PVRRecord
   //properties.emplace_back(PVR_STREAM_PROPERTY_MIMETYPE, "application/xml+dash");
     // Record TV
 
-    const std::string strUrl = GetChannelStreamURL(recording.GetRecordingId());
+    //const std::string strUrl = GetChannelStreamURL(recording.GetRecordingId());
+    const std::string strUrl = recording.GetRecordingId();
     kodi::Log(ADDON_LOG_DEBUG, "Recording Stream URL -> %s", strUrl.c_str());
     PVR_ERROR ret = PVR_ERROR_FAILED;
     if (!strUrl.empty())
