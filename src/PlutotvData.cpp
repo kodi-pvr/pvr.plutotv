@@ -56,11 +56,18 @@ ADDON_STATUS PlutotvData::SetSetting(const std::string& settingName,
 
 PVR_ERROR PlutotvData::GetCapabilities(kodi::addon::PVRCapabilities& capabilities){
   kodi::Log(ADDON_LOG_DEBUG, "%s - GetCapabilities is being run", __FUNCTION__);
-  capabilities.SetSupportsChannelGroups(true);
-  capabilities.SetSupportsTimers(false);
-  capabilities.SetSupportsRecordings(true);
   capabilities.SetSupportsEPG(true);
   capabilities.SetSupportsTV(true);
+  capabilities.SetSupportsChannelGroups(true);
+  capabilities.SetSupportsTimers(false);      // No Timers
+  capabilities.SetSupportsRadio(false);       // No Radio
+  // Recordings
+  capabilities.SetSupportsRecordings(true);
+  capabilities.SetSupportsRecordingsDelete(false);
+  capabilities.SetSupportsRecordingsRename(false);
+  capabilities.SetSupportsRecordingsLifetimeChange(false);
+
+
   return PVR_ERROR_NO_ERROR;
 }
 
@@ -225,8 +232,6 @@ bool PlutotvData::LoadChannelsData(){
     plutotv_channel.strChannelName = displayName;
     kodi::Log(ADDON_LOG_DEBUG, "[channel] name: %s;", plutotv_channel.strChannelName.c_str());
 
-    //plutotv_channel.strGroupName = channel.at("category"); // set category
-    //kodi::Log(ADDON_LOG_DEBUG, "[channel] Category: %s;", plutotv_channel.strGroupName.c_str());
     const std::string categoryName = channel.at("category");
     plutotv_channel.m_Groups.SetGroupName(categoryName); // set category
     if ( (!(std::find(uniqueGroupList.begin(), uniqueGroupList.end(), categoryName) != uniqueGroupList.end())) && (categoryName.find("Test") == std::string::npos)){
@@ -681,12 +686,21 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
   return PVR_ERROR_INVALID_PARAMETERS;
 }
 
+PVR_ERROR PlutotvData::GetRecordingsAmount(bool deleted, int& amount){
+  if(deleted){
+    amount = 0;
+  }else{
+    amount = (int)m_recordings.size();
+  }
+  return PVR_ERROR_NO_ERROR;
+}
 PVR_ERROR PlutotvData::GetRecordings(bool deleted, kodi::addon::PVRRecordingsResultSet& results){
+  
   if(!deleted){
-    
-    //PVR_ERROR ret = GetChannelStreamProperties(channel, PVR_SOURCE_EPG_AS_LIVE, properties);
 
-    kodi::addon::PVRRecording recording;
+    for(auto& recording : m_recordings){
+      results.Add(recording);
+    }
     //recording.SetRecordingId();
     //recording.SetTitle();
     //recording.SetEpisodeName();
@@ -696,13 +710,9 @@ PVR_ERROR PlutotvData::GetRecordings(bool deleted, kodi::addon::PVRRecordingsRes
     //recording.SetPlotOutline();
     //recording.SetChannelName();
 
-    results.Add(recording);
-    return PVR_ERROR_NO_ERROR;
-  }else{
-    // Return deleted recordings not implemented
-    return PVR_ERROR_NOT_IMPLEMENTED;
   }
-  
+  return PVR_ERROR_NO_ERROR;
+
 }
 PVR_ERROR PlutotvData::GetRecordingStreamProperties(const kodi::addon::PVRRecording& recording,
                                                        std::vector<kodi::addon::PVRStreamProperty>& properties){
@@ -720,7 +730,7 @@ PVR_ERROR PlutotvData::GetRecordingStreamProperties(const kodi::addon::PVRRecord
     if (!strUrl.empty())
     {
       SetStreamProperties(properties, strUrl, true);
-      recordingList.emplace_back(recording);
+      m_recordings.emplace_back(recording);
       ret = PVR_ERROR_NO_ERROR;
     }
 

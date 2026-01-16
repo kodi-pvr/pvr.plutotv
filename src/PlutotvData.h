@@ -60,9 +60,11 @@ public:
                              time_t end,
                              kodi::addon::PVREPGTagsResultSet& results) override;
 
+  PVR_ERROR GetRecordingsAmount(bool deleted, int& amount) override;
   PVR_ERROR GetRecordings(bool deleted, kodi::addon::PVRRecordingsResultSet& results) override;
   PVR_ERROR GetRecordingStreamProperties(const kodi::addon::PVRRecording& recording,
                                                        std::vector<kodi::addon::PVRStreamProperty>& properties) override;
+  
 private:
   struct PlutotvChannel
   {
@@ -87,7 +89,7 @@ private:
   // List of unique group elements 
   std::vector<std::string> uniqueGroupList;
   // List of recordings on the backend
-  std::vector<kodi::addon::PVRRecording> recordingList;
+  std::vector<kodi::addon::PVRRecording> m_recordings;
 
   bool m_bChannelsLoaded = false;
   int categoryCounter; 
