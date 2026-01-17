@@ -763,5 +763,39 @@ std::string PlutotvData::GetRecordingURL(const kodi::addon::PVRRecording& record
   return "";
 }
 
+PVR_ERROR PlutotvData::GetTimerTypes(std::vector<kodi::addon::PVRTimerType>& types)
+{
+  /* TODO: Implement this to get support for the timer features introduced with PVR API 1.9.7 */
+  return PVR_ERROR_NOT_IMPLEMENTED;
+}
+
+PVR_ERROR PlutotvData::GetTimersAmount(int& amount)
+{
+  amount = m_timers.size();
+  return PVR_ERROR_NO_ERROR;
+}
+
+PVR_ERROR PlutotvData::GetTimers(kodi::addon::PVRTimersResultSet& results)
+{
+  unsigned int i = PVR_TIMER_NO_CLIENT_INDEX + 1;
+  for (const auto& timer : m_timers)
+  {
+    kodi::addon::PVRTimer kodiTimer;
+
+    /* TODO: Implement own timer types to get support for the timer features introduced with PVR API 1.9.7 */
+    kodiTimer.SetTimerType(PVR_TIMER_TYPE_NONE);
+    kodiTimer.SetClientIndex(i++);
+    kodiTimer.SetClientChannelUid(timer.iChannelId);
+    kodiTimer.SetStartTime(timer.startTime);
+    kodiTimer.SetEndTime(timer.endTime);
+    kodiTimer.SetState(timer.state);
+    kodiTimer.SetTitle(timer.strTitle);
+    kodiTimer.SetSummary(timer.strSummary);
+
+    results.Add(kodiTimer);
+  }
+
+  return PVR_ERROR_NO_ERROR;
+}
 
 ADDONCREATOR(PlutotvData)

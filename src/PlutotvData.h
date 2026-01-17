@@ -66,6 +66,10 @@ public:
                                                        std::vector<kodi::addon::PVRStreamProperty>& properties) override;
   std::string GetRecordingURL(const kodi::addon::PVRRecording& recording);
 
+PVR_ERROR GetTimerTypes(std::vector<kodi::addon::PVRTimerType>& types);
+PVR_ERROR GetTimersAmount(int& amount);
+PVR_ERROR GetTimers(kodi::addon::PVRTimersResultSet& results);
+
 private:
   struct PlutotvChannel
   {
@@ -106,6 +110,15 @@ private:
     std::string strParentalRatingSource;
     int iYear;
   };
+  struct PlutotvTimer
+  {
+    int iChannelId;
+    time_t startTime;
+    time_t endTime;
+    PVR_TIMER_STATE state;
+    std::string strTitle;
+    std::string strSummary;
+  };
 
   std::shared_ptr<nlohmann::json> m_epg_cache_document;
   time_t m_epg_cache_start = time_t(0);
@@ -118,6 +131,7 @@ private:
   //std::vector<kodi::addon::PVRRecording> m_recordings;
   std::vector<PlutotvRecording> m_recordings;
   std::vector<PlutotvRecording> m_recordingsDeleted;
+  std::vector<PlutotvTimer> m_timers;
   bool m_bChannelsLoaded = false;
   int categoryCounter; 
 
