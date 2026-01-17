@@ -236,6 +236,7 @@ bool PlutotvData::LoadChannelsData(){
     plutotv_channel.m_Groups.SetGroupName(categoryName); // set category
     if ( (!(std::find(uniqueGroupList.begin(), uniqueGroupList.end(), categoryName) != uniqueGroupList.end())) && (categoryName.find("Test") == std::string::npos)){
         // unique group located, store it to access easier later
+        // PlutoTV has a test channel(group), remove it.
         uniqueGroupList.emplace_back(categoryName);
         categoryCounter++;
         //kodi::Log(ADDON_LOG_DEBUG, "[channel] uniqueGroupList located: %s;",categoryName);
@@ -722,9 +723,9 @@ PVR_ERROR PlutotvData::GetRecordingStreamProperties(const kodi::addon::PVRRecord
   //properties.emplace_back("inputstream.adaptive.manifest_update_parameter", "full");
   //properties.emplace_back(PVR_STREAM_PROPERTY_MIMETYPE, "application/xml+dash");
     // Record TV
-
-    //const std::string strUrl = GetChannelStreamURL(recording.GetRecordingId());
-    const std::string strUrl = recording.GetRecordingId();
+    //GetChannelStreamURL(channel.GetUniqueId())
+    const std::string strUrl = GetChannelStreamURL(recording.GetChannelUid());
+    //const std::string strUrl = recording.GetRecordingId();
     kodi::Log(ADDON_LOG_DEBUG, "Recording Stream URL -> %s", strUrl.c_str());
     PVR_ERROR ret = PVR_ERROR_FAILED;
     if (!strUrl.empty())
@@ -736,5 +737,7 @@ PVR_ERROR PlutotvData::GetRecordingStreamProperties(const kodi::addon::PVRRecord
 
   return ret;
 }
+
+
 
 ADDONCREATOR(PlutotvData)

@@ -64,7 +64,8 @@ public:
   PVR_ERROR GetRecordings(bool deleted, kodi::addon::PVRRecordingsResultSet& results) override;
   PVR_ERROR GetRecordingStreamProperties(const kodi::addon::PVRRecording& recording,
                                                        std::vector<kodi::addon::PVRStreamProperty>& properties) override;
-  
+  std::string GetRecordingURL(const kodi::addon::PVRRecording& recording);
+
 private:
   struct PlutotvChannel
   {
@@ -74,12 +75,12 @@ private:
     std::string strChannelName;
     //std::string strChannelExtraInfo;        // Extra information about the channel
     //std::string strChannelShowDescription;  // Description about the show being played
-    std::string strGroupName;                // The group the show belongs to: reality, comedy, kids, etc 
     std::string strIconPath;
     std::string strStreamURL;
     // The group the channel belongs to
     kodi::addon::PVRChannelGroup m_Groups;
   };
+  
 
   std::shared_ptr<nlohmann::json> m_epg_cache_document;
   time_t m_epg_cache_start = time_t(0);
