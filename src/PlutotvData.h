@@ -80,7 +80,32 @@ private:
     // The group the channel belongs to
     kodi::addon::PVRChannelGroup m_Groups;
   };
-  
+  struct PlutotvRecording
+  {
+    bool bRadio;
+    int iDuration;
+    int iGenreType;
+    int iGenreSubType;
+    int iSeriesNumber;
+    int iEpisodeNumber;
+    int iEpisodePartNumber;
+    std::string strChannelName;
+    std::string strPlotOutline;
+    std::string strPlot;
+    std::string strRecordingId;
+    std::string strStreamURL;
+    std::string strTitle;
+    std::string strEpisodeName;
+    std::string strDirectory;
+    time_t recordingTime;
+    int iChannelId;
+    int iProviderId;
+    int iParentalRating = 0;
+    std::string strParentalRatingCode;
+    std::string strParentalRatingIcon;
+    std::string strParentalRatingSource;
+    int iYear;
+  };
 
   std::shared_ptr<nlohmann::json> m_epg_cache_document;
   time_t m_epg_cache_start = time_t(0);
@@ -90,7 +115,8 @@ private:
   // List of unique group elements 
   std::vector<std::string> uniqueGroupList;
   // List of recordings on the backend
-  std::vector<kodi::addon::PVRRecording> m_recordings;
+  //std::vector<kodi::addon::PVRRecording> m_recordings;
+  std::vector<PlutotvRecording> m_recordings;
 
   bool m_bChannelsLoaded = false;
   int categoryCounter; 

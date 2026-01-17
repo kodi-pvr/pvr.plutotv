@@ -687,57 +687,73 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
   return PVR_ERROR_INVALID_PARAMETERS;
 }
 
-PVR_ERROR PlutotvData::GetRecordingsAmount(bool deleted, int& amount){
-  if(deleted){
-    amount = 0;
-  }else{
-    amount = (int)m_recordings.size();
-  }
+PVR_ERROR PlutotvData::GetRecordingsAmount(bool deleted, int& amount)
+{
+  amount = deleted ? m_recordingsDeleted.size() : m_recordings.size();
   return PVR_ERROR_NO_ERROR;
 }
-PVR_ERROR PlutotvData::GetRecordings(bool deleted, kodi::addon::PVRRecordingsResultSet& results){
-  
-  if(!deleted){
 
-    for(auto& recording : m_recordings){
-      results.Add(recording);
-    }
-    //recording.SetRecordingId();
-    //recording.SetTitle();
-    //recording.SetEpisodeName();
-    //recording.SetSeriesNumber();  // Show season
-    //recording.SetEpisodeNumber();
-    //recording.SetPlot();          // Plot name
-    //recording.SetPlotOutline();
-    //recording.SetChannelName();
+PVR_ERROR PlutotvData::GetRecordings(bool deleted, kodi::addon::PVRRecordingsResultSet& results)
+{
+  for (const auto& recording : deleted ? m_recordingsDeleted : m_recordings)
+  {
+    kodi::addon::PVRRecording kodiRecording;
 
+    kodiRecording.SetDuration(recording.iDuration);
+    kodiRecording.SetGenreType(recording.iGenreType);
+    kodiRecording.SetGenreSubType(recording.iGenreSubType);
+    kodiRecording.SetRecordingTime(recording.recordingTime);
+    kodiRecording.SetEpisodeNumber(recording.iEpisodeNumber);
+    kodiRecording.SetEpisodePartNumber(recording.iEpisodePartNumber);
+    kodiRecording.SetSeriesNumber(recording.iSeriesNumber);
+    kodiRecording.SetIsDeleted(deleted);
+    kodiRecording.SetChannelType(recording.bRadio ? PVR_RECORDING_CHANNEL_TYPE_RADIO
+                                                  : PVR_RECORDING_CHANNEL_TYPE_TV);
+    kodiRecording.SetChannelName(recording.strChannelName);
+    kodiRecording.SetPlotOutline(recording.strPlotOutline);
+    kodiRecording.SetPlot(recording.strPlot);
+    kodiRecording.SetRecordingId(recording.strRecordingId);
+    kodiRecording.SetTitle(recording.strTitle);
+    kodiRecording.SetEpisodeName(recording.strEpisodeName);
+    kodiRecording.SetDirectory(recording.strDirectory);
+    kodiRecording.SetYear(recording.iYear);
+
+    /* TODO: PVR API 5.0.0: Implement this */
+    kodiRecording.SetChannelUid(recording.iChannelId);
+
+    /* PVR API 8.0.0 */
+    kodiRecording.SetClientProviderUid(recording.iProviderId);
+    kodiRecording.SetParentalRating(recording.iParentalRating);
+    kodiRecording.SetParentalRatingCode(recording.strParentalRatingCode);
+    kodiRecording.SetParentalRatingIcon(recording.strParentalRatingIcon);
+    kodiRecording.SetParentalRatingSource(recording.strParentalRatingSource);
+    
+    results.Add(kodiRecording);
   }
-  return PVR_ERROR_NO_ERROR;
 
+  return PVR_ERROR_NO_ERROR;
 }
-PVR_ERROR PlutotvData::GetRecordingStreamProperties(const kodi::addon::PVRRecording& recording,
-                                                       std::vector<kodi::addon::PVRStreamProperty>& properties){
-  
-  //properties.emplace_back(PVR_STREAM_PROPERTY_INPUTSTREAM, "inputstream.adaptive");
-  //properties.emplace_back("inputstream.adaptive.manifest_type", "mpd");
-  //properties.emplace_back("inputstream.adaptive.manifest_update_parameter", "full");
-  //properties.emplace_back(PVR_STREAM_PROPERTY_MIMETYPE, "application/xml+dash");
-    // Record TV
-    //GetChannelStreamURL(channel.GetUniqueId())
-    const std::string strUrl = GetChannelStreamURL(recording.GetChannelUid());
-    //const std::string strUrl = recording.GetRecordingId();
-    kodi::Log(ADDON_LOG_DEBUG, "Recording Stream URL -> %s", strUrl.c_str());
-    PVR_ERROR ret = PVR_ERROR_FAILED;
-    if (!strUrl.empty())
+
+PVR_ERROR PlutotvData::GetRecordingStreamProperties(
+    const kodi::addon::PVRRecording& recording,
+    std::vector<kodi::addon::PVRStreamProperty>& properties)
+{
+  properties.emplace_back(PVR_STREAM_PROPERTY_STREAMURL, GetRecordingURL(recording));
+  return PVR_ERROR_NO_ERROR;
+}
+
+std::string PlutotvData::GetRecordingURL(const kodi::addon::PVRRecording& recording)
+{
+  for (const auto& thisRecording : m_recordings)
+  {
+    if (thisRecording.strRecordingId == recording.GetRecordingId())
     {
-      SetStreamProperties(properties, strUrl, true);
-      m_recordings.emplace_back(recording);
-      ret = PVR_ERROR_NO_ERROR;
+      return thisRecording.strStreamURL;
     }
+  }
 
-  return ret;
+  return "";
 }
-
 
 
 ADDONCREATOR(PlutotvData)
