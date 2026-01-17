@@ -704,7 +704,7 @@ PVR_ERROR PlutotvData::GetRecordings(bool deleted, kodi::addon::PVRRecordingsRes
     kodiRecording.SetGenreSubType(recording.iGenreSubType);
     kodiRecording.SetRecordingTime(recording.recordingTime);
     kodiRecording.SetEpisodeNumber(recording.iEpisodeNumber);
-    kodiRecording.SetEpisodePartNumber(recording.iEpisodePartNumber);
+    //kodiRecording.SetEpisodePartNumber(recording.iEpisodePartNumber);
     kodiRecording.SetSeriesNumber(recording.iSeriesNumber);
     kodiRecording.SetIsDeleted(deleted);
     kodiRecording.SetChannelType(recording.bRadio ? PVR_RECORDING_CHANNEL_TYPE_RADIO
@@ -722,11 +722,11 @@ PVR_ERROR PlutotvData::GetRecordings(bool deleted, kodi::addon::PVRRecordingsRes
     kodiRecording.SetChannelUid(recording.iChannelId);
 
     /* PVR API 8.0.0 */
-    kodiRecording.SetClientProviderUid(recording.iProviderId);
-    kodiRecording.SetParentalRating(recording.iParentalRating);
-    kodiRecording.SetParentalRatingCode(recording.strParentalRatingCode);
-    kodiRecording.SetParentalRatingIcon(recording.strParentalRatingIcon);
-    kodiRecording.SetParentalRatingSource(recording.strParentalRatingSource);
+    //kodiRecording.SetClientProviderUid(recording.iProviderId);
+    //kodiRecording.SetParentalRating(recording.iParentalRating);
+    //kodiRecording.SetParentalRatingCode(recording.strParentalRatingCode);
+    //kodiRecording.SetParentalRatingIcon(recording.strParentalRatingIcon);
+    //kodiRecording.SetParentalRatingSource(recording.strParentalRatingSource);
     
     results.Add(kodiRecording);
   }

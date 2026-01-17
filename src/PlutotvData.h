@@ -117,7 +117,7 @@ private:
   // List of recordings on the backend
   //std::vector<kodi::addon::PVRRecording> m_recordings;
   std::vector<PlutotvRecording> m_recordings;
-
+  std::vector<PlutotvRecording> m_recordingsDeleted;
   bool m_bChannelsLoaded = false;
   int categoryCounter; 
 
