@@ -59,14 +59,16 @@ PVR_ERROR PlutotvData::GetCapabilities(kodi::addon::PVRCapabilities& capabilitie
   capabilities.SetSupportsEPG(true);
   capabilities.SetSupportsTV(true);
   capabilities.SetSupportsChannelGroups(true);
-  capabilities.SetSupportsTimers(false);      // No Timers
+  capabilities.SetSupportsTimers(true);      // No Timers
   capabilities.SetSupportsRadio(false);       // No Radio
   // Recordings
   capabilities.SetSupportsRecordings(true);
-  capabilities.SetSupportsRecordingsDelete(false);
+  capabilities.SetSupportsRecordingsDelete(true);
+  capabilities.SetSupportsRecordingsUndelete(true);
   capabilities.SetSupportsRecordingsRename(false);
   capabilities.SetSupportsRecordingsLifetimeChange(false);
-
+  capabilities.SetSupportsDescrambleInfo(false);
+  capabilities.SetSupportsProviders(false);
 
   return PVR_ERROR_NO_ERROR;
 }
@@ -689,12 +691,14 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
 
 PVR_ERROR PlutotvData::GetRecordingsAmount(bool deleted, int& amount)
 {
+  kodi::Log(ADDON_LOG_DEBUG, "%s - GetRecordingsAmount is being run", __FUNCTION__);
   amount = deleted ? m_recordingsDeleted.size() : m_recordings.size();
   return PVR_ERROR_NO_ERROR;
 }
 
 PVR_ERROR PlutotvData::GetRecordings(bool deleted, kodi::addon::PVRRecordingsResultSet& results)
 {
+  kodi::Log(ADDON_LOG_DEBUG, "%s - GetRecordings is being run", __FUNCTION__);
   for (const auto& recording : deleted ? m_recordingsDeleted : m_recordings)
   {
     kodi::addon::PVRRecording kodiRecording;
@@ -738,12 +742,16 @@ PVR_ERROR PlutotvData::GetRecordingStreamProperties(
     const kodi::addon::PVRRecording& recording,
     std::vector<kodi::addon::PVRStreamProperty>& properties)
 {
-  properties.emplace_back(PVR_STREAM_PROPERTY_STREAMURL, GetRecordingURL(recording));
+  kodi::Log(ADDON_LOG_DEBUG, "%s - GetRecordingStreamProperties is being run", __FUNCTION__);
+  std::string url = GetRecordingURL(recording);
+  SetStreamProperties(properties, url, false);
+  //properties.emplace_back(PVR_STREAM_PROPERTY_STREAMURL, GetRecordingURL(recording));
   return PVR_ERROR_NO_ERROR;
 }
 
 std::string PlutotvData::GetRecordingURL(const kodi::addon::PVRRecording& recording)
 {
+  kodi::Log(ADDON_LOG_DEBUG, "%s - GetRecordingURL is being run", __FUNCTION__);
   for (const auto& thisRecording : m_recordings)
   {
     if (thisRecording.strRecordingId == recording.GetRecordingId())
