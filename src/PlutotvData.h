@@ -69,9 +69,9 @@ public:
                                                        std::vector<kodi::addon::PVRStreamProperty>& properties) override;
   std::string GetRecordingURL(const kodi::addon::PVRRecording& recording);
 
-PVR_ERROR GetTimerTypes(std::vector<kodi::addon::PVRTimerType>& types);
-PVR_ERROR GetTimersAmount(int& amount);
-PVR_ERROR GetTimers(kodi::addon::PVRTimersResultSet& results);
+PVR_ERROR GetTimerTypes(std::vector<kodi::addon::PVRTimerType>& types) override;
+PVR_ERROR GetTimersAmount(int& amount) override;
+PVR_ERROR GetTimers(kodi::addon::PVRTimersResultSet& results) override;
 
 private:
   struct PlutotvChannel
