@@ -712,9 +712,9 @@ PVR_ERROR PlutotvData::GetRecordings(bool deleted, kodi::addon::PVRRecordingsRes
   for (const auto& recording : m_recordings)
   {
     kodi::addon::PVRRecording kodiRecording;
-    kodiRecording.SetRecordingId(iUniqueId);
-    kodiRecording.SetTitle(plutotvID);
-    kodiRecording.SetChannelName(strChannelName);
+    kodiRecording.SetRecordingId(recording.iUniqueId);
+    kodiRecording.SetTitle(recording.plutotvID);
+    kodiRecording.SetChannelName(recording.strChannelName);
     //kodiRecording.SetPlotOutline(recording.strPlotOutline);
     /*
     int iUniqueId;
@@ -812,7 +812,7 @@ std::string PlutotvData::GetRecordingURL(const kodi::addon::PVRRecording& record
   kodi::Log(ADDON_LOG_DEBUG, "%s - GetRecordingURL is being run", __FUNCTION__);
   for (const auto& thisRecording : m_recordings)
   {
-    if (thisRecording.strRecordingId == recording.GetRecordingId())
+    if (thisRecording.iUniqueId == recording.GetRecordingId())
     {
       return thisRecording.strStreamURL;
     }
