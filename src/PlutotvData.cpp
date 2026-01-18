@@ -761,15 +761,16 @@ PVR_ERROR PlutotvData::GetRecordingStreamProperties(
   //SetStreamProperties(properties, url, true);
   //properties.emplace_back(PVR_STREAM_PROPERTY_STREAMURL, GetRecordingURL(recording));
   */
-   kodi::Log(ADDON_LOG_DEBUG, "[RECORD STREAM] url: %s", url.c_str());
-   bool realtime = true;
+  std::string url = GetRecordingURL(recording);
+  kodi::Log(ADDON_LOG_DEBUG, "[RECORD STREAM] url: %s", url.c_str());
+  bool realtime = true;
 
   //properties.emplace_back(PVR_STREAM_PROPERTY_INPUTSTREAM, "inputstream.adaptive");
   //properties.emplace_back("inputstream.adaptive.manifest_type", "mpd");
   //properties.emplace_back("inputstream.adaptive.manifest_update_parameter", "full");
   //properties.emplace_back(PVR_STREAM_PROPERTY_MIMETYPE, "application/xml+dash");
 
-  properties.emplace_back(PVR_STREAM_PROPERTY_STREAMURL, GetRecordingURL(recording));
+  properties.emplace_back(PVR_STREAM_PROPERTY_STREAMURL, url);
   properties.emplace_back(PVR_STREAM_PROPERTY_INPUTSTREAM, "inputstream.adaptive");
   properties.emplace_back(PVR_STREAM_PROPERTY_ISREALTIMESTREAM, realtime ? "true" : "false");
   // HLS
