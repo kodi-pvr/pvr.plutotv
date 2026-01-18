@@ -852,7 +852,7 @@ PVR_ERROR PlutotvData::CallMenuHook(const kodi::addon::PVRMenuhook& menuhook)
     default:
       return PVR_ERROR_INVALID_PARAMETERS;
   }
-  kodi::QueueNotification(QUEUE_INFO, "", kodi::addon::GetLocalizedString(iMsg));
+  //kodi::QueueNotification(QUEUE_INFO, "", kodi::addon::GetLocalizedString(iMsg));
 
   return PVR_ERROR_NO_ERROR;
 }
