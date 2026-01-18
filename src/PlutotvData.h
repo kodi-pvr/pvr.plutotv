@@ -29,8 +29,11 @@ class ATTR_DLL_LOCAL PlutotvData : public kodi::addon::CAddonBase,
 {
 public:
 
+  PlutotvData();
+  ~PlutotvData();
+
   std::string HttpGet(const std::string&);
-  PlutotvData() = default;
+  
   PlutotvData(const PlutotvData&) = delete;
   PlutotvData(PlutotvData&&) = delete;
   PlutotvData& operator=(const PlutotvData&) = delete;
