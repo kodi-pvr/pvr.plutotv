@@ -763,12 +763,12 @@ PVR_ERROR PlutotvData::GetRecordingStreamProperties(
   */
    kodi::Log(ADDON_LOG_DEBUG, "[RECORD STREAM] url: %s", strUrl.c_str());
 
-  properties.emplace_back(PVR_STREAM_PROPERTY_INPUTSTREAM, "inputstream.adaptive");
-  properties.emplace_back("inputstream.adaptive.manifest_type", "mpd");
-  properties.emplace_back("inputstream.adaptive.manifest_update_parameter", "full");
-  properties.emplace_back(PVR_STREAM_PROPERTY_MIMETYPE, "application/xml+dash");
-/*
-  properties.emplace_back(PVR_STREAM_PROPERTY_STREAMURL, GetRecordingURL(recording));
+  //properties.emplace_back(PVR_STREAM_PROPERTY_INPUTSTREAM, "inputstream.adaptive");
+  //properties.emplace_back("inputstream.adaptive.manifest_type", "mpd");
+  //properties.emplace_back("inputstream.adaptive.manifest_update_parameter", "full");
+  //properties.emplace_back(PVR_STREAM_PROPERTY_MIMETYPE, "application/xml+dash");
+
+  properties.emplace_back(PVR_STREAM_PROPERTY_STREAMURL, strUrl);
   properties.emplace_back(PVR_STREAM_PROPERTY_INPUTSTREAM, "inputstream.adaptive");
   properties.emplace_back(PVR_STREAM_PROPERTY_ISREALTIMESTREAM, realtime ? "true" : "false");
   // HLS
@@ -783,7 +783,8 @@ PVR_ERROR PlutotvData::GetRecordingStreamProperties(
   if (GetSettingsWorkaroundBrokenStreams())
     properties.emplace_back("inputstream.adaptive.manifest_config",
                             "{\"hls_ignore_endlist\":true,\"hls_fix_mediasequence\":true,\"hls_fix_discsequence\":true}");
-*/
+
+
   return PVR_ERROR_NO_ERROR;
 }
 
