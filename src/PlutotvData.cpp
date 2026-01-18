@@ -290,6 +290,8 @@ bool PlutotvData::LoadChannelsData(){
     }
 
     m_channels.emplace_back(plutotv_channel);
+    // Store the channels in the recording to be accessed later
+    m_recordings.emplace_back(plutotv_channel);
   }
 
   m_bChannelsLoaded = true;
