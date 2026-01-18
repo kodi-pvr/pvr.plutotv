@@ -751,7 +751,7 @@ PVR_ERROR PlutotvData::GetRecordingStreamProperties(
   kodi::Log(ADDON_LOG_DEBUG, "%s - GetRecordingStreamProperties is being run", __FUNCTION__);
   for(const auto& channel : m_channels){
     if(channel.plutotvID == recording.GetRecordingId()){
-      std::string recordUrl = GetChannelStreamURL(channel.plutotvID);
+      std::string recordUrl = GetChannelStreamURL(channel.iUniqueId);
 
       SetStreamProperties(properties, recordUrl, true);
     }
