@@ -748,7 +748,7 @@ PVR_ERROR PlutotvData::GetRecordingStreamProperties(
     const kodi::addon::PVRRecording& recording,
     std::vector<kodi::addon::PVRStreamProperty>& properties)
 {
-  kodi::Log(ADDON_LOG_DEBUG, "%s - GetRecordingStreamProperties is being run", __FUNCTION__);
+  /*kodi::Log(ADDON_LOG_DEBUG, "%s - GetRecordingStreamProperties is being run", __FUNCTION__);
   for(const auto& channel : m_channels){
     if(channel.plutotvID == recording.GetRecordingId()){
       std::string recordUrl = GetChannelStreamURL(channel.iUniqueId);
@@ -760,6 +760,30 @@ PVR_ERROR PlutotvData::GetRecordingStreamProperties(
   //std::string url = GetRecordingURL(recording);
   //SetStreamProperties(properties, url, true);
   //properties.emplace_back(PVR_STREAM_PROPERTY_STREAMURL, GetRecordingURL(recording));
+  */
+   kodi::Log(ADDON_LOG_DEBUG, "[RECORD STREAM] url: %s", url.c_str());
+   bool realtime = true;
+
+  //properties.emplace_back(PVR_STREAM_PROPERTY_INPUTSTREAM, "inputstream.adaptive");
+  //properties.emplace_back("inputstream.adaptive.manifest_type", "mpd");
+  //properties.emplace_back("inputstream.adaptive.manifest_update_parameter", "full");
+  //properties.emplace_back(PVR_STREAM_PROPERTY_MIMETYPE, "application/xml+dash");
+
+  properties.emplace_back(PVR_STREAM_PROPERTY_STREAMURL, GetRecordingURL(recording));
+  properties.emplace_back(PVR_STREAM_PROPERTY_INPUTSTREAM, "inputstream.adaptive");
+  properties.emplace_back(PVR_STREAM_PROPERTY_ISREALTIMESTREAM, realtime ? "true" : "false");
+  // HLS
+  properties.emplace_back(PVR_STREAM_PROPERTY_MIMETYPE, "application/x-mpegURL");
+
+  const std::string encodedUserAgent{UrlEncode(PLUTOTV_USER_AGENT)};
+  properties.emplace_back("inputstream.adaptive.manifest_headers",
+                          "User-Agent=" + encodedUserAgent);
+  properties.emplace_back("inputstream.adaptive.stream_headers",
+                          "User-Agent=" + encodedUserAgent);
+
+  if (GetSettingsWorkaroundBrokenStreams())
+    properties.emplace_back("inputstream.adaptive.manifest_config",
+                            "{\"hls_ignore_endlist\":true,\"hls_fix_mediasequence\":true,\"hls_fix_discsequence\":true}");
   return PVR_ERROR_NO_ERROR;
 }
 
