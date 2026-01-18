@@ -767,7 +767,7 @@ PVR_ERROR PlutotvData::GetRecordingStreamProperties(
   //properties.emplace_back("inputstream.adaptive.manifest_type", "mpd");
   //properties.emplace_back("inputstream.adaptive.manifest_update_parameter", "full");
   //properties.emplace_back(PVR_STREAM_PROPERTY_MIMETYPE, "application/xml+dash");
-
+  bool realtime = true;
   properties.emplace_back(PVR_STREAM_PROPERTY_STREAMURL, strUrl);
   properties.emplace_back(PVR_STREAM_PROPERTY_INPUTSTREAM, "inputstream.adaptive");
   properties.emplace_back(PVR_STREAM_PROPERTY_ISREALTIMESTREAM, realtime ? "true" : "false");
