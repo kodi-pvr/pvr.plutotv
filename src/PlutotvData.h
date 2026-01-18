@@ -144,7 +144,7 @@ private:
   std::vector<std::string> uniqueGroupList;
   // List of recordings on the backend
   //std::vector<kodi::addon::PVRRecording> m_recordings;
-  std::vector<PlutotvChannel> m_recordings;
+  std::vector<PlutotvRecording> m_recordings;
   std::vector<PlutotvRecording> m_recordingsDeleted;
   std::vector<PlutotvTimer> m_timers;
   bool m_bChannelsLoaded = false;

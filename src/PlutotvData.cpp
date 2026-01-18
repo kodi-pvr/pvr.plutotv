@@ -761,7 +761,7 @@ PVR_ERROR PlutotvData::GetRecordingStreamProperties(
   //SetStreamProperties(properties, url, true);
   //properties.emplace_back(PVR_STREAM_PROPERTY_STREAMURL, GetRecordingURL(recording));
   */
-   kodi::Log(ADDON_LOG_DEBUG, "[RECORD STREAM] url: %s", url.c_str());
+   kodi::Log(ADDON_LOG_DEBUG, "[RECORD STREAM] url: %s", strUrl.c_str());
 
   properties.emplace_back(PVR_STREAM_PROPERTY_INPUTSTREAM, "inputstream.adaptive");
   properties.emplace_back("inputstream.adaptive.manifest_type", "mpd");
