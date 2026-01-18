@@ -771,18 +771,21 @@ std::string PlutotvData::GetRecordingURL(const kodi::addon::PVRRecording& record
 
 PVR_ERROR PlutotvData::GetTimerTypes(std::vector<kodi::addon::PVRTimerType>& types)
 {
+  kodi::Log(ADDON_LOG_DEBUG, "%s - GetTimerTypes is being run", __FUNCTION__);
   /* TODO: Implement this to get support for the timer features introduced with PVR API 1.9.7 */
   return PVR_ERROR_NOT_IMPLEMENTED;
 }
 
 PVR_ERROR PlutotvData::GetTimersAmount(int& amount)
 {
+   kodi::Log(ADDON_LOG_DEBUG, "%s - GetTimersAmount is being run", __FUNCTION__);
   amount = m_timers.size();
   return PVR_ERROR_NO_ERROR;
 }
 
 PVR_ERROR PlutotvData::GetTimers(kodi::addon::PVRTimersResultSet& results)
 {
+   kodi::Log(ADDON_LOG_DEBUG, "%s - GetTimers is being run", __FUNCTION__);
   unsigned int i = PVR_TIMER_NO_CLIENT_INDEX + 1;
   for (const auto& timer : m_timers)
   {
