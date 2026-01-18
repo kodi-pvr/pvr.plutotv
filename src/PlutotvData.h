@@ -149,6 +149,7 @@ private:
   bool m_bChannelsLoaded = false;
   int categoryCounter; 
 
+  PVR_ERROR CallMenuHook(const kodi::addon::PVRMenuhook& menuhook);
 
   std::string GetChannelStreamURL(int uniqueId);
   std::string GetSettingsUUID(const std::string& setting);
