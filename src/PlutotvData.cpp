@@ -290,8 +290,6 @@ bool PlutotvData::LoadChannelsData(){
     }
 
     m_channels.emplace_back(plutotv_channel);
-    // Store the channels in the recording to be accessed later
-    m_recordings.emplace_back(plutotv_channel);
   }
 
   m_bChannelsLoaded = true;
@@ -344,8 +342,7 @@ PVR_ERROR PlutotvData::GetChannelStreamProperties(
     // Playback from the EPG but playing like live TV
   //}else{
     // Live TV
-    //const std::string strUrl = GetChannelStreamURL(channel.GetUniqueId());
-    strUrl.assign(GetChannelStreamURL(channel.GetUniqueId()));
+    const std::string strUrl = GetChannelStreamURL(channel.GetUniqueId());
     kodi::Log(ADDON_LOG_DEBUG, "Stream URL -> %s", strUrl.c_str());
     PVR_ERROR ret = PVR_ERROR_FAILED;
     if (!strUrl.empty())
@@ -708,26 +705,10 @@ PVR_ERROR PlutotvData::GetRecordingsAmount(bool deleted, int& amount)
 PVR_ERROR PlutotvData::GetRecordings(bool deleted, kodi::addon::PVRRecordingsResultSet& results)
 {
   kodi::Log(ADDON_LOG_DEBUG, "%s - GetRecordings is being run", __FUNCTION__);
-  //for (const auto& recording : deleted ? m_recordingsDeleted : m_recordings)
-  for (const auto& recording : m_recordings)
+  for (const auto& recording : deleted ? m_recordingsDeleted : m_recordings)
   {
     kodi::addon::PVRRecording kodiRecording;
-    kodiRecording.SetRecordingId(recording.plutotvID);
-    kodiRecording.SetTitle(recording.plutotvID);
-    kodiRecording.SetChannelName(recording.strChannelName);
-    //kodiRecording.SetPlotOutline(recording.strPlotOutline);
-    /*
-    int iUniqueId;
-    std::string plutotvID;
-    int iChannelNumber; //position
-    std::string strChannelName;
-    //std::string strChannelExtraInfo;        // Extra information about the channel
-    //std::string strChannelShowDescription;  // Description about the show being played
-    std::string strIconPath;
-    std::string strStreamURL;
-    // The group the channel belongs to
-    kodi::addon::PVRChannelGroup m_Groups;
-    
+
     kodiRecording.SetDuration(recording.iDuration);
     kodiRecording.SetGenreType(recording.iGenreType);
     kodiRecording.SetGenreSubType(recording.iGenreSubType);
@@ -746,9 +727,9 @@ PVR_ERROR PlutotvData::GetRecordings(bool deleted, kodi::addon::PVRRecordingsRes
     kodiRecording.SetEpisodeName(recording.strEpisodeName);
     kodiRecording.SetDirectory(recording.strDirectory);
     kodiRecording.SetYear(recording.iYear);
-    */
+
     /* TODO: PVR API 5.0.0: Implement this */
-    //kodiRecording.SetChannelUid(recording.iChannelId);
+    kodiRecording.SetChannelUid(recording.iChannelId);
 
     /* PVR API 8.0.0 */
     //kodiRecording.SetClientProviderUid(recording.iProviderId);
@@ -780,16 +761,14 @@ PVR_ERROR PlutotvData::GetRecordingStreamProperties(
   //SetStreamProperties(properties, url, true);
   //properties.emplace_back(PVR_STREAM_PROPERTY_STREAMURL, GetRecordingURL(recording));
   */
-  //std::string url = GetRecordingURL(recording);
-  kodi::Log(ADDON_LOG_DEBUG, "[RECORD STREAM] url: %s", strUrl.c_str());
-  bool realtime = true;
+   kodi::Log(ADDON_LOG_DEBUG, "[RECORD STREAM] url: %s", url.c_str());
 
-  //properties.emplace_back(PVR_STREAM_PROPERTY_INPUTSTREAM, "inputstream.adaptive");
-  //properties.emplace_back("inputstream.adaptive.manifest_type", "mpd");
-  //properties.emplace_back("inputstream.adaptive.manifest_update_parameter", "full");
-  //properties.emplace_back(PVR_STREAM_PROPERTY_MIMETYPE, "application/xml+dash");
-
-  properties.emplace_back(PVR_STREAM_PROPERTY_STREAMURL, strUrl);
+  properties.emplace_back(PVR_STREAM_PROPERTY_INPUTSTREAM, "inputstream.adaptive");
+  properties.emplace_back("inputstream.adaptive.manifest_type", "mpd");
+  properties.emplace_back("inputstream.adaptive.manifest_update_parameter", "full");
+  properties.emplace_back(PVR_STREAM_PROPERTY_MIMETYPE, "application/xml+dash");
+/*
+  properties.emplace_back(PVR_STREAM_PROPERTY_STREAMURL, GetRecordingURL(recording));
   properties.emplace_back(PVR_STREAM_PROPERTY_INPUTSTREAM, "inputstream.adaptive");
   properties.emplace_back(PVR_STREAM_PROPERTY_ISREALTIMESTREAM, realtime ? "true" : "false");
   // HLS
@@ -804,6 +783,7 @@ PVR_ERROR PlutotvData::GetRecordingStreamProperties(
   if (GetSettingsWorkaroundBrokenStreams())
     properties.emplace_back("inputstream.adaptive.manifest_config",
                             "{\"hls_ignore_endlist\":true,\"hls_fix_mediasequence\":true,\"hls_fix_discsequence\":true}");
+*/
   return PVR_ERROR_NO_ERROR;
 }
 
@@ -812,7 +792,7 @@ std::string PlutotvData::GetRecordingURL(const kodi::addon::PVRRecording& record
   kodi::Log(ADDON_LOG_DEBUG, "%s - GetRecordingURL is being run", __FUNCTION__);
   for (const auto& thisRecording : m_recordings)
   {
-    if (thisRecording.plutotvID == recording.GetRecordingId())
+    if (thisRecording.strRecordingId == recording.GetRecordingId())
     {
       return thisRecording.strStreamURL;
     }
