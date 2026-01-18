@@ -69,9 +69,20 @@ public:
                                                        std::vector<kodi::addon::PVRStreamProperty>& properties) override;
   std::string GetRecordingURL(const kodi::addon::PVRRecording& recording);
 
-PVR_ERROR GetTimerTypes(std::vector<kodi::addon::PVRTimerType>& types) override;
-PVR_ERROR GetTimersAmount(int& amount) override;
-PVR_ERROR GetTimers(kodi::addon::PVRTimersResultSet& results) override;
+  PVR_ERROR GetTimerTypes(std::vector<kodi::addon::PVRTimerType>& types) override;
+  PVR_ERROR GetTimersAmount(int& amount) override;
+  PVR_ERROR GetTimers(kodi::addon::PVRTimersResultSet& results) override;
+
+  PVR_ERROR CallEPGMenuHook(const kodi::addon::PVRMenuhook& menuhook,
+                            const kodi::addon::PVREPGTag& item) override;
+  PVR_ERROR CallChannelMenuHook(const kodi::addon::PVRMenuhook& menuhook,
+                                const kodi::addon::PVRChannel& item) override;
+  PVR_ERROR CallTimerMenuHook(const kodi::addon::PVRMenuhook& menuhook,
+                              const kodi::addon::PVRTimer& item) override;
+  PVR_ERROR CallRecordingMenuHook(const kodi::addon::PVRMenuhook& menuhook,
+                                  const kodi::addon::PVRRecording& item) override;
+  PVR_ERROR CallSettingsMenuHook(const kodi::addon::PVRMenuhook& menuhook) override;
+
 
 private:
   struct PlutotvChannel

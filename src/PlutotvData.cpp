@@ -806,5 +806,54 @@ PVR_ERROR PlutotvData::GetTimers(kodi::addon::PVRTimersResultSet& results)
 
   return PVR_ERROR_NO_ERROR;
 }
+PVR_ERROR PlutotvData::CallEPGMenuHook(const kodi::addon::PVRMenuhook& menuhook,
+                                    const kodi::addon::PVREPGTag& item)
+{
+  return CallMenuHook(menuhook);
+}
 
+PVR_ERROR PlutotvData::CallChannelMenuHook(const kodi::addon::PVRMenuhook& menuhook,
+                                        const kodi::addon::PVRChannel& item)
+{
+  return CallMenuHook(menuhook);
+}
+
+PVR_ERROR PlutotvData::CallTimerMenuHook(const kodi::addon::PVRMenuhook& menuhook,
+                                      const kodi::addon::PVRTimer& item)
+{
+  return CallMenuHook(menuhook);
+}
+
+PVR_ERROR PlutotvData::CallRecordingMenuHook(const kodi::addon::PVRMenuhook& menuhook,
+                                          const kodi::addon::PVRRecording& item)
+{
+  return CallMenuHook(menuhook);
+}
+
+PVR_ERROR PlutotvData::CallSettingsMenuHook(const kodi::addon::PVRMenuhook& menuhook)
+{
+  return CallMenuHook(menuhook);
+}
+
+PVR_ERROR PlutotvData::CallMenuHook(const kodi::addon::PVRMenuhook& menuhook)
+{
+  int iMsg;
+  switch (menuhook.GetHookId())
+  {
+    case 1:
+      iMsg = 30010;
+      break;
+    case 2:
+      iMsg = 30011;
+      break;
+    case 3:
+      iMsg = 30012;
+      break;
+    default:
+      return PVR_ERROR_INVALID_PARAMETERS;
+  }
+  kodi::QueueNotification(QUEUE_INFO, "", kodi::addon::GetLocalizedString(iMsg));
+
+  return PVR_ERROR_NO_ERROR;
+}
 ADDONCREATOR(PlutotvData)
