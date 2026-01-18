@@ -342,7 +342,8 @@ PVR_ERROR PlutotvData::GetChannelStreamProperties(
     // Playback from the EPG but playing like live TV
   //}else{
     // Live TV
-    const std::string strUrl = GetChannelStreamURL(channel.GetUniqueId());
+    //const std::string strUrl = GetChannelStreamURL(channel.GetUniqueId());
+    strUrl = GetChannelStreamURL(channel.GetUniqueId());
     kodi::Log(ADDON_LOG_DEBUG, "Stream URL -> %s", strUrl.c_str());
     PVR_ERROR ret = PVR_ERROR_FAILED;
     if (!strUrl.empty())
@@ -761,8 +762,8 @@ PVR_ERROR PlutotvData::GetRecordingStreamProperties(
   //SetStreamProperties(properties, url, true);
   //properties.emplace_back(PVR_STREAM_PROPERTY_STREAMURL, GetRecordingURL(recording));
   */
-  std::string url = GetRecordingURL(recording);
-  kodi::Log(ADDON_LOG_DEBUG, "[RECORD STREAM] url: %s", url.c_str());
+  //std::string url = GetRecordingURL(recording);
+  kodi::Log(ADDON_LOG_DEBUG, "[RECORD STREAM] url: %s", strUrl.c_str());
   bool realtime = true;
 
   //properties.emplace_back(PVR_STREAM_PROPERTY_INPUTSTREAM, "inputstream.adaptive");
@@ -770,7 +771,7 @@ PVR_ERROR PlutotvData::GetRecordingStreamProperties(
   //properties.emplace_back("inputstream.adaptive.manifest_update_parameter", "full");
   //properties.emplace_back(PVR_STREAM_PROPERTY_MIMETYPE, "application/xml+dash");
 
-  properties.emplace_back(PVR_STREAM_PROPERTY_STREAMURL, url);
+  properties.emplace_back(PVR_STREAM_PROPERTY_STREAMURL, strUrl);
   properties.emplace_back(PVR_STREAM_PROPERTY_INPUTSTREAM, "inputstream.adaptive");
   properties.emplace_back(PVR_STREAM_PROPERTY_ISREALTIMESTREAM, realtime ? "true" : "false");
   // HLS
