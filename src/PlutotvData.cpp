@@ -708,10 +708,26 @@ PVR_ERROR PlutotvData::GetRecordingsAmount(bool deleted, int& amount)
 PVR_ERROR PlutotvData::GetRecordings(bool deleted, kodi::addon::PVRRecordingsResultSet& results)
 {
   kodi::Log(ADDON_LOG_DEBUG, "%s - GetRecordings is being run", __FUNCTION__);
-  for (const auto& recording : deleted ? m_recordingsDeleted : m_recordings)
+  //for (const auto& recording : deleted ? m_recordingsDeleted : m_recordings)
+  for (const auto& recording : m_recordings)
   {
     kodi::addon::PVRRecording kodiRecording;
-
+    kodiRecording.SetRecordingId(iUniqueId);
+    kodiRecording.SetTitle(plutotvID);
+    kodiRecording.SetChannelName(strChannelName);
+    //kodiRecording.SetPlotOutline(recording.strPlotOutline);
+    /*
+    int iUniqueId;
+    std::string plutotvID;
+    int iChannelNumber; //position
+    std::string strChannelName;
+    //std::string strChannelExtraInfo;        // Extra information about the channel
+    //std::string strChannelShowDescription;  // Description about the show being played
+    std::string strIconPath;
+    std::string strStreamURL;
+    // The group the channel belongs to
+    kodi::addon::PVRChannelGroup m_Groups;
+    
     kodiRecording.SetDuration(recording.iDuration);
     kodiRecording.SetGenreType(recording.iGenreType);
     kodiRecording.SetGenreSubType(recording.iGenreSubType);
@@ -730,9 +746,9 @@ PVR_ERROR PlutotvData::GetRecordings(bool deleted, kodi::addon::PVRRecordingsRes
     kodiRecording.SetEpisodeName(recording.strEpisodeName);
     kodiRecording.SetDirectory(recording.strDirectory);
     kodiRecording.SetYear(recording.iYear);
-
+    */
     /* TODO: PVR API 5.0.0: Implement this */
-    kodiRecording.SetChannelUid(recording.iChannelId);
+    //kodiRecording.SetChannelUid(recording.iChannelId);
 
     /* PVR API 8.0.0 */
     //kodiRecording.SetClientProviderUid(recording.iProviderId);
