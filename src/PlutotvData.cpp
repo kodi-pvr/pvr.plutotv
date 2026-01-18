@@ -343,7 +343,7 @@ PVR_ERROR PlutotvData::GetChannelStreamProperties(
   //}else{
     // Live TV
     //const std::string strUrl = GetChannelStreamURL(channel.GetUniqueId());
-    strUrl = GetChannelStreamURL(channel.GetUniqueId());
+    strUrl.assign(GetChannelStreamURL(channel.GetUniqueId()));
     kodi::Log(ADDON_LOG_DEBUG, "Stream URL -> %s", strUrl.c_str());
     PVR_ERROR ret = PVR_ERROR_FAILED;
     if (!strUrl.empty())
