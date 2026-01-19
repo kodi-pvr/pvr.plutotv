@@ -23,7 +23,11 @@ PlutotvData::PlutotvData(){
   LoadChannelsData();
 }
 PlutotvData::~PlutotvData(){
-  
+  m_channels.clear();
+  uniqueGroupList.clear();
+  m_recordings.clear();
+  m_recordingsDeleted.clear();
+  m_timers.clear();
 }
 std::string PlutotvData::HttpGet(const std::string& url){
 
@@ -64,7 +68,7 @@ PVR_ERROR PlutotvData::GetCapabilities(kodi::addon::PVRCapabilities& capabilitie
   capabilities.SetSupportsEPG(true);
   capabilities.SetSupportsTV(true);
   capabilities.SetSupportsChannelGroups(true);
-  capabilities.SetSupportsTimers(true);      // No Timers
+  capabilities.SetSupportsTimers(true);       
   capabilities.SetSupportsRadio(false);       // No Radio
   // Recordings
   capabilities.SetSupportsRecordings(true);
@@ -290,6 +294,8 @@ bool PlutotvData::LoadChannelsData(){
     }
 
     m_channels.emplace_back(plutotv_channel);
+    m_recordings.emplace_back(plutotv_channel);
+
   }
 
   m_bChannelsLoaded = true;
@@ -708,37 +714,8 @@ PVR_ERROR PlutotvData::GetRecordings(bool deleted, kodi::addon::PVRRecordingsRes
   for (const auto& recording : deleted ? m_recordingsDeleted : m_recordings)
   {
     kodi::addon::PVRRecording kodiRecording;
-
-    kodiRecording.SetDuration(recording.iDuration);
-    kodiRecording.SetGenreType(recording.iGenreType);
-    kodiRecording.SetGenreSubType(recording.iGenreSubType);
-    kodiRecording.SetRecordingTime(recording.recordingTime);
-    kodiRecording.SetEpisodeNumber(recording.iEpisodeNumber);
-    //kodiRecording.SetEpisodePartNumber(recording.iEpisodePartNumber);
-    kodiRecording.SetSeriesNumber(recording.iSeriesNumber);
-    kodiRecording.SetIsDeleted(deleted);
-    kodiRecording.SetChannelType(recording.bRadio ? PVR_RECORDING_CHANNEL_TYPE_RADIO
-                                                  : PVR_RECORDING_CHANNEL_TYPE_TV);
-    kodiRecording.SetChannelName(recording.strChannelName);
-    kodiRecording.SetPlotOutline(recording.strPlotOutline);
-    kodiRecording.SetPlot(recording.strPlot);
-    kodiRecording.SetRecordingId(recording.strRecordingId);
-    kodiRecording.SetTitle(recording.strTitle);
-    kodiRecording.SetEpisodeName(recording.strEpisodeName);
-    kodiRecording.SetDirectory(recording.strDirectory);
-    kodiRecording.SetYear(recording.iYear);
-
-    /* TODO: PVR API 5.0.0: Implement this */
-    kodiRecording.SetChannelUid(recording.iChannelId);
-
-    /* PVR API 8.0.0 */
-    //kodiRecording.SetClientProviderUid(recording.iProviderId);
-    //kodiRecording.SetParentalRating(recording.iParentalRating);
-    //kodiRecording.SetParentalRatingCode(recording.strParentalRatingCode);
-    //kodiRecording.SetParentalRatingIcon(recording.strParentalRatingIcon);
-    //kodiRecording.SetParentalRatingSource(recording.strParentalRatingSource);
-    
-    results.Add(kodiRecording);
+    kodiRecording.SetRecordingId(recording.iUniqueId);
+    kodiRecording.SetTitle(recording.plutotvID);
   }
 
   return PVR_ERROR_NO_ERROR;
@@ -788,19 +765,6 @@ PVR_ERROR PlutotvData::GetRecordingStreamProperties(
   return PVR_ERROR_NO_ERROR;
 }
 
-std::string PlutotvData::GetRecordingURL(const kodi::addon::PVRRecording& recording)
-{
-  kodi::Log(ADDON_LOG_DEBUG, "%s - GetRecordingURL is being run", __FUNCTION__);
-  for (const auto& thisRecording : m_recordings)
-  {
-    if (thisRecording.strRecordingId == recording.GetRecordingId())
-    {
-      return thisRecording.strStreamURL;
-    }
-  }
-
-  return "";
-}
 
 PVR_ERROR PlutotvData::GetTimerTypes(std::vector<kodi::addon::PVRTimerType>& types)
 {
@@ -839,56 +803,7 @@ PVR_ERROR PlutotvData::GetTimers(kodi::addon::PVRTimersResultSet& results)
 
   return PVR_ERROR_NO_ERROR;
 }
-PVR_ERROR PlutotvData::CallEPGMenuHook(const kodi::addon::PVRMenuhook& menuhook,
-                                    const kodi::addon::PVREPGTag& item)
-{
-  return CallMenuHook(menuhook);
-}
 
-PVR_ERROR PlutotvData::CallChannelMenuHook(const kodi::addon::PVRMenuhook& menuhook,
-                                        const kodi::addon::PVRChannel& item)
-{
-  return CallMenuHook(menuhook);
-}
 
-PVR_ERROR PlutotvData::CallTimerMenuHook(const kodi::addon::PVRMenuhook& menuhook,
-                                      const kodi::addon::PVRTimer& item)
-{
-  kodi::Log(ADDON_LOG_DEBUG, "%s - CallTimerMenuHook is being run", __FUNCTION__);
-  return CallMenuHook(menuhook);
-}
 
-PVR_ERROR PlutotvData::CallRecordingMenuHook(const kodi::addon::PVRMenuhook& menuhook,
-                                          const kodi::addon::PVRRecording& item)
-{
-  kodi::Log(ADDON_LOG_DEBUG, "%s - CallRecordingMenuHook is being run", __FUNCTION__);
-  return CallMenuHook(menuhook);
-}
-
-PVR_ERROR PlutotvData::CallSettingsMenuHook(const kodi::addon::PVRMenuhook& menuhook)
-{
-  return CallMenuHook(menuhook);
-}
-
-PVR_ERROR PlutotvData::CallMenuHook(const kodi::addon::PVRMenuhook& menuhook)
-{
-  int iMsg;
-  switch (menuhook.GetHookId())
-  {
-    case 1:
-      iMsg = 30010;
-      break;
-    case 2:
-      iMsg = 30011;
-      break;
-    case 3:
-      iMsg = 30012;
-      break;
-    default:
-      return PVR_ERROR_INVALID_PARAMETERS;
-  }
-  //kodi::QueueNotification(QUEUE_INFO, "", kodi::addon::GetLocalizedString(iMsg));
-
-  return PVR_ERROR_NO_ERROR;
-}
 ADDONCREATOR(PlutotvData)
