@@ -854,12 +854,14 @@ PVR_ERROR PlutotvData::CallChannelMenuHook(const kodi::addon::PVRMenuhook& menuh
 PVR_ERROR PlutotvData::CallTimerMenuHook(const kodi::addon::PVRMenuhook& menuhook,
                                       const kodi::addon::PVRTimer& item)
 {
+  kodi::Log(ADDON_LOG_DEBUG, "%s - CallTimerMenuHook is being run", __FUNCTION__);
   return CallMenuHook(menuhook);
 }
 
 PVR_ERROR PlutotvData::CallRecordingMenuHook(const kodi::addon::PVRMenuhook& menuhook,
                                           const kodi::addon::PVRRecording& item)
 {
+  kodi::Log(ADDON_LOG_DEBUG, "%s - CallRecordingMenuHook is being run", __FUNCTION__);
   return CallMenuHook(menuhook);
 }
 
