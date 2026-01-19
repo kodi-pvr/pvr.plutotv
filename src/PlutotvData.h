@@ -10,7 +10,6 @@
 #pragma once
 
 #include "kodi/addon-instance/PVR.h"
-#include "guilib/GUIDialog.h"
 //#include "rapidjson/document.h"
 #include <nlohmann/json.hpp>
 //#include <ChannelGroups.h>
