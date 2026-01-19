@@ -11,6 +11,7 @@
 
 #include "kodi/addon-instance/PVR.h"
 //#include "rapidjson/document.h"
+#include <GUIMessage.h>
 #include <nlohmann/json.hpp>
 //#include <ChannelGroups.h>
 
