@@ -133,7 +133,8 @@ void PlutotvData::SetStreamProperties(std::vector<kodi::addon::PVRStreamProperty
   properties.emplace_back(PVR_STREAM_PROPERTY_INPUTSTREAM, "inputstream.adaptive");
   properties.emplace_back(PVR_STREAM_PROPERTY_ISREALTIMESTREAM, realtime ? "true" : "false");
   // HLS
-  properties.emplace_back(PVR_STREAM_PROPERTY_MIMETYPE, "application/x-mpegURL");
+  properties.emplace_back(PVR_STREAM_PROPERTY_MIMETYPE, "application/xml+dash");
+  //properties.emplace_back(PVR_STREAM_PROPERTY_MIMETYPE, "application/x-mpegURL");
 
   const std::string encodedUserAgent{UrlEncode(PLUTOTV_USER_AGENT)};
   properties.emplace_back("inputstream.adaptive.manifest_headers",
