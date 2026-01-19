@@ -711,11 +711,11 @@ PVR_ERROR PlutotvData::GetRecordingsAmount(bool deleted, int& amount)
 PVR_ERROR PlutotvData::GetRecordings(bool deleted, kodi::addon::PVRRecordingsResultSet& results)
 {
   kodi::Log(ADDON_LOG_DEBUG, "%s - GetRecordings is being run", __FUNCTION__);
-  for (auto& recording : deleted ? m_recordingsDeleted : m_recordings)
+  for (const auto& recording : deleted ? m_recordingsDeleted : m_recordings)
   {
     kodi::addon::PVRRecording kodiRecording;
-    kodiRecording.SetRecordingId(recording.iUniqueId);
-    kodiRecording.SetTitle(recording.plutotvID);
+    kodiRecording.SetRecordingId(recording.plutotvID);
+    kodiRecording.SetTitle(recording.strChannelName);
   }
 
   return PVR_ERROR_NO_ERROR;
