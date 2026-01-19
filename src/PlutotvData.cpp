@@ -71,9 +71,9 @@ PVR_ERROR PlutotvData::GetCapabilities(kodi::addon::PVRCapabilities& capabilitie
   capabilities.SetSupportsTimers(true);       
   capabilities.SetSupportsRadio(false);       // No Radio
   // Recordings
-  capabilities.SetSupportsRecordings(true);
-  capabilities.SetSupportsRecordingsDelete(true);
-  capabilities.SetSupportsRecordingsUndelete(true);
+  capabilities.SetSupportsRecordings(false);
+  capabilities.SetSupportsRecordingsDelete(false);
+  capabilities.SetSupportsRecordingsUndelete(false);
   capabilities.SetSupportsRecordingsRename(false);
   capabilities.SetSupportsRecordingsLifetimeChange(false);
   capabilities.SetSupportsDescrambleInfo(false);
