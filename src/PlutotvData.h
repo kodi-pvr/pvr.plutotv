@@ -10,10 +10,7 @@
 #pragma once
 
 #include "kodi/addon-instance/PVR.h"
-//#include "rapidjson/document.h"
-
 #include <nlohmann/json.hpp>
-//#include <ChannelGroups.h>
 
 #include <memory>
 #include <vector>
@@ -47,6 +44,8 @@ public:
   PVR_ERROR GetCapabilities(kodi::addon::PVRCapabilities& capabilities) override;
   PVR_ERROR GetBackendName(std::string& name) override;
   PVR_ERROR GetBackendVersion(std::string& version) override;
+
+  const std::string UrlEncode(const std::string& value);
 
   PVR_ERROR GetChannelsAmount(int& amount) override;
   PVR_ERROR GetChannels(bool radio, kodi::addon::PVRChannelsResultSet& results) override;
@@ -101,7 +100,6 @@ private:
   std::shared_ptr<nlohmann::json> m_epg_cache_document;
   time_t m_epg_cache_start = time_t(0);
   time_t m_epg_cache_end = time_t(0);;
-  std::string strUrl;
 
   std::vector<PlutotvChannel> m_channels;
   // List of unique group elements 
