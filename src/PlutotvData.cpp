@@ -71,13 +71,13 @@ PVR_ERROR PlutotvData::GetCapabilities(kodi::addon::PVRCapabilities& capabilitie
   capabilities.SetSupportsTimers(true);       
   capabilities.SetSupportsRadio(false);       // No Radio
   // Recordings
-  capabilities.SetSupportsRecordings(false);
-  capabilities.SetSupportsRecordingsDelete(false);
-  capabilities.SetSupportsRecordingsUndelete(false);
-  capabilities.SetSupportsRecordingsRename(false);
-  capabilities.SetSupportsRecordingsLifetimeChange(false);
-  capabilities.SetSupportsDescrambleInfo(false);
-  capabilities.SetSupportsProviders(false);
+  //capabilities.SetSupportsRecordings(false);
+  //capabilities.SetSupportsRecordingsDelete(false);
+  //capabilities.SetSupportsRecordingsUndelete(false);
+  //capabilities.SetSupportsRecordingsRename(false);
+  //capabilities.SetSupportsRecordingsLifetimeChange(false);
+  //capabilities.SetSupportsDescrambleInfo(false);
+  //capabilities.SetSupportsProviders(false);
 
   return PVR_ERROR_NO_ERROR;
 }
@@ -133,7 +133,7 @@ void PlutotvData::SetStreamProperties(std::vector<kodi::addon::PVRStreamProperty
   properties.emplace_back(PVR_STREAM_PROPERTY_INPUTSTREAM, "inputstream.adaptive");
   properties.emplace_back(PVR_STREAM_PROPERTY_ISREALTIMESTREAM, realtime ? "true" : "false");
   // HLS
-  properties.emplace_back(PVR_STREAM_PROPERTY_MIMETYPE, "video/mp4");
+  properties.emplace_back(PVR_STREAM_PROPERTY_MIMETYPE, "video/mpeg");
   //properties.emplace_back(PVR_STREAM_PROPERTY_MIMETYPE, "application/x-mpegURL");
 
   const std::string encodedUserAgent{UrlEncode(PLUTOTV_USER_AGENT)};
