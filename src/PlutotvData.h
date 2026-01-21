@@ -62,7 +62,7 @@ public:
                              time_t start,
                              time_t end,
                              kodi::addon::PVREPGTagsResultSet& results) override;
-
+/*
   PVR_ERROR GetRecordingsAmount(bool deleted, int& amount) override;
   PVR_ERROR GetRecordings(bool deleted, kodi::addon::PVRRecordingsResultSet& results) override;
   PVR_ERROR GetRecordingStreamProperties(const kodi::addon::PVRRecording& recording,
@@ -72,7 +72,7 @@ public:
   PVR_ERROR GetTimersAmount(int& amount) override;
   PVR_ERROR GetTimers(kodi::addon::PVRTimersResultSet& results) override;
 
-
+*/
 
 private:
   struct PlutotvChannel

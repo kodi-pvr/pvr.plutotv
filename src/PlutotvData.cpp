@@ -133,7 +133,7 @@ void PlutotvData::SetStreamProperties(std::vector<kodi::addon::PVRStreamProperty
   properties.emplace_back(PVR_STREAM_PROPERTY_INPUTSTREAM, "inputstream.adaptive");
   properties.emplace_back(PVR_STREAM_PROPERTY_ISREALTIMESTREAM, realtime ? "true" : "false");
   // HLS
-  properties.emplace_back(PVR_STREAM_PROPERTY_MIMETYPE, "application/xml+dash");
+  properties.emplace_back(PVR_STREAM_PROPERTY_MIMETYPE, "video/mp4");
   //properties.emplace_back(PVR_STREAM_PROPERTY_MIMETYPE, "application/x-mpegURL");
 
   const std::string encodedUserAgent{UrlEncode(PLUTOTV_USER_AGENT)};
@@ -638,6 +638,7 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
   return PVR_ERROR_INVALID_PARAMETERS;
 }
 
+/*
 PVR_ERROR PlutotvData::GetRecordingsAmount(bool deleted, int& amount)
 {
   kodi::Log(ADDON_LOG_DEBUG, "%s - GetRecordingsAmount is being run", __FUNCTION__);
@@ -692,7 +693,7 @@ PVR_ERROR PlutotvData::GetTimers(kodi::addon::PVRTimersResultSet& results)
   {
     kodi::addon::PVRTimer kodiTimer;
 
-    /* TODO: Implement own timer types to get support for the timer features introduced with PVR API 1.9.7 */
+    //TODO: Implement own timer types to get support for the timer features introduced with PVR API 1.9.7 
     kodiTimer.SetTimerType(PVR_TIMER_TYPE_NONE);
     kodiTimer.SetClientIndex(i++);
     kodiTimer.SetClientChannelUid(timer.iChannelId);
@@ -707,7 +708,7 @@ PVR_ERROR PlutotvData::GetTimers(kodi::addon::PVRTimersResultSet& results)
 
   return PVR_ERROR_NO_ERROR;
 }
-
+*/
 
 
 ADDONCREATOR(PlutotvData)
