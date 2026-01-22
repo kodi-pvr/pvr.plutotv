@@ -105,8 +105,8 @@ private:
   // List of unique group elements 
   std::vector<std::string> uniqueGroupList;
   // List of recordings on the backend
-  std::vector<PlutotvChannel> m_recordings;
-  std::vector<PlutotvChannel> m_recordingsDeleted;
+  //std::vector<PlutotvChannel> m_recordings;
+  //std::vector<PlutotvChannel> m_recordingsDeleted;
   std::vector<PlutotvTimer> m_timers;
 
   bool m_bChannelsLoaded = false;

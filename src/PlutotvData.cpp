@@ -25,8 +25,8 @@ PlutotvData::PlutotvData(){
 PlutotvData::~PlutotvData(){
   m_channels.clear();
   uniqueGroupList.clear();
-  m_recordings.clear();
-  m_recordingsDeleted.clear();
+  //m_recordings.clear();
+  //m_recordingsDeleted.clear();
   m_timers.clear();
 }
 std::string PlutotvData::HttpGet(const std::string& url){
@@ -135,8 +135,8 @@ void PlutotvData::SetStreamProperties(std::vector<kodi::addon::PVRStreamProperty
   //properties.emplace_back("inputstream.adaptive.manifest_update_parameter", "full"); //TODO
   properties.emplace_back(PVR_STREAM_PROPERTY_ISREALTIMESTREAM, realtime ? "true" : "false");
   // HLS
-  properties.emplace_back(PVR_STREAM_PROPERTY_MIMETYPE, "video/mp4");
-  //properties.emplace_back(PVR_STREAM_PROPERTY_MIMETYPE, "application/x-mpegURL");
+  //properties.emplace_back(PVR_STREAM_PROPERTY_MIMETYPE, "video/mp4");
+  properties.emplace_back(PVR_STREAM_PROPERTY_MIMETYPE, "application/x-mpegURL");
 
   const std::string encodedUserAgent{UrlEncode(PLUTOTV_USER_AGENT)};
   properties.emplace_back("inputstream.adaptive.manifest_headers",
