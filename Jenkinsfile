@@ -1,1 +1,1 @@
-buildPlugin(version: "Piers")
+buildPlugin(version: "Omega")
