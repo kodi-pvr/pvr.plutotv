@@ -25,9 +25,6 @@ PlutotvData::PlutotvData(){
 PlutotvData::~PlutotvData(){
   m_channels.clear();
   uniqueGroupList.clear();
-  //m_recordings.clear();
-  //m_recordingsDeleted.clear();
-  m_timers.clear();
 }
 std::string PlutotvData::HttpGet(const std::string& url){
 
@@ -64,20 +61,12 @@ ADDON_STATUS PlutotvData::SetSetting(const std::string& settingName,
 }
 
 PVR_ERROR PlutotvData::GetCapabilities(kodi::addon::PVRCapabilities& capabilities){
-  kodi::Log(ADDON_LOG_DEBUG, "%s - GetCapabilities is being run", __FUNCTION__);
+
   capabilities.SetSupportsEPG(true);
   capabilities.SetSupportsTV(true);
   capabilities.SetSupportsChannelGroups(true);
-  capabilities.SetSupportsTimers(true);       
+  capabilities.SetSupportsTimers(false);       
   capabilities.SetSupportsRadio(false);       // No Radio
-  // Recordings
-  //capabilities.SetSupportsRecordings(false);
-  //capabilities.SetSupportsRecordingsDelete(false);
-  //capabilities.SetSupportsRecordingsUndelete(false);
-  //capabilities.SetSupportsRecordingsRename(false);
-  //capabilities.SetSupportsRecordingsLifetimeChange(false);
-  //capabilities.SetSupportsDescrambleInfo(false);
-  //capabilities.SetSupportsProviders(false);
 
   return PVR_ERROR_NO_ERROR;
 }
@@ -124,18 +113,10 @@ void PlutotvData::SetStreamProperties(std::vector<kodi::addon::PVRStreamProperty
 
   kodi::Log(ADDON_LOG_DEBUG, "[PLAY STREAM] url: %s", url.c_str());
 
-  //properties.emplace_back(PVR_STREAM_PROPERTY_INPUTSTREAM, "inputstream.adaptive");
-  //properties.emplace_back("inputstream.adaptive.manifest_type", "mpd");
-  //properties.emplace_back("inputstream.adaptive.manifest_update_parameter", "full");
-  //properties.emplace_back(PVR_STREAM_PROPERTY_MIMETYPE, "application/xml+dash");
-
   properties.emplace_back(PVR_STREAM_PROPERTY_STREAMURL, url);
   properties.emplace_back(PVR_STREAM_PROPERTY_INPUTSTREAM, "inputstream.adaptive");
-  //properties.emplace_back("inputstream.adaptive.manifest_type", "mpd"); //TODO
-  //properties.emplace_back("inputstream.adaptive.manifest_update_parameter", "full"); //TODO
   properties.emplace_back(PVR_STREAM_PROPERTY_ISREALTIMESTREAM, realtime ? "true" : "false");
   // HLS
-  //properties.emplace_back(PVR_STREAM_PROPERTY_MIMETYPE, "video/mp4");
   properties.emplace_back(PVR_STREAM_PROPERTY_MIMETYPE, "application/x-mpegURL");
 
   const std::string encodedUserAgent{UrlEncode(PLUTOTV_USER_AGENT)};
@@ -280,7 +261,6 @@ bool PlutotvData::LoadChannelsData(){
     }
 
     m_channels.emplace_back(plutotv_channel);
-    //m_recordings.emplace_back(plutotv_channel);
 
   }
 
@@ -626,7 +606,6 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
             tag.SetFlags(EPG_TAG_FLAG_IS_SERIES);
           }
         }
-        // TODO: Load recording data.
 
         results.Add(tag);
       }
@@ -639,78 +618,5 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
   kodi::Log(ADDON_LOG_ERROR, "[GetEPG] ERROR: channel not found");
   return PVR_ERROR_INVALID_PARAMETERS;
 }
-
-/*
-PVR_ERROR PlutotvData::GetRecordingsAmount(bool deleted, int& amount)
-{
-  kodi::Log(ADDON_LOG_DEBUG, "%s - GetRecordingsAmount is being run", __FUNCTION__);
-  amount = deleted ? m_recordingsDeleted.size() : m_recordings.size();
-  return PVR_ERROR_NO_ERROR;
-}
-
-PVR_ERROR PlutotvData::GetRecordings(bool deleted, kodi::addon::PVRRecordingsResultSet& results)
-{
-  kodi::Log(ADDON_LOG_DEBUG, "%s - GetRecordings is being run", __FUNCTION__);
-  for (const auto& recording : deleted ? m_recordingsDeleted : m_recordings)
-  {
-    kodi::addon::PVRRecording kodiRecording;
-    kodiRecording.SetRecordingId(recording.plutotvID);
-    kodiRecording.SetTitle(recording.strChannelName);
-  }
-
-  return PVR_ERROR_NO_ERROR;
-}
-
-PVR_ERROR PlutotvData::GetRecordingStreamProperties(
-    const kodi::addon::PVRRecording& recording,
-    std::vector<kodi::addon::PVRStreamProperty>& properties)
-{
-
-  //properties.emplace_back(PVR_STREAM_PROPERTY_INPUTSTREAM, "inputstream.adaptive");
-  //properties.emplace_back("inputstream.adaptive.manifest_type", "mpd");
-  //properties.emplace_back("inputstream.adaptive.manifest_update_parameter", "full");
-  //properties.emplace_back(PVR_STREAM_PROPERTY_MIMETYPE, "application/xml+dash");
-
-  return PVR_ERROR_NO_ERROR;
-}
-
-
-PVR_ERROR PlutotvData::GetTimerTypes(std::vector<kodi::addon::PVRTimerType>& types)
-{
-  return PVR_ERROR_NOT_IMPLEMENTED;
-}
-
-PVR_ERROR PlutotvData::GetTimersAmount(int& amount)
-{
-   kodi::Log(ADDON_LOG_DEBUG, "%s - GetTimersAmount is being run", __FUNCTION__);
-  amount = m_timers.size();
-  return PVR_ERROR_NO_ERROR;
-}
-
-PVR_ERROR PlutotvData::GetTimers(kodi::addon::PVRTimersResultSet& results)
-{
-   kodi::Log(ADDON_LOG_DEBUG, "%s - GetTimers is being run", __FUNCTION__);
-  unsigned int i = PVR_TIMER_NO_CLIENT_INDEX + 1;
-  for (const auto& timer : m_timers)
-  {
-    kodi::addon::PVRTimer kodiTimer;
-
-    //TODO: Implement own timer types to get support for the timer features introduced with PVR API 1.9.7 
-    kodiTimer.SetTimerType(PVR_TIMER_TYPE_NONE);
-    kodiTimer.SetClientIndex(i++);
-    kodiTimer.SetClientChannelUid(timer.iChannelId);
-    kodiTimer.SetStartTime(timer.startTime);
-    kodiTimer.SetEndTime(timer.endTime);
-    kodiTimer.SetState(timer.state);
-    kodiTimer.SetTitle(timer.strTitle);
-    kodiTimer.SetSummary(timer.strSummary);
-
-    results.Add(kodiTimer);
-  }
-
-  return PVR_ERROR_NO_ERROR;
-}
-*/
-
 
 ADDONCREATOR(PlutotvData)

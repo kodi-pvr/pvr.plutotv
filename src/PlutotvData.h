@@ -62,17 +62,7 @@ public:
                              time_t start,
                              time_t end,
                              kodi::addon::PVREPGTagsResultSet& results) override;
-/*
-  PVR_ERROR GetRecordingsAmount(bool deleted, int& amount) override;
-  PVR_ERROR GetRecordings(bool deleted, kodi::addon::PVRRecordingsResultSet& results) override;
-  PVR_ERROR GetRecordingStreamProperties(const kodi::addon::PVRRecording& recording,
-                                                       std::vector<kodi::addon::PVRStreamProperty>& properties) override;
 
-  PVR_ERROR GetTimerTypes(std::vector<kodi::addon::PVRTimerType>& types) override;
-  PVR_ERROR GetTimersAmount(int& amount) override;
-  PVR_ERROR GetTimers(kodi::addon::PVRTimersResultSet& results) override;
-
-*/
 
 private:
   struct PlutotvChannel
@@ -86,16 +76,7 @@ private:
     // The group the channel belongs to
     kodi::addon::PVRChannelGroup m_Groups;
   };
-  
-  struct PlutotvTimer
-  {
-    int iChannelId;
-    time_t startTime;
-    time_t endTime;
-    PVR_TIMER_STATE state;
-    std::string strTitle;
-    std::string strSummary;
-  };
+
 
   std::shared_ptr<nlohmann::json> m_epg_cache_document;
   time_t m_epg_cache_start = time_t(0);
@@ -104,10 +85,6 @@ private:
   std::vector<PlutotvChannel> m_channels;
   // List of unique group elements 
   std::vector<std::string> uniqueGroupList;
-  // List of recordings on the backend
-  //std::vector<PlutotvChannel> m_recordings;
-  //std::vector<PlutotvChannel> m_recordingsDeleted;
-  std::vector<PlutotvTimer> m_timers;
 
   bool m_bChannelsLoaded = false;
   int categoryCounter; 

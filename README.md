@@ -16,16 +16,16 @@ The addon `inputstream.adaptive` must be built at the same time
 ### Linux
 
 The following instructions assume you will not have built Kodi already in the `kodi-build` directory
-suggested by the README. Assuming all prerequisites are met, continuing from the build steps for x11. Done for branch `Omega` with source in directory `kodi` as follows:
+suggested by the README. Assuming all prerequisites are met, continuing from the build steps for x11. Done for branch `Piers` with source in directory `kodi` as follows:
 
 1. `cd $HOME`
-2. `sudo git clone --branch Omega https://github.com/xbmc/xbmc.git`
+2. `sudo git clone --branch Piers https://github.com/xbmc/xbmc.git`
 3. `sudo mkdir kodi-build`
 4. `cd kodi-build`
 5. `sudo cmake ../kodi -DCMAKE_INSTALL_PREFIX=/usr/local -DCORE_PLATFORM_NAME=x11 -DAPP_RENDER_SYSTEM=gl`
 6. `cd $HOME`
-7. `sudo git clone --branch Omega https://github.com/xbmc/inputstream.adaptive`
-8. `sudo git clone --branch Omega https://github.com/Asmodasis/pvr.plutotv`
+7. `sudo git clone --branch Piers https://github.com/xbmc/inputstream.adaptive`
+8. `sudo git clone --branch Piers https://github.com/kodi-pvr/pvr.plutotv`
 9. `cd inputstream.adaptive && sudo mkdir build && cd build`
 10. `sudo cmake -DADDONS_TO_BUILD=inputstream.adaptive -DADDON_SRC_PREFIX=../.. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=../../kodi-build/addons -DPACKAGE_ZIP=1 ../../kodi/cmake/addons`
 11. `sudo make`
