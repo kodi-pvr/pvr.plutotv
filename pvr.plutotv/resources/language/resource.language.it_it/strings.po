@@ -47,13 +47,9 @@ msgctxt "#30040"
 msgid "Debug"
 msgstr "Debug"
 
-msgctxt "#30041"
-msgid "SID"
-msgstr "SID"
-
-msgctxt "#30042"
-msgid "Device ID"
-msgstr "ID dispositivo"
+msgctxt "#30043"
+msgid "Client ID"
+msgstr ""
 
 msgctxt "#30100"
 msgid "Category containing playback settings"
@@ -78,6 +74,14 @@ msgstr "Usa loghi dei canali colorati, se disponibili."
 msgctxt "#30300"
 msgid "Category containing debug settings"
 msgstr "Categoria contenente impostazioni di debug"
+
+#~ msgctxt "#30041"
+#~ msgid "SID"
+#~ msgstr "SID"
+
+#~ msgctxt "#30042"
+#~ msgid "Device ID"
+#~ msgstr "ID dispositivo"
 
 #~ msgctxt "#30001"
 #~ msgid "General"

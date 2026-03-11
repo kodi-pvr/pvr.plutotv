@@ -47,13 +47,9 @@ msgctxt "#30040"
 msgid "Debug"
 msgstr "디버그"
 
-msgctxt "#30041"
-msgid "SID"
-msgstr "SID"
-
-msgctxt "#30042"
-msgid "Device ID"
-msgstr "장치 ID"
+msgctxt "#30043"
+msgid "Client ID"
+msgstr ""
 
 msgctxt "#30100"
 msgid "Category containing playback settings"
@@ -78,6 +74,14 @@ msgstr "가능하면 컬러 채널 로고를 사용합니다."
 msgctxt "#30300"
 msgid "Category containing debug settings"
 msgstr "디버그 설정이 포함된 카테고리"
+
+#~ msgctxt "#30041"
+#~ msgid "SID"
+#~ msgstr "SID"
+
+#~ msgctxt "#30042"
+#~ msgid "Device ID"
+#~ msgstr "장치 ID"
 
 #~ msgctxt "#30001"
 #~ msgid "General"

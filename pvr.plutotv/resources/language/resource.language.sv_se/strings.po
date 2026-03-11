@@ -47,13 +47,9 @@ msgctxt "#30040"
 msgid "Debug"
 msgstr "Felsök"
 
-msgctxt "#30041"
-msgid "SID"
-msgstr "SID"
-
-msgctxt "#30042"
-msgid "Device ID"
-msgstr "Enhets-ID"
+msgctxt "#30043"
+msgid "Client ID"
+msgstr ""
 
 msgctxt "#30100"
 msgid "Category containing playback settings"
@@ -78,6 +74,14 @@ msgstr "Använd färgade kanallogotyper, om sådana finns tillgängliga."
 msgctxt "#30300"
 msgid "Category containing debug settings"
 msgstr "Kategori som innehåller felsökningsinställningar"
+
+#~ msgctxt "#30041"
+#~ msgid "SID"
+#~ msgstr "SID"
+
+#~ msgctxt "#30042"
+#~ msgid "Device ID"
+#~ msgstr "Enhets-ID"
 
 #~ msgctxt "#30001"
 #~ msgid "General"

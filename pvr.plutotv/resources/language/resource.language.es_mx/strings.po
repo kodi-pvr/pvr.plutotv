@@ -47,13 +47,9 @@ msgctxt "#30040"
 msgid "Debug"
 msgstr "Depuración"
 
-msgctxt "#30041"
-msgid "SID"
-msgstr "SID"
-
-msgctxt "#30042"
-msgid "Device ID"
-msgstr "ID de dispositivo"
+msgctxt "#30043"
+msgid "Client ID"
+msgstr ""
 
 msgctxt "#30100"
 msgid "Category containing playback settings"
@@ -78,6 +74,14 @@ msgstr ""
 msgctxt "#30300"
 msgid "Category containing debug settings"
 msgstr ""
+
+#~ msgctxt "#30041"
+#~ msgid "SID"
+#~ msgstr "SID"
+
+#~ msgctxt "#30042"
+#~ msgid "Device ID"
+#~ msgstr "ID de dispositivo"
 
 #~ msgctxt "#30001"
 #~ msgid "General"
