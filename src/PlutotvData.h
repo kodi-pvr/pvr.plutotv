@@ -25,7 +25,8 @@ class ATTR_DLL_LOCAL PlutotvData : public kodi::addon::CAddonBase,
                                    public kodi::addon::CInstancePVRClient
 {
 public:
-  PlutotvData() = default;
+  PlutotvData();
+  ~PlutotvData() = default;
   PlutotvData(const PlutotvData&) = delete;
   PlutotvData(PlutotvData&&) = delete;
   PlutotvData& operator=(const PlutotvData&) = delete;

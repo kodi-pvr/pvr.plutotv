@@ -18,6 +18,12 @@
 #include <ios>
 #include <sstream>
 
+PlutotvData::PlutotvData()
+{
+  // Channels are loaded on instantiation
+  LoadChannelsData();
+}
+
 ADDON_STATUS PlutotvData::Create()
 {
   kodi::Log(ADDON_LOG_DEBUG, "%s - Creating the pluto.tv PVR add-on", __FUNCTION__);
@@ -214,7 +220,6 @@ PVR_ERROR PlutotvData::GetChannelsAmount(int& amount)
 {
   kodi::Log(ADDON_LOG_DEBUG, "pluto.tv function call: [%s]", __FUNCTION__);
 
-  LoadChannelsData();
   if (!m_bChannelsLoaded)
     return PVR_ERROR_SERVER_ERROR;
 
@@ -228,7 +233,6 @@ PVR_ERROR PlutotvData::GetChannels(bool radio, kodi::addon::PVRChannelsResultSet
 
   if (!radio)
   {
-    LoadChannelsData();
     if (!m_bChannelsLoaded)
       return PVR_ERROR_SERVER_ERROR;
 
@@ -294,7 +298,6 @@ bool PlutotvData::GetSettingsWorkaroundBrokenStreams() const
 
 std::string PlutotvData::GetChannelStreamURL(int uniqueId)
 {
-  LoadChannelsData();
   if (!m_bChannelsLoaded)
     return {};
 
@@ -334,7 +337,6 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
                                         time_t end,
                                         kodi::addon::PVREPGTagsResultSet& results)
 {
-  LoadChannelsData();
   if (!m_bChannelsLoaded)
     return PVR_ERROR_SERVER_ERROR;
 
