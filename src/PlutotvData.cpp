@@ -125,21 +125,20 @@ bool PlutotvData::LoadChannelsData()
 
   // parse channels
   kodi::Log(ADDON_LOG_DEBUG, "[channels] parse channels");
-  rapidjson::Document channelsDoc;
-  channelsDoc.Parse(jsonChannels.c_str());
-  if (channelsDoc.GetParseError())
+  nlohmann::json channelsDoc = nlohmann::json::parse(jsonChannels.c_str());
+  if (channelsDoc.is_discarded())
   {
     kodi::Log(ADDON_LOG_ERROR, "[LoadChannelData] ERROR: error while parsing json");
     return false;
   }
   kodi::Log(ADDON_LOG_DEBUG, "[channels] iterate channels");
-  kodi::Log(ADDON_LOG_DEBUG, "[channels] size: %i;", channelsDoc["data"].Size());
+  kodi::Log(ADDON_LOG_DEBUG, "[channels] size: %i;", channelsDoc.at("data").size());
 
   // Use configured start channel number to populate the channel list
   int i = GetSettingsStartChannel();
-  for (const auto& channel : channelsDoc["data"].GetArray())
+  for (const auto& channel : channelsDoc.at("data"))
   {
-    const std::string plutotvid{channel["id"].GetString()};
+    const std::string plutotvid{channel.at("id")};
 
     PlutotvChannel plutotv_channel;
     plutotv_channel.iChannelNumber = i++; // position
@@ -152,36 +151,36 @@ bool PlutotvData::LoadChannelsData()
     plutotv_channel.iUniqueId = uniqueId;
     kodi::Log(ADDON_LOG_DEBUG, "[channel] id: %i;", uniqueId);
 
-    const std::string displayName = channel["name"].GetString();
+    const std::string displayName = channel.at("name");
     plutotv_channel.strChannelName = displayName;
     kodi::Log(ADDON_LOG_DEBUG, "[channel] name: %s;", plutotv_channel.strChannelName.c_str());
 
     std::string logo;
 
-    if (channel.HasMember("images") && channel["images"].Size() > 0)
+    if (channel.contains("images") && channel.at("images").size() > 0)
     {
-      for (const auto& l : channel["images"].GetArray())
+      for (const auto& l : channel.at("images"))
       {
-        if (!l.HasMember("type"))
+        if (!l.contains("type"))
           continue;
 
         if (GetSettingsColoredChannelLogos())
         {
-          if (l["type"] == "colorLogoPNG")
+          if (l.at("type") == "colorLogoPNG")
           {
-            logo = l["url"].GetString();
+            logo = l.at("url");
             break;
           }
         }
-        else if (l["type"] == "solidLogoPNG")
+        else if (l.at("type") == "solidLogoPNG")
         {
-          logo = l["url"].GetString();
+          logo = l.at("url");
           break;
         }
         // fallback, should always work
-        if (l["type"] == "logo")
+        if (l.at("type") == "logo")
         {
-          logo = l["url"].GetString();
+          logo = l.at("url");
           // no break, since we might find the proper image with one of the next iterations
         }
       }
@@ -190,11 +189,11 @@ bool PlutotvData::LoadChannelsData()
     plutotv_channel.strIconPath = logo;
     kodi::Log(ADDON_LOG_DEBUG, "[channel] iconpath: %s;", plutotv_channel.strIconPath.c_str());
 
-    if (channel.HasMember("stitched") && channel["stitched"].HasMember("paths") &&
-        channel["stitched"]["paths"].Size() > 0)
+    if (channel.contains("stitched") && channel.at("stitched").contains("paths") &&
+        channel.at("stitched").at("paths").size() > 0)
     {
       std::string streamURL{"https://cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv/v2"};
-      streamURL += channel["stitched"]["paths"][0]["path"].GetString();
+      streamURL += channel.at("stitched").at("paths").at(0).at("path");
       streamURL += "?includeExtendedEvents=true";
       streamURL += "&masterJWTPassthrough=true";
       streamURL += "&jwt="; // JWT value will be added on demand.
@@ -364,36 +363,36 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
         return PVR_ERROR_SERVER_ERROR;
       }
 
-      const auto epgDoc(std::make_shared<rapidjson::Document>());
-      epgDoc->Parse(jsonEpg.c_str());
-      if (epgDoc->GetParseError())
+      nlohmann::json epgDoc = nlohmann::json::parse(jsonEpg.c_str());
+      if (epgDoc.is_discarded())
       {
         kodi::Log(ADDON_LOG_ERROR, "[GetEPG] ERROR: error while parsing json");
         return PVR_ERROR_SERVER_ERROR;
       }
 
-      m_epg_cache_document = epgDoc;
+      // Shared pointer handles memory exceptions more efficiently.
+      m_epg_cache_document = std::make_shared<nlohmann::json>(epgDoc);
       m_epg_cache_start = orig_start;
       m_epg_cache_end = end;
     }
 
     kodi::Log(ADDON_LOG_DEBUG, "[epg] iterate entries");
 
-    kodi::Log(ADDON_LOG_DEBUG, "[epg] size: %i;", (*m_epg_cache_document)["data"].Size());
+    kodi::Log(ADDON_LOG_DEBUG, "[epg] size: %i;", (*m_epg_cache_document).at("data"));
 
     // Find EPG data
-    for (const auto& epgChannel : (*m_epg_cache_document)["data"].GetArray())
+    for (const auto& epgChannel : (*m_epg_cache_document).at("data"))
     {
-      if (epgChannel["channelId"].GetString() != channel.plutotvID)
+      if (epgChannel.at("channelId") != channel.plutotvID)
         continue;
 
       // EPG data found
-      for (const auto& epgData : epgChannel["timelines"].GetArray())
+      for (const auto& epgData : epgChannel.at("timelines"))
       {
         kodi::addon::PVREPGTag tag;
 
         // generate a unique boadcast id
-        const std::string epg_bsid = epgData["_id"].GetString();
+        const std::string epg_bsid = epgData.at("_id");
         kodi::Log(ADDON_LOG_DEBUG, "[epg] epg_bsid: %s;", epg_bsid.c_str());
         const int epg_bid = Utils::Hash(epg_bsid);
         kodi::Log(ADDON_LOG_DEBUG, "[epg] epg_bid: %i;", epg_bid);
@@ -403,54 +402,54 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
         tag.SetUniqueChannelId(channel.iUniqueId);
 
         // set title
-        tag.SetTitle(epgData["title"].GetString());
-        kodi::Log(ADDON_LOG_DEBUG, "[epg] title: %s;", epgData["title"].GetString());
+        tag.SetTitle(epgData.at("title"));
+        kodi::Log(ADDON_LOG_DEBUG, "[epg] title: %s;", epgData.at("title"));
 
         // set startTime
-        std::string startTime = epgData["start"].GetString();
+        std::string startTime = epgData.at("start");
         tag.SetStartTime(Utils::StringToTime(startTime));
 
         // set endTime
-        std::string endTime = epgData["stop"].GetString();
+        std::string endTime = epgData.at("stop");
         tag.SetEndTime(Utils::StringToTime(endTime));
 
-        if (epgData.HasMember("episode"))
+        if (epgData.contains("episode"))
         {
-          const auto& episode = epgData["episode"];
+          const auto& episode = epgData.at("episode");
           // set description
-          if (episode.HasMember("description") && episode["description"].IsString())
+          if (episode.contains("description") && episode.at("description"))
           {
-            tag.SetPlot(episode["description"].GetString());
+            tag.SetPlot(episode.at("description"));
             kodi::Log(ADDON_LOG_DEBUG, "[epg] description: %s;",
-                      episode["description"].GetString());
+                      episode.at("description"));
           }
 
           // genre
-          if (episode.HasMember("genre") && episode["genre"].IsString())
+          if (episode.contains("genre") && episode.at("genre"))
           {
             tag.SetGenreType(EPG_GENRE_USE_STRING);
-            tag.SetGenreDescription(episode["genre"].GetString());
+            tag.SetGenreDescription(episode.at("genre"));
           }
 
           // thumbnail
-          if (episode.HasMember("thumbnail") && episode["thumbnail"]["path"].IsString())
+          if (episode.contains("thumbnail") && episode.at("thumbnail").at("path"))
           {
-            tag.SetIconPath(episode["thumbnail"]["path"].GetString());
+            tag.SetIconPath(episode.at("thumbnail").at("path"));
           }
 
           // series title / episode name
-          if (episode.HasMember("series") && episode["series"].HasMember("name") &&
-              episode["series"]["name"].IsString() && episode.HasMember("name") &&
-              episode["name"].IsString())
+          if (episode.contains("series") && episode.at("series").contains("name") &&
+              episode.at("series").at("name") && episode.contains("name") &&
+              episode.at("name"))
           {
             // series title
-            tag.SetTitle(episode["series"]["name"].GetString());
+            tag.SetTitle(episode.at("series").at("name"));
             kodi::Log(ADDON_LOG_DEBUG, "[epg] series title: %s;",
-                      episode["series"]["name"].GetString());
+                      episode.at("series").at("name"));
 
             // episode name
-            tag.SetEpisodeName(episode["name"].GetString());
-            kodi::Log(ADDON_LOG_DEBUG, "[epg] episode name: %s;", episode["name"].GetString());
+            tag.SetEpisodeName(episode.at("name"));
+            kodi::Log(ADDON_LOG_DEBUG, "[epg] episode name: %s;", episode.at("name"));
 
             // set is series
             tag.SetFlags(EPG_TAG_FLAG_IS_SERIES);
@@ -499,15 +498,14 @@ std::string PlutotvData::GetJWT()
     const std::string json{curl.Get(url, statusCode)};
     if (statusCode == 200)
     {
-      rapidjson::Document doc;
-      doc.Parse(json.c_str());
-      if (doc.GetParseError())
+      nlohmann::json doc = nlohmann::json::parse(json.c_str());
+      if (doc.is_discarded())
       {
         kodi::Log(ADDON_LOG_ERROR, "[GetJWT] ERROR: error while parsing json");
       }
       else
       {
-        m_jwt = doc["sessionToken"].GetString();
+        m_jwt = doc.at("sessionToken");
         m_jwtTimestamp = std::chrono::steady_clock::now();
         kodi::Log(ADDON_LOG_DEBUG, "[GetJWT]: New JWT: %s.", m_jwt.c_str());
       }
