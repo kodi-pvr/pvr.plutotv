@@ -17,6 +17,8 @@ jobs:
             CC: clang
             CXX: clang++
     steps:
+    - name: Install build essentials
+      run: sudo apt install nlohmann-json3-dev
     - name: Checkout Kodi repo
       uses: actions/checkout@v5
       with:
