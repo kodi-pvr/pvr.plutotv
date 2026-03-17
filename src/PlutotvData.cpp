@@ -378,7 +378,7 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
 
     kodi::Log(ADDON_LOG_DEBUG, "[epg] iterate entries");
 
-    kodi::Log(ADDON_LOG_DEBUG, "[epg] size: %i;", (*m_epg_cache_document).at("data").c_str());
+    kodi::Log(ADDON_LOG_DEBUG, "[epg] size: %i;",  nlohmann::to_string((*m_epg_cache_document).at("data")));
 
     // Find EPG data
     for (const auto& epgChannel : (*m_epg_cache_document).at("data"))
@@ -393,7 +393,7 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
 
         // generate a unique boadcast id
         const std::string epg_bsid = epgData.at("_id");
-        kodi::Log(ADDON_LOG_DEBUG, "[epg] epg_bsid: %s;", epg_bsid.c_str());
+        kodi::Log(ADDON_LOG_DEBUG, "[epg] epg_bsid: %s;",  nlohmann::to_string(epg_bsid));
         const int epg_bid = Utils::Hash(epg_bsid);
         kodi::Log(ADDON_LOG_DEBUG, "[epg] epg_bid: %i;", epg_bid);
         tag.SetUniqueBroadcastId(epg_bid);
@@ -403,7 +403,7 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
 
         // set title
         tag.SetTitle(epgData.at("title"));
-        kodi::Log(ADDON_LOG_DEBUG, "[epg] title: %s;", epgData.at("title").c_str());
+        kodi::Log(ADDON_LOG_DEBUG, "[epg] title: %s;",  nlohmann::to_string(epgData.at("title")));
 
         // set startTime
         std::string startTime = epgData.at("start");
@@ -449,7 +449,7 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
 
             // episode name
             tag.SetEpisodeName(episode.at("name"));
-            kodi::Log(ADDON_LOG_DEBUG, "[epg] episode name: %s;", episode.at("name").c_str());
+            kodi::Log(ADDON_LOG_DEBUG, "[epg] episode name: %s;", nlohmann::to_string(episode.at("name")));
 
             // set is series
             tag.SetFlags(EPG_TAG_FLAG_IS_SERIES);
