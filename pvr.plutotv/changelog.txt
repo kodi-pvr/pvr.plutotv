@@ -1,3 +1,9 @@
+v22.2.6
+- Translations updates from Weblate
+- EPG: Add support for season number and episode number.
+- EPG: Add support for parental rating.
+- EPG: Add support for first aired date.
+
 v22.2.5
 - Use new Pluto.tv API
 
