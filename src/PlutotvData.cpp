@@ -411,7 +411,7 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
 
         // generate a unique boadcast id
         const std::string epg_bsid = epgData.at("_id");
-        kodi::Log(ADDON_LOG_DEBUG, "[epg] epg_bsid: %s;", convertStringToCharPtr(nlohmann::to_string(epg_bsid)));
+        kodi::Log(ADDON_LOG_DEBUG, "[epg] epg_bsid: %s;", epg_bsid);
         const int epg_bid = Utils::Hash(epg_bsid);
         kodi::Log(ADDON_LOG_DEBUG, "[epg] epg_bid: %i;", epg_bid);
         tag.SetUniqueBroadcastId(epg_bid);
