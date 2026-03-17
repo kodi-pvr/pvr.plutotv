@@ -397,7 +397,7 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
 
     kodi::Log(ADDON_LOG_DEBUG, "[epg] iterate entries");
 
-    kodi::Log(ADDON_LOG_DEBUG, "[epg] size: %i;", ConvertStringToCharPtr(nlohmann::to_string((*m_epg_cache_document).at("data"))));
+    kodi::Log(ADDON_LOG_DEBUG, "[epg] size: %i;", ConvertStringToCharPtr((*m_epg_cache_document).at("data")));
 
     // Find EPG data
     for (const auto& epgChannel : (*m_epg_cache_document).at("data"))
@@ -422,7 +422,7 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
 
         // set title
         tag.SetTitle(epgData.at("title"));
-        kodi::Log(ADDON_LOG_DEBUG, "[epg] title: %s;", ConvertStringToCharPtr(nlohmann::to_string(epgData.at("title"))));
+        kodi::Log(ADDON_LOG_DEBUG, "[epg] title: %s;", ConvertStringToCharPtr(epgData.at("title")));
 
         // set startTime
         std::string startTime = epgData.at("start");
@@ -440,7 +440,7 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
           {
             tag.SetPlot(episode.at("description"));
             kodi::Log(ADDON_LOG_DEBUG, "[epg] description: %s;",
-                      ConvertStringToCharPtr(nlohmann::to_string(episode.at("description"))));
+                      ConvertStringToCharPtr(episode.at("description")));
           }
 
           // genre
@@ -464,11 +464,11 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
             // series title
             tag.SetTitle(episode.at("series").at("name"));
             kodi::Log(ADDON_LOG_DEBUG, "[epg] series title: %s;",
-                      ConvertStringToCharPtr(nlohmann::to_string(episode.at("series").at("name"))));
+                      ConvertStringToCharPtr(episode.at("series").at("name")));
 
             // episode name
             tag.SetEpisodeName(episode.at("name"));
-            kodi::Log(ADDON_LOG_DEBUG, "[epg] episode name: %s;", ConvertStringToCharPtr(nlohmann::to_string(episode.at("name"))));
+            kodi::Log(ADDON_LOG_DEBUG, "[epg] episode name: %s;", ConvertStringToCharPtr(episode.at("name")));
 
             // set is series
             tag.SetFlags(EPG_TAG_FLAG_IS_SERIES);
