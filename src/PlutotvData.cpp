@@ -378,7 +378,7 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
 
     kodi::Log(ADDON_LOG_DEBUG, "[epg] iterate entries");
 
-    //kodi::Log(ADDON_LOG_DEBUG, "[epg] size: %i;", (*m_epg_cache_document).at("data").get<std::string>());
+    kodi::Log(ADDON_LOG_DEBUG, "[epg] size: %i;", (*m_epg_cache_document).at("data").GetString());
 
     // Find EPG data
     for (const auto& epgChannel : (*m_epg_cache_document).at("data"))
@@ -393,7 +393,7 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
 
         // generate a unique boadcast id
         const std::string epg_bsid = epgData.at("_id");
-        //kodi::Log(ADDON_LOG_DEBUG, "[epg] epg_bsid: %s;", epg_bsid.get<std::string>());
+        kodi::Log(ADDON_LOG_DEBUG, "[epg] epg_bsid: %s;", epg_bsid.GetString());
         const int epg_bid = Utils::Hash(epg_bsid);
         kodi::Log(ADDON_LOG_DEBUG, "[epg] epg_bid: %i;", epg_bid);
         tag.SetUniqueBroadcastId(epg_bid);
@@ -403,7 +403,7 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
 
         // set title
         tag.SetTitle(epgData.at("title"));
-        //kodi::Log(ADDON_LOG_DEBUG, "[epg] title: %s;", epgData.at("title").get<std::string>());
+        kodi::Log(ADDON_LOG_DEBUG, "[epg] title: %s;", epgData.at("title").GetString());
 
         // set startTime
         std::string startTime = epgData.at("start");
@@ -420,8 +420,8 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
           if (episode.contains("description") && episode.at("description"))
           {
             tag.SetPlot(episode.at("description"));
-           // kodi::Log(ADDON_LOG_DEBUG, "[epg] description: %s;",
-            //          episode.at("description").get<std::string>());
+            kodi::Log(ADDON_LOG_DEBUG, "[epg] description: %s;",
+                      episode.at("description").GetString());
           }
 
           // genre
@@ -444,12 +444,12 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
           {
             // series title
             tag.SetTitle(episode.at("series").at("name"));
-           // kodi::Log(ADDON_LOG_DEBUG, "[epg] series title: %s;",
-           //           episode.at("series").at("name"));
+            kodi::Log(ADDON_LOG_DEBUG, "[epg] series title: %s;",
+                      episode.at("series").at("name").GetString());
 
             // episode name
             tag.SetEpisodeName(episode.at("name"));
-           // kodi::Log(ADDON_LOG_DEBUG, "[epg] episode name: %s;", episode.at("name").get<std::string>());
+            kodi::Log(ADDON_LOG_DEBUG, "[epg] episode name: %s;", episode.at("name").GetString());
 
             // set is series
             tag.SetFlags(EPG_TAG_FLAG_IS_SERIES);
