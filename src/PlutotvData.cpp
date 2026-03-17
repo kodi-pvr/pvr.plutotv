@@ -378,7 +378,7 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
 
     kodi::Log(ADDON_LOG_DEBUG, "[epg] iterate entries");
 
-    kodi::Log(ADDON_LOG_DEBUG, "[epg] size: %i;", (*m_epg_cache_document).at("data"));
+    kodi::Log(ADDON_LOG_DEBUG, "[epg] size: %i;", (*m_epg_cache_document).at("data").c_str());
 
     // Find EPG data
     for (const auto& epgChannel : (*m_epg_cache_document).at("data"))
@@ -403,7 +403,7 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
 
         // set title
         tag.SetTitle(epgData.at("title"));
-        kodi::Log(ADDON_LOG_DEBUG, "[epg] title: %s;", epgData.at("title"));
+        kodi::Log(ADDON_LOG_DEBUG, "[epg] title: %s;", epgData.at("title").c_str());
 
         // set startTime
         std::string startTime = epgData.at("start");
@@ -421,7 +421,7 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
           {
             tag.SetPlot(episode.at("description"));
             kodi::Log(ADDON_LOG_DEBUG, "[epg] description: %s;",
-                      episode.at("description"));
+                      episode.at("description").c_str());
           }
 
           // genre
@@ -449,7 +449,7 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
 
             // episode name
             tag.SetEpisodeName(episode.at("name"));
-            kodi::Log(ADDON_LOG_DEBUG, "[epg] episode name: %s;", episode.at("name"));
+            kodi::Log(ADDON_LOG_DEBUG, "[epg] episode name: %s;", episode.at("name").c_str());
 
             // set is series
             tag.SetFlags(EPG_TAG_FLAG_IS_SERIES);
