@@ -444,8 +444,8 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
           {
             // series title
             tag.SetTitle(episode.at("series").at("name"));
-            kodi::Log(ADDON_LOG_DEBUG, "[epg] series title: %s;",
-                      episode.at("series").at("name"));
+           // kodi::Log(ADDON_LOG_DEBUG, "[epg] series title: %s;",
+           //           episode.at("series").at("name"));
 
             // episode name
             tag.SetEpisodeName(episode.at("name"));
