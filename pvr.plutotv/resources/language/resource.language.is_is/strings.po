@@ -47,13 +47,9 @@ msgctxt "#30040"
 msgid "Debug"
 msgstr ""
 
-msgctxt "#30041"
-msgid "SID"
+msgctxt "#30043"
+msgid "Client ID"
 msgstr ""
-
-msgctxt "#30042"
-msgid "Device ID"
-msgstr "Auðkenni tækis"
 
 msgctxt "#30100"
 msgid "Category containing playback settings"
@@ -78,6 +74,10 @@ msgstr ""
 msgctxt "#30300"
 msgid "Category containing debug settings"
 msgstr ""
+
+#~ msgctxt "#30042"
+#~ msgid "Device ID"
+#~ msgstr "Auðkenni tækis"
 
 #~ msgctxt "#30001"
 #~ msgid "General"

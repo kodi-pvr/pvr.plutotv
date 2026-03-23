@@ -44,12 +44,8 @@ msgctxt "#30040"
 msgid "Debug"
 msgstr ""
 
-msgctxt "#30041"
-msgid "SID"
-msgstr ""
-
-msgctxt "#30042"
-msgid "Device ID"
+msgctxt "#30043"
+msgid "Client ID"
 msgstr ""
 
 msgctxt "#30100"

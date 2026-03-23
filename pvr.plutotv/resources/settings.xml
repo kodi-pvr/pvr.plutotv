@@ -29,15 +29,7 @@
     </category>
     <category id="debug" label="30040" help="30300">
       <group id="1" label="">
-        <setting id="internal_sid" type="string" label="30041" help="-1">
-          <level>3</level>
-          <default />
-          <constraints>
-            <allowempty>true</allowempty>
-          </constraints>
-          <control type="edit" format="string"></control>
-        </setting>
-        <setting id="internal_deviceid" type="string" label="30042" help="-1">
+        <setting id="internal_clientid" type="string" label="30043" help="-1">
           <level>3</level>
           <default />
           <constraints>

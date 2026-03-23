@@ -9,16 +9,17 @@
 #pragma once
 
 #include "kodi/addon-instance/PVR.h"
-#include "rapidjson/document.h"
+#include <nlohmann/json.hpp>
 
+#include <chrono>
 #include <memory>
 #include <vector>
 
 /**
  * User Agent for HTTP Requests
  */
-static const std::string PLUTOTV_USER_AGENT =
-    "Mozilla/5.0 (Windows NT 6.2; rv:24.0) Gecko/20100101 Firefox/24.0";
+static const std::string PLUTOTV_USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+                                              "(KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36";
 
 class ATTR_DLL_LOCAL PlutotvData : public kodi::addon::CAddonBase,
                                    public kodi::addon::CInstancePVRClient
@@ -66,9 +67,9 @@ private:
     std::string strStreamURL;
   };
 
-  std::shared_ptr<rapidjson::Document> m_epg_cache_document;
+  std::shared_ptr<nlohmann::json> m_epg_cache_document;
   time_t m_epg_cache_start = time_t(0);
-  time_t m_epg_cache_end = time_t(0);;
+  time_t m_epg_cache_end = time_t(0);
 
   std::vector<PlutotvChannel> m_channels;
   bool m_bChannelsLoaded = false;
@@ -82,4 +83,11 @@ private:
                            const std::string& url,
                            bool realtime);
   bool LoadChannelsData();
+
+  std::string GetJWT();
+  std::string GetChannelsJson() const;
+  std::string GetEpgJson(time_t start) const;
+
+  std::string m_jwt;
+  std::chrono::time_point<std::chrono::steady_clock> m_jwtTimestamp;
 };
