@@ -436,7 +436,7 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
             tag.SetIconPath(episode.at("thumbnail").at("path"));
             kodi::Log(ADDON_LOG_INFO, "[epg]] episode thumbnail: %s", nlohmann::to_string(episode.at("thumbnail").at("path")).c_str());
           }
-          // TODO below
+
           // first aired
           if (episode.contains("firstAired") && episode.at("firstAired"))
           {
@@ -474,7 +474,7 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
             tag.SetEpisodeNumber(episode.at("number"));
             kodi::Log(ADDON_LOG_DEBUG, "[epg] episode number: %s;", nlohmann::to_string(episode.at("number")).c_str());
           }
-          // TODO above
+
           // series title / episode name
           if (episode.contains("series") && episode.at("series").contains("name") &&
               episode.at("series").at("name") && episode.contains("name") &&
