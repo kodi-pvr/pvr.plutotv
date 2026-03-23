@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
-"PO-Revision-Date: 2025-09-01 07:29+0000\n"
+"PO-Revision-Date: 2026-01-05 10:13+0000\n"
 "Last-Translator: Alexey <signfinder@gmail.com>\n"
 "Language-Team: Russian <https://kodi.weblate.cloud/projects/kodi-add-ons-pvr-clients/pvr-plutotv/ru_ru/>\n"
 "Language: ru_ru\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.13\n"
+"X-Generator: Weblate 5.15.1\n"
 
 msgctxt "Addon Summary"
 msgid "Pluto.tv PVR Client"
@@ -21,7 +21,7 @@ msgstr "PVR-клиент Pluto.tv"
 
 msgctxt "Addon Description"
 msgid "Pluto.tv PVR Client. Note: This is not an official pluto.tv add-on and not related to pluto.tv. It was developed by volunteers."
-msgstr "PVR-клиент Pluto.tv. Примечание: Это не официальное дополнение для pluto.tv и не связано с pluto.tv. Оно было разработано добровольцами."
+msgstr "PVR-клиент Pluto.tv. Примечание: это не официальное дополнение для pluto.tv и не связано с pluto.tv. Оно было разработано добровольцами."
 
 msgctxt "#30001"
 msgid "Playback"
@@ -47,13 +47,9 @@ msgctxt "#30040"
 msgid "Debug"
 msgstr "Отладить"
 
-msgctxt "#30041"
-msgid "SID"
-msgstr "SID"
-
-msgctxt "#30042"
-msgid "Device ID"
-msgstr "ID устройства"
+msgctxt "#30043"
+msgid "Client ID"
+msgstr ""
 
 msgctxt "#30100"
 msgid "Category containing playback settings"
@@ -78,6 +74,14 @@ msgstr "Используйте цветные логотипы каналов, �
 msgctxt "#30300"
 msgid "Category containing debug settings"
 msgstr "Категория с настройками отладки"
+
+#~ msgctxt "#30041"
+#~ msgid "SID"
+#~ msgstr "SID"
+
+#~ msgctxt "#30042"
+#~ msgid "Device ID"
+#~ msgstr "ID устройства"
 
 #~ msgctxt "#30001"
 #~ msgid "General"

@@ -47,13 +47,9 @@ msgctxt "#30040"
 msgid "Debug"
 msgstr "调试"
 
-msgctxt "#30041"
-msgid "SID"
-msgstr "SID"
-
-msgctxt "#30042"
-msgid "Device ID"
-msgstr "设备 ID"
+msgctxt "#30043"
+msgid "Client ID"
+msgstr ""
 
 msgctxt "#30100"
 msgid "Category containing playback settings"
@@ -78,6 +74,14 @@ msgstr "如果可用，请使用彩色通道徽标。"
 msgctxt "#30300"
 msgid "Category containing debug settings"
 msgstr "包含调试设置的类别"
+
+#~ msgctxt "#30041"
+#~ msgid "SID"
+#~ msgstr "SID"
+
+#~ msgctxt "#30042"
+#~ msgid "Device ID"
+#~ msgstr "设备 ID"
 
 #~ msgctxt "#30001"
 #~ msgid "General"
