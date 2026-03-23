@@ -537,7 +537,47 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
           if (episode.HasMember("thumbnail") &&
               episode["thumbnail"]["path"].IsString())
           {
-            tag.SetIconPath(episode["thumbnail"]["path"].GetString());
+            tag.SetIconPath(episode.at("thumbnail").at("path"));
+            kodi::Log(ADDON_LOG_DEBUG, "[epg] episode thumbnail: %s;", nlohmann::to_string(episode.at("thumbnail").at("path")).c_str());
+          }
+          
+          // first aired
+          if (episode.contains("firstAired") && episode.at("firstAired"))
+          {
+            tag.SetFirstAired(episode.at("firstAired"));
+            kodi::Log(ADDON_LOG_INFO, "[epg] episode first aired: %s",
+                       nlohmann::to_string(episode.at("firstAired")).c_str());
+          }
+
+          // parental rating (as age number,"FSK-*", "Not Rated")
+          if (episode.contains("rating") && episode.at("rating"))
+          {
+            const std::string ratingString{episode.at("rating")};
+            kodi::Log(ADDON_LOG_INFO, "[epg] episode rating: %s", ratingString.c_str());
+
+            // rating as string
+            tag.SetParentalRatingCode(ratingString);
+
+            const int rating{Utils::StringToInt(ratingString, -1)};
+            if (rating > -1)
+            {
+              // rating as age number
+              tag.SetParentalRating(rating);
+            }
+          }
+
+          // season number
+          if (episode.contains("season") && episode.at("season"))
+          {
+            tag.SetSeriesNumber(episode.at("season"));
+            kodi::Log(ADDON_LOG_DEBUG, "[epg] season number: %s;", nlohmann::to_string(episode.at("season")).c_str());
+          }
+
+          // episode number
+          if (episode.contains("number") && episode.at("number"))
+          {
+            tag.SetEpisodeNumber(episode.at("number"));
+            kodi::Log(ADDON_LOG_DEBUG, "[epg] episode number: %s;", nlohmann::to_string(episode.at("number")).c_str());
           }
 
           // series title / episode name
