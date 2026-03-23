@@ -400,83 +400,48 @@ PVR_ERROR PlutotvData::GetEPGForChannel(int channelUid,
         // channel ID
         tag.SetUniqueChannelId(channel.iUniqueId);
 
-        // title
-        tag.SetTitle(epgData["title"].GetString());
-        kodi::Log(ADDON_LOG_DEBUG, "[epg] title: %s;", epgData["title"].GetString());
+        // set title
+        tag.SetTitle(epgData.at("title"));
+        kodi::Log(ADDON_LOG_DEBUG, "[epg] title: %s;", nlohmann::to_string(epgData.at("title")).c_str());
 
         // startTime
-        std::string startTime = epgData["start"].GetString();
+        std::string startTime = epgData.at("start");
         tag.SetStartTime(Utils::StringToTime(startTime));
 
         // endTime
-        std::string endTime = epgData["stop"].GetString();
+        std::string endTime = epgData.at("stop");
         tag.SetEndTime(Utils::StringToTime(endTime));
 
         if (epgData.contains("episode"))
         {
-          const auto& episode = epgData["episode"];
-
+          const auto& episode = epgData.at("episode");
           // description
-          if (episode.HasMember("description") && episode["description"].IsString())
+          if (episode.contains("description") && episode.at("description"))
           {
-            tag.SetPlot(episode["description"].GetString());
-            kodi::Log(ADDON_LOG_DEBUG, "[epg] episode description: %s;",
-                      episode["description"].GetString());
+            tag.SetPlot(episode.at("description"));
+            kodi::Log(ADDON_LOG_DEBUG, "[epg] episode description: %s;", nlohmann::to_string(episode.at("description")).c_str());
           }
 
           // genre
           if (episode.contains("genre") && episode.at("genre"))
           {
             tag.SetGenreType(EPG_GENRE_USE_STRING);
-            tag.SetGenreDescription(episode["genre"].GetString());
-            kodi::Log(ADDON_LOG_INFO, "[epg]] episode genre: %s", episode["genre"].GetString());
+            tag.SetGenreDescription(episode.at("genre"));
+            kodi::Log(ADDON_LOG_INFO, "[epg]] episode genre: %s", nlohmann::to_string(episode.at("genre")).c_str());
           }
 
           // thumbnail
           if (episode.contains("thumbnail") && episode.at("thumbnail").at("path"))
           {
-            tag.SetIconPath(episode["thumbnail"]["path"].GetString());
-            kodi::Log(ADDON_LOG_INFO, "[epg]] episode thumbnail: %s",
-                      episode["thumbnail"]["path"].GetString());
+            tag.SetIconPath(episode.at("thumbnail").at("path"));
+            kodi::Log(ADDON_LOG_INFO, "[epg]] episode thumbnail: %s", nlohmann::to_string(episode.at("thumbnail").at("path")).c_str());
           }
-
+          // TODO below
           // first aired
-          if (episode.HasMember("firstAired") && episode["firstAired"].IsString())
+          if (episode.contains("firstAired") && episode.at("firstAired"))
           {
-            tag.SetFirstAired(episode["firstAired"].GetString());
-            kodi::Log(ADDON_LOG_INFO, "[epg]] episode first aired: %s",
-                      episode["firstAired"].GetString());
-          }
-
-          // parental rating (as age number,"FSK-*", "Not Rated")
-          if (episode.HasMember("rating") && episode["rating"].IsString())
-          {
-            const std::string ratingString{episode["rating"].GetString()};
-            kodi::Log(ADDON_LOG_INFO, "[epg]] episode rating: %s", ratingString.c_str());
-
-            // rating as string
-            tag.SetParentalRatingCode(ratingString);
-
-            const int rating{Utils::StringToInt(ratingString, -1)};
-            if (rating > -1)
-            {
-              // rating as age number
-              tag.SetParentalRating(rating);
-            }
-          }
-
-          // season number
-          if (episode.HasMember("season") && episode["season"].IsInt())
-          {
-            tag.SetSeriesNumber(episode["season"].GetInt());
-            kodi::Log(ADDON_LOG_DEBUG, "[epg] season number: %d;", episode["season"].GetInt());
-          }
-
-          // episode number
-          if (episode.HasMember("number") && episode["number"].IsInt())
-          {
-            tag.SetEpisodeNumber(episode["number"].GetInt());
-            kodi::Log(ADDON_LOG_DEBUG, "[epg] episode number: %d;", episode["number"].GetInt());
+            tag.SetFirstAired(episode.at("firstAired"));
+            kodi::Log(ADDON_LOG_INFO, "[epg] episode first aired: %s", nlohmann::to_string(episode.at("firstAired")).c_str());
           }
 
           // parental rating (as age number,"FSK-*", "Not Rated")
