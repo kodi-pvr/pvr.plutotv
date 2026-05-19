@@ -1,3 +1,6 @@
+v22.3.2
+- Fix HTTP request timeouts whith newer CURL versions
+
 v22.3.1
 - Fix EPG refresh not working (due to expired JWT)
 

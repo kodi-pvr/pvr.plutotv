@@ -163,10 +163,9 @@ kodi::vfs::CFile* Curl::PrepareRequest(const std::string& action,
     return nullptr;
   }
 
+  file->CURLAddOption(ADDON_CURL_OPTION_PROTOCOL, "http-version", "1.1");
   file->CURLAddOption(ADDON_CURL_OPTION_PROTOCOL, "redirect-limit", "0");
   file->CURLAddOption(ADDON_CURL_OPTION_PROTOCOL, "customrequest", action);
-
-  file->CURLAddOption(ADDON_CURL_OPTION_HEADER, "acceptencoding", "gzip");
 
   if (!postData.empty())
   {
